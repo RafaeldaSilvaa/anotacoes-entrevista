@@ -1,0 +1,138 @@
+Detalhes da Oportunidade
+ID da Vaga: 809764
+Nível: Sênior
+Papel: Team Member
+Área: Tecnologia (Comunidade IBBA)
+Squad: Inteligência Artificial (RT CRM Dados e Analytics)
+Local: São Paulo (Híbrido sem escala)
+Prazo: Inscrições até 16/01/2026
+
+Sobre a Vaga
+	Busca-se um profissional para integrar a squad de IA focada na jornada comercial do IBBA, estruturando produtos essenciais para o CRM, garantindo qualidade, robustez e escalabilidade nas práticas de infraestrutura e dados.
+
+O que é CRM?
+	 - Definição: Ferramenta de gestão que reúne em um único lugar dados de clientes, histórico de interações e oportunidades de negócio.
+	 - Objetivo: Melhorar o relacionamento com clientes, aumentar conversões, reduzir ciclos de venda e elevar taxas de retenção.
+	 - Forma de uso: É mais que software; é uma estratégia de gestão que integra equipes de vendas, marketing e atendimento.
+
+Responsabilidades e Atribuições
+		- Experiência sólida em democratização de dados, sei que não está descrito, mas para contextualizar
+			- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+			- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+			- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+
+		- Arquitetura e Desenvolvimento e Domínio de SOLID, Design Patterns e Orientação a Objetos (OOP)
+			- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+			- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+			- SOLID:
+				S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+				O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+				L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+				I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+				D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+				
+				SOLID aplicado:
+				SRP → classes pequenas e testáveis
+				OCP → extensão sem quebrar código existente
+				LSP → contratos respeitados
+				ISP → interfaces coesas
+				DIP → dependência de abstrações
+
+			- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+			- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+
+		O que é DDD
+			Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+			Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+			Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+		
+		Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+			- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+			- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+			- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+			- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+			
+		Padrões de Projeto:
+			- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+			- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+			- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+			- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+			- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+			- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+			- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+			- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+			- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+			- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+		
+		- Projetar, implementar e manter microsserviços escaláveis e desacoplados.
+			Tenho experiência em projetar, implementar e manter microsserviços escaláveis e desacoplados, aplicando princípios de DDD, Clean Architecture e SOLID para garantir baixo acoplamento e evolução independente. Utilizo Docker/ecs para orquestração e escalabilidade horizontal, e defino comunicação via APIs RESTful, ou mensageria (Kafka, SQS/SNS) conforme o cenário. Em persistência, escolho entre DynamoDB para alta escala e baixa latência ou RDS/PostgreSQL quando consistência relacional é essencial.
+
+		- Desenvolver fluxos assíncronos, event-driven e tolerantes a falhas.
+			Tenho experiência em desenvolver fluxos assíncronos e arquiteturas event-driven, garantindo que sistemas sejam resilientes, escaláveis e tolerantes a falhas. Para isso, aplico padrões como mensageria (SQS, SNS) e orquestração com Step Functions, que permitem desacoplamento e processamento paralelo. Em cenários críticos, implemento estratégias de retry, dead-letter queues e idempotência, assegurando consistência mesmo diante de falhas temporárias. Em AWS, utilizo Kinesis, Lambda e DynamoDB Streams para eventos em tempo real, complementando com monitoramento e observabilidade via CloudWatch e Datadog. Dessa forma, os fluxos não apenas suportam alta demanda, mas também mantêm confiabilidade e eficiência contínua.
+			
+			- Assíncrono: melhora performance e evita bloqueios em operações longas.
+			- Event-driven: serviços reagem a eventos, promovendo baixo acoplamento e escalabilidade.
+			- Tolerância a falhas: retry, fallback, dead-letter queues, circuit breakers.
+			- Tecnologias AWS: Kinesis, SQS/SNS, Lambda, DynamoDB Streams, Step Functions.
+			- Boas práticas: idempotência, observabilidade, monitoramento de métricas e logs.
+
+		- Estruturar sistemas complexos, reutilizáveis e com boas práticas de modelagem.
+			Utilizo princípios como DDD (Domain-Driven Design), Clean Architecture e SOLID, que permitem separar responsabilidades e manter baixo acoplamento. Para modelagem, aplico design orientado a domínio, identificando entidades, agregados e bounded contexts, o que facilita evolução e integração entre módulos. Também adoto padrões como event-driven, microservices e APIs bem definidas, garantindo que os sistemas sejam reutilizáveis e preparados para crescer junto com o negócio.
+
+		- Trabalhar com APIs RESTful.
+			Tenho experiência em trabalhar com APIs RESTful, aplicando boas práticas de design, segurança e documentação. REST é o conjunto de princípios arquiteturais que define como sistemas devem se comunicar de forma padronizada, usando recursos, verbos HTTP e representações. Já RESTful significa colocar esses princípios em prática corretamente, ou seja, construir APIs que realmente seguem o modelo REST (com endpoints bem definidos, versionamento, uso adequado de status codes e documentação via Swagger/OpenAPI). Em AWS, por exemplo, exponho APIs com API Gateway e Lambda, armazeno dados em DynamoDB ou RDS, e monitoro chamadas com CloudWatch, garantindo escalabilidade, segurança e facilidade de integração.
+
+		- DevOps e Infraestrutura (Cloud AWS)
+			Familiariade com pipelines do banco e infraestrutura
+			
+		- Gerenciamento de Infraestrutura como Código (Terraform e CloudFormation).
+			Familiaridade com Terraform e cloudformation
+			
+		- Experiência com Containers e Orquestração (Docker e Kubernetes).
+			Experiencia em docker, com criações de ECS
+			
+		- Deploy, monitoramento e automação de serviços AWS (ECS, EKS, Lambda, S3, RDS).
+			Experiencia com todos, utilização das pipelines e módulos do banco; implementação e monitorizamneto com datadog
+			
+		- Implementação de pipelines de CI/CD (GitHub Actions).
+			Tenho conhecimento
+
+		- Monitoramento, logging e observabilidade utilizando Datadog.
+			Recentemente fiz o treinamento de datadog e apliquei em projetos, criei dashs e alarmes
+			
+		- Dados e Mensageria
+
+		- Conhecimento em bancos de dados relacionais (PostgreSQL).
+
+		- Implementação de filas e tópicos (SQS, SNS, Kafka).
+			- SNS (Notificação): Use para espalhar uma mensagem para vários destinos ao mesmo tempo (Broadcast/Fan-out) sem garantir armazenamento.
+			- SQS (Fila): Use para garantir a execução de tarefas individuais, onde cada mensagem é processada por um único consumidor e deletada após o sucesso.
+			- Kafka (Streaming): Use para fluxos de dados massivos onde as mensagens ficam salvas em log, permitindo que vários sistemas leiam e releiam os mesmos dados históricos na ordem exata.
+
+		- Processamento assíncrono e mensageria.
+
+			Comunicação Síncrona na AWS
+			O emissor envia a requisição e bloqueia aguardando a resposta. Ideal para operações que exigem confirmação imediata.
+			API Gateway + Lambda: O cliente chama a API e espera o Lambda terminar de rodar para receber o JSON de resposta.
+			Application Load Balancer (ALB) + ECS: O tráfego chega ao Load Balancer e é direcionado para um container; a conexão TCP permanece aberta até a resposta.
+			DynamoDB/RDS: Consultas de leitura e escrita tradicionais.
+			Risco Sênior: Tight Coupling (Acoplamento forte). Se o serviço de destino estiver lento ou fora do ar, o serviço de origem também trava (efeito cascata).
+
+			Comunicação Assíncrona na AWS
+			O emissor envia a mensagem e segue seu fluxo. O processamento acontece "em algum momento no futuro" (Consistência Eventual).
+			Amazon SQS (Filas): O produtor coloca a mensagem na fila e esquece. O consumidor processa no seu próprio ritmo.
+			Amazon SNS (Pub/Sub): Dispara notificações para múltiplos destinos (Lambda, SQS, E-mail) simultaneamente.
+			Amazon Kinesis / MSK (Kafka): Streaming de dados em tempo real para ingestão de milhões de eventos (telemetria de CRM).
+			AWS Step Functions: Orquestração de workflows. O Step Functions gerencia o estado, mas os passos individuais podem ser assíncronos e demorar dias.
+			S3 Event Notifications: Quando um arquivo cai no S3, ele dispara um Lambda assincronamente para processar (ex: processar um CSV de dados de clientes).
+			EventBridge: O "barramento de eventos" da AWS. Excelente para arquiteturas Event-Driven puras.
+
+		- Qualidade de Software e Cobertura de testes unitários, integração e end-to-end.
+			- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+			- Boas praticas seguindo documentações e ferramentas que apoiam o desenvolvimento
+		
+		-Uso de ferramentas de análise estática e revisão de código.
+			Análise Estática (SAST): É o processo de examinar o código-fonte sem executá-lo para encontrar vulnerabilidades, bugs ou violações de padrões de escrita.
+			Ferramentas comuns: SonarQube (o padrão no Itaú)
