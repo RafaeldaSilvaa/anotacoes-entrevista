@@ -1,0 +1,141 @@
+Contexto
+- Área: Tecnologia – Digital Assets
+- Squad: Trading Cripto
+- Tema complexo e inovador
+- Rampagem de plataforma de custódia de criptoativos
+- Forte integração com tesouraria do banco
+
+O QUE ESPERAMOS DE VOCÊ
+- Experiência sólida em democratização de dados
+	- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+	- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+	- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+
+- Uso de:
+  • AWS Step Functions
+  • Athena
+  • Armazenamento em Parquet no S3
+	
+	- Existem diferentes arquiteturas para democratizar dados. As tabelas do Brainr foram democratizadas com Step Funtions e Glue.
+	- É possível usar Kinesis, o Phoenix que facilita a ingestão
+	- Atualmente temos com Glue, Dynamo Streams, Lambda que insere no bucket toolkit
+	- Entendo que a arquitetura ideal pode variar de acordo com a origem dos dados
+	- É importante sempre particionar os dados para performance e otimização de custos, porque sem partição o Athena acaba lendo tudo
+	- O formato Parquet é importante porque organiza os dados em colunas, reduz custos de armazenamento e acelera consultas analíticas em grandes volumes de dados, tornando o processamento mais eficiente
+	- Utilização do Athena em contas consumer, solicitação de acesso para base necessária
+	
+- Conhecimento avançado em Python e .NET
+	
+	- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+		- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+		- SOLID:
+			S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+			O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+			L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+			I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+			D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+			
+			SOLID aplicado:
+			SRP → classes pequenas e testáveis
+			OCP → extensão sem quebrar código existente
+			LSP → contratos respeitados
+			ISP → interfaces coesas
+			DIP → dependência de abstrações
+
+		- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+		- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+	
+	- Conhecimento em .NET
+		Arquitetura e boas práticas
+			- Clean Architecture / DDD: Separar domínio, aplicação, infraestrutura e interfaces.
+			- SOLID: Aplicar princípios de design para manter código extensível e testável.
+			- Testes: Unitários, integração e end-to-end (pirâmide de testes).
+			- Logging e Observabilidade: Usar ILogger, Application Insights, OpenTelemetry.
+
+	O que é DDD
+		Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+		Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+		Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+	
+	Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+		- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+		- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+		- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+		- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+		
+	Padrões de Projeto:
+		- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+		- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+		- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+		- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+		- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+		- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+		- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+		- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+		- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+		- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+	
+- Integração com APIs externas:
+  • FIX
+  • REST
+	
+	- Na integração com APIs externas, o FIX é usado em ambientes financeiros de alta performance, com mensagens tag-based e foco em baixa latência. O REST é um estilo arquitetural baseado em HTTP e JSON, simples e escalável. Já o RESTful vai além: exige modelagem correta de recursos, uso consistente de verbos e status codes, e respeito ao princípio de statelessness, garantindo aderência completa ao padrão REST.
+	- Nos ultimos tempos tenho implementado API Rest Gateway na AWS e On Premises
+	
+- Domínio de processos batch e online
+
+	- Em batch, o foco é processar grandes volumes de dados em janelas específicas, como ETL ou relatórios. Para isso, é possivel usar AWS Glue para orquestração de ETL, Amazon EMR para processamento distribuído e S3 como storage escalável. Já em online, o objetivo é baixa latência e alta disponibilidade, como em APIs ou sistemas de trading. Nesse cenário, aplico Amazon API Gateway e AWS Lambda para expor serviços serverless, Amazon DynamoDB para persistência rápida e Amazon Kinesis para ingestão de eventos em tempo real. O desafio é equilibrar throughput e latência, e a AWS oferece ferramentas que permitem construir soluções resilientes, escaláveis e seguras para ambos os cenários.
+	
+- Capacidade de definir arquiteturas robustas e eficientes
+	
+	Custo, qualidade e performance devem andar junto. Consultar pares, especialistas, documentações e literatura é muito importante. Tenho experiência em definir arquiteturas robustas e eficientes, equilibrando requisitos de negócio, performance e escalabilidade. Normalmente aplico princípios como Clean Architecture e DDD para manter o domínio isolado, e adoto práticas de alta disponibilidade e resiliência com cloud. Em AWS, por exemplo, desenho soluções com API Gateway, Lambda, DynamoDB e Kinesis para cenários online de baixa latência, e Glue, EMR e S3 para processos batch de alto volume. Além disso, aplico monitoramento e observabilidade com CloudWatch e OpenTelemetry, garantindo que a arquitetura seja não apenas funcional, mas sustentável e evolutiva.
+	
+- Forte experiência em AWS
+
+	Tenho forte experiência em arquitetura e soluções na nuvem, principalmente em AWS, onde possuo 6 certificações oficiais que comprovam meu domínio em áreas como arquitetura, segurança, desenvolvimento e data engineering. Além disso, também tenho 2 certificações em Azure, o que me dá visão comparativa entre diferentes provedores e capacidade de desenhar soluções híbridas ou multi-cloud. Essa combinação me permite definir arquiteturas robustas, escaláveis e eficientes, aproveitando o melhor de cada plataforma para atender às necessidades de negócio.
+	
+- Capacidade de selecionar ferramentas corretas para cada desafio
+
+	Tenho experiência em avaliar requisitos de negócio e técnicos para selecionar as ferramentas mais adequadas a cada desafio. Considero fatores como latência, escalabilidade, custo, segurança e facilidade de manutenção. Por exemplo, em cenários de processamento em tempo real, escolho soluções como AWS Kinesis ou Kafka; para processos batch, uso AWS Glue ou EMR; em persistência, opto por DynamoDB quando preciso de baixa latência e escalabilidade, ou PostgreSQL/RDS quando consistência relacional é crítica. Também comparo alternativas multi-cloud, aproveitando minha experiência com 6 certificações AWS e 2 Azure, o que me permite desenhar arquiteturas híbridas e resilientes. Essa capacidade garante que cada solução seja eficiente, sustentável e alinhada ao negócio.
+	
+- Perfil disruptivo, inovador e orientado a resultados
+
+O QUE VOCÊ VAI FAZER
+- Construção e rampagem de plataforma de custódia de criptoativos
+
+- Garantir eficiência, segurança e escalabilidade
+	- Observabilidade com Datadog, com dash e alarmes
+	- Eficiência: otimização de custos (AWS Cost Explorer, Reserved Instances), performance tuning.
+	- Segurança: IAM, VPC, Security Groups, criptografia (KMS), auditoria (CloudTrail).
+	- Escalabilidade: Auto Scaling, Load Balancer, DynamoDB on-demand, Kinesis para eventos em tempo real.
+	- Princípios: alta disponibilidade, resiliência, observabilidade (CloudWatch, OpenTelemetry).
+	
+	Tenho experiência em garantir eficiência, segurança e escalabilidade nas soluções que desenho. Para eficiência, aplico boas práticas de arquitetura e otimização de recursos, sempre equilibrando custo e performance. Em segurança, sigo padrões como IAM bem estruturado, criptografia em trânsito e em repouso. Já em escalabilidade, utilizo arquiteturas serverless e event-driven em AWS (API Gateway, Lambda, DynamoDB, Kinesis) e também serviços como Auto Scaling e Elastic Load Balancer, garantindo que o sistema cresça de forma sustentável. Essa combinação assegura que as soluções sejam não apenas funcionais, mas também resilientes e preparadas para evoluir junto com o negócio.
+	
+- Integrações com corretoras externas
+
+- Construção de APIs e calculadoras financeiras
+	Desenvolvimento de APIs em Python, utilizando as pipelines, módulos e boas praticas do banco; fiz o treinamento de api owner recentemente
+	
+- Definir arquiteturas para batch e online
+
+	- Diferença entre batch (alto volume, agendado, throughput) e online (tempo real, baixa latência).
+	- Tecnologias AWS típicas:
+		- Batch: Glue, EMR, S3, Step Functions.
+		- Online: API Gateway, Lambda, DynamoDB, Kinesis.
+	- Boas práticas: alta disponibilidade, resiliência, otimização de custos, observabilidade.
+	- Capacidade de justificar quando usar cada abordagem:
+		- Batch: Use quando precisar processar grandes volumes de dados de forma periódica, sem necessidade de resposta imediata (ex.: ETL, relatórios, fechamento contábil)
+		- Online: Use quando precisar de respostas em tempo real ou baixa latência, em sistemas interativos ou transacionais (ex.: APIs, e-commerce, trading).
+
+- Democratizar acesso aos dados no banco
+- Infraestrutura em cloud usando Infra as Code
+	- Conehcimento em Terraform e Cloudformation
+	
+- Aplicar testes unitários e integrados
+	- Conhecimento em piramede de testes
+	
+	
+Não mencionados que conheço: modelagem de dados, banco de dados relacional e não relacional, 
