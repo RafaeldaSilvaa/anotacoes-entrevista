@@ -1,0 +1,152 @@
+Resumo da Vaga: Engenheiro de TI Sênior
+Squad: IU ARCH
+Papel: TEAM MEMBER
+Local: São Paulo – São Paulo
+Modelo de Trabalho: Híbrido sem escala
+
+Sobre a vaga
+Busca-se um Engenheiro de TI Sênior para o projeto IU Arch, focado em avaliação de arquiteturas de contas e projetos em AWS. O profissional atuará no desenvolvimento e evolução do sistema, com foco em performance, escalabilidade, análise de arquiteturas e atuação fullstack.
+
+Requisitos Técnicos
+Cloud: Experiência sólida em AWS (EC2, S3, IAM, CloudFormation, Lambda, etc.).
+
+	- Falar das certificações AWS
+	
+	- Experiência sólida em democratização de dados, sei que não está descrito, mas para contextualizar
+			- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+			- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+			- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+			
+Arquitetura: Forte conhecimento em arquitetura de sistemas e boas práticas de cloud.
+
+	- Boas praticas: Princípio do Privilégio Mínimo, Otimização de Custos, Confiabilidade/Design para Falhas, 
+
+	- Arquitetura e Desenvolvimento e Domínio de SOLID, Design Patterns e Orientação a Objetos (OOP)
+			- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+			- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+			- SOLID:
+				S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+				O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+				L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+				I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+				D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+				
+				SOLID aplicado:
+				SRP → classes pequenas e testáveis
+				OCP → extensão sem quebrar código existente
+				LSP → contratos respeitados
+				ISP → interfaces coesas
+				DIP → dependência de abstrações
+
+			- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+			- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+
+		O que é DDD
+			Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+			Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+			Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+		
+		Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+			- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+			- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+			- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+			- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+			
+		Padrões de Projeto:
+			- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+			- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+			- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+			- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+			- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+			- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+			- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+			- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+			- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+			- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+
+Machine Learning: Experiência com modelagem, treinamento, avaliação e deploy (TensorFlow, PyTorch, Scikit-learn).
+	
+	Conheço o ciclo em Machine Learning, cobrindo todo o ciclo de vida: modelagem, treinamento, avaliação e deploy.
+	Modelagem:
+		Definição de problemas e escolha de algoritmos adequados (regressão, classificação, redes neurais, árvores de decisão).
+		Uso de Scikit-learn para prototipagem rápida e modelos clássicos.
+		Aplicação de TensorFlow e PyTorch para arquiteturas mais complexas, como redes neurais profundas e modelos de NLP ou visão computacional.
+
+	Treinamento:
+		Pré-processamento de dados (normalização, feature engineering, balanceamento de classes).
+		Treinamento em GPU/TPU para acelerar redes neurais.
+		Ajuste de hiperparâmetros com técnicas como Grid Search, Random Search e Bayesian Optimization.
+
+	Avaliação:
+		Uso de métricas adequadas ao problema: accuracy, precision, recall, F1-score, ROC-AUC para classificação; RMSE, MAE, R² para regressão.
+		Validação cruzada e análise de overfitting/underfitting.
+		Interpretação de modelos com ferramentas como SHAP e LIME para explicar decisões.
+
+	Deploy:
+		Criação de APIs com Flask/FastAPI para servir modelos.
+		Deploy em AWS (SageMaker, Lambda, ECS) ou containers com Docker/Kubernetes.
+		Monitoramento de modelos em produção (drift de dados, re-treinamento periódico).
+	
+	Tipos de redes neurais:
+		MLP (Perceptron Multicamadas): redes totalmente conectadas, usadas em classificação e regressão.
+		CNN (Convolucionais): especializadas em imagens e visão computacional, extraem padrões locais.
+		RNN (Recorrentes): tratam dados sequenciais (texto, áudio, séries temporais); variantes LSTM e GRU resolvem memória de longo prazo.
+		GAN (Generativas Adversárias): gerador + discriminador, criam dados sintéticos como imagens realistas.
+		Autoencoders: usados para compressão, reconstrução e detecção de anomalias.
+		Transformers: baseados em atenção, dominam NLP (tradução, chatbots, sumarização).
+		Arquiteturas específicas: U-Net (segmentação de imagens médicas), Diffusion Models (geração de imagens), PINNs (problemas físicos).
+	
+	- O Amazon SageMaker é o serviço da AWS voltado para Machine Learning tradicional e Deep Learning, que cobre todo o ciclo de vida de modelos: preparação de dados, modelagem, treinamento, avaliação e deploy. Diferente do Bedrock (que foca em IA generativa com modelos prontos), o SageMaker é usado para criar e treinar seus próprios modelos com bibliotecas como TensorFlow, PyTorch e Scikit-learn.
+	
+	- O Amazon Bedrock é um serviço da AWS voltado para IA generativa, que permite acessar modelos de base (foundation models) de diferentes provedores sem precisar treinar ou gerenciar infraestrutura. Ele oferece uma API simples para consumir modelos de texto, imagem e multimodais, além de recursos para fine-tuning leve, prompt engineering e criação de agentes inteligentes.
+	Com o Bedrock, empresas podem:
+		Prototipar rapidamente aplicações de IA generativa (chatbots, assistentes, geração de conteúdo).
+		Integrar modelos aos seus dados corporativos por meio de bases de conhecimento.
+		Fazer deploy seguro e escalável usando a infraestrutura da AWS, integrada com serviços como API Gateway, Lambda, ECS/EKS e SageMaker.
+		Garantir segurança e compliance com IAM, criptografia e políticas da AWS.
+		
+Desenvolvimento Fullstack:
+Front-end: React, Angular ou Vue.js.
+	Não tenho conhecimento
+	
+Back-end: Node.js, Python (Django/Flask), APIs REST/GraphQL.
+	
+	🔹 REST
+		Sistemas simples e padronizados:  
+		Exemplo: uma API de cadastro de clientes com endpoints como /clientes, /clientes/{id}.
+		→ Fácil de implementar, ideal quando as operações são bem definidas e não mudam muito.
+
+		Integrações com serviços legados:  
+		Exemplo: sistemas antigos de ERP ou CRM que já expõem APIs REST.
+		→ REST é padrão de mercado, então facilita integração com sistemas existentes.
+
+		APIs públicas com cache eficiente:  
+		Exemplo: uma API de previsão do tempo ou cotação de moedas.
+		→ Como os dados são consumidos por milhares de clientes, o cache HTTP nativo do REST ajuda a reduzir custo e latência.
+
+	🔹 GraphQL
+		Aplicações com front-end dinâmico (React, Angular, mobile):  
+		Exemplo: um app mobile que precisa mostrar dados de usuário, posts e comentários em uma única tela.
+		→ Com GraphQL, o cliente pede exatamente os campos necessários em uma única requisição, evitando múltiplos endpoints.
+
+		Cenários com múltiplos clientes consumindo dados diferentes:  
+		Exemplo: um sistema de e-commerce com web, mobile e dashboards internos.
+		→ Cada cliente pode consultar apenas os dados que precisa, sem depender de versões diferentes da API.
+
+		Necessidade de evitar overfetching/underfetching:  
+		Exemplo: em REST, um endpoint /produtos pode trazer dados demais (overfetching) ou faltar informações (underfetching).
+		→ Com GraphQL, o cliente define os campos exatos, evitando desperdício de banda e garantindo eficiência.
+
+Dados: Experiência com bancos de dados (SQL e NoSQL).
+	Conheço banco de dados relacional e não relacional
+
+DevOps: Conhecimento em Infraestrutura como Código (IaC), automação e práticas de CI/CD.
+
+Responsabilidades
+Definição da estratégia técnica e colaboração com equipes de arquitetura e engenharia.
+Garantir segurança, governança e compliance em AWS.
+Integração de dados para análise e geração de insights.
+Criação de interfaces intuitivas e responsivas.
+Desenvolvimento de algoritmos de ML para melhorias e otimizações.
