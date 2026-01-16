@@ -1,0 +1,168 @@
+ANL ENGENHARIA DE DADOS SR - CRÉDITO PJ - 808538
+Data de Publicação: 17 de dezembro de 2025
+Status: Inscrições encerradas
+Localidade: São Paulo - SP (Presencial)
+Tipo de Contratação: Efetivo
+
+Descrição da Vaga
+A oportunidade é voltada para profissionais apaixonados por tecnologia e pela metodologia data driven que queiram contribuir com a evolução da área de crédito no Itaú. O objetivo é utilizar dados para orientar a tomada de decisão e o planejamento estratégico, visando maior eficiência operacional e centralidade no cliente.
+
+Responsabilidades e Atribuições
+O profissional será responsável por:
+
+Modelagem de dados e conceitos de Data Mesh.
+	- Experiência sólida em democratização de dados, sei que não está descrito, mas para contextualizar
+	- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+	- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+	- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+
+
+Trabalhar com bancos de dados relacionais e NoSQL.
+
+	1. Bancos de Dados Relacionais (SQL)
+		No contexto bancário, o modelo relacional é fundamental para garantir a consistência e integridade (propriedades ACID) das transações de crédito.
+		Normalização: Saber estruturar tabelas para evitar redundância e garantir que os dados de clientes PJ e seus limites de crédito estejam sempre corretos.
+		Consultas Complexas: Domínio de SQL avançado para realizar cruzamentos de dados entre diferentes domínios da empresa.
+
+	2. Bancos de Dados NoSQL
+		A vaga cita explicitamente o AWS DynamoDB. Aqui, a mentalidade muda:
+		Escalabilidade: Utilizado para lidar com grandes volumes de dados ou acessos simultâneos que um banco tradicional teria dificuldade em suportar.
+		Modelagem por Padrão de Acesso: Diferente do SQL, no NoSQL (especialmente no DynamoDB), você modela os dados com base em como eles serão consultados e não apenas em como eles se relacionam.
+		Flexibilidade de Esquema: Ideal para armazenar logs de transações, eventos de mensageria ou dados semiestruturados que vêm de diferentes fontes de crédito.
+		
+	- Bancos Relacionais (SQL) - Ex: PostgreSQL, MySQL, Oracle
+		Foco: Integridade de dados e consistência transacional (ACID).
+		Quando usar: * Dados altamente relacionados (ex: Cadastro de Cliente x Conta x Cartão).
+		Necessidade de Joins complexos e transações financeiras garantidas.
+		Esquema de dados rígido e estruturado.
+		Pontos chave: Normalização, índices, chaves estrangeiras e escalabilidade predominantemente vertical (aumentar o servidor).
+	- Bancos Não Relacionais (NoSQL) - Ex: DynamoDB, MongoDB, Cassandra
+		Foco: Escalabilidade horizontal, alta disponibilidade e flexibilidade.
+		Quando usar: * Grandes volumes de dados e alta taxa de leitura/escrita.
+		Esquemas flexíveis ou que mudam rápido.
+		Performance de baixa latência em escala global.
+		Pontos chave: Desnormalização, escalabilidade horizontal (adicionar mais máquinas) e teorema CAP.
+	
+	- Uso SQL quando a integridade referencial e transações ACID são críticas para o negócio, como no núcleo financeiro. Já o NoSQL (DynamoDB) eu aplico em cenários de alta escala e baixa latência, como o histórico de faturas ou logs de eventos, onde a performance e a disponibilidade global superam a necessidade de Joins complexos.
+	
+	As Três Engrenagens (C-A-P)
+	C - Consistência (Consistency): Todos os nós do sistema veem os mesmos dados ao mesmo tempo. Se você grava uma informação, qualquer leitura imediata em qualquer lugar trará esse dado atualizado.
+	A - Disponibilidade (Availability): O sistema continua respondendo a todas as requisições (leitura/escrita), mesmo que alguns nós falhem. Ele nunca fica "fora do ar".
+	P - Tolerância a Partição (Partition Tolerance): O sistema continua operando mesmo que a comunicação entre os servidores sofra uma interrupção (uma "partição" na rede).
+
+	2. A Regra de Ouro: Escolha Duas
+	Em um mundo perfeito, teríamos as três. Porém, em sistemas distribuídos (na nuvem), falhas de rede são inevitáveis, portanto a Tolerância a Partição (P) é obrigatória. Isso nos força a escolher entre:
+	
+	CP (Consistência + Tolerância a Partição): O sistema prioriza dados corretos. Se houver erro de rede, ele prefere ficar indisponível (erro 500) do que entregar um dado desatualizado.
+	Exemplo: Bancos de dados relacionais tradicionais e o Hadoop (citado na vaga de dados).
+
+	AP (Disponibilidade + Tolerância a Partição): O sistema prioriza estar sempre ativo. Ele entrega o dado que tiver disponível, mesmo que não seja a versão mais recente.
+	Exemplo: O DynamoDB (citado em ambas as vagas) opera frequentemente neste modelo para garantir alta performance.
+
+Análise de sistemas e análise de dados.
+
+	Análise de Sistemas
+		Foco em entender requisitos de negócio e traduzi-los em soluções tecnológicas.
+		Atividades principais: levantamento de requisitos, modelagem de processos, definição de arquitetura, documentação funcional e técnica.
+		Objetivo: garantir que o sistema atenda às necessidades do usuário, seja escalável e sustentável.
+		Exemplo: desenhar o fluxo de um sistema de vendas, definindo integrações com ERP e regras de negócio.
+
+	Análise de Dados
+		Foco em coletar, organizar e interpretar dados para gerar insights e apoiar decisões.
+		Atividades principais: limpeza e transformação de dados, modelagem estatística, criação de dashboards e relatórios.
+		Ferramentas comuns: SQL, Python (pandas, NumPy), Power BI, Tableau.
+		Objetivo: transformar dados brutos em informação útil e estratégica.
+		Exemplo: analisar dados de vendas para identificar padrões de consumo e prever demanda.
+
+Programação e aplicação de conceitos de Engenharia de Software.
+	- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+				- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+				- SOLID:
+					S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+					O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+					L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+					I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+					D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+					
+					SOLID aplicado:
+					SRP → classes pequenas e testáveis
+					OCP → extensão sem quebrar código existente
+					LSP → contratos respeitados
+					ISP → interfaces coesas
+					DIP → dependência de abstrações
+
+				- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+				- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+
+			O que é DDD
+				Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+				Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+				Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+			
+			Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+				- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+				- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+				- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+				- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+				
+			Padrões de Projeto:
+				- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+				- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+				- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+				- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+				- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+				- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+				- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+				- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+				- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+				- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+
+
+Processos de ETL e ELT, além de Pipelines de Dados.
+
+	Esses conceitos são o "coração" da vaga de Engenharia de Dados SR para Crédito PJ. Eles descrevem como o dado sai da origem (sistemas de cadastro de empresas) e chega até o destino final para análise.
+	
+	Aqui está a distinção técnica entre eles, focando no que a vaga exige:
+
+	1. ETL vs. ELT: A Ordem dos Fatores Altera o Produto
+	A principal diferença está em onde o dado é transformado.
+	
+	ETL (Extract, Transform, Load):
+	Processo: O dado é extraído, transformado em um servidor intermediário (usando Spark ou AWS Glue Jobs) e só depois carregado no destino.
+	Uso: Ideal quando o dado de origem é sensível ou precisa de limpeza pesada antes de ser armazenado.
+
+	ELT (Extract, Load, Transform):
+	Processo: O dado bruto é extraído e carregado diretamente no destino (como Amazon S3). A transformação ocorre dentro do próprio destino usando o poder de processamento da nuvem (como AWS Athena).
+	Uso: Muito comum em arquiteturas modernas de Data Lake e Data Mesh, pois permite maior agilidade.
+
+	2. Pipelines de Dados
+	O pipeline é o "cano" que conecta tudo. Na descrição da vaga, isso envolve orquestrar várias ferramentas da AWS para garantir que o fluxo não pare.
+	Orquestração: Uso de AWS Step Functions para definir a ordem das tarefas (ex: "Só comece a transformar o dado de Crédito PJ após a extração do banco NoSQL terminar").
+	Processamento em Lote (Batch): Processar grandes volumes de dados de uma vez, geralmente usando AWS EMR ou Glue.
+	Processamento em Tempo Real (Streaming): Citado na primeira vaga como essencial para eventos e mensageria.
+
+	3. Ferramentas Citadas na Imagem
+	Para construir esses processos no Itaú, você precisará dominar:
+	Python e Spark: Para escrever a lógica das transformações.
+	Terraform: Para criar a infraestrutura do pipeline como código (IaC).
+	S3: Como o ponto central de armazenamento (landing zone).
+	Hadoop: Citado como parte do ecossistema de Big Data para lidar com volumes massivos.
+	
+	ETL vs. ELT (Processamento de Dados)
+	Use ETL (Extract, Transform, Load) quando:
+	Segurança e Privacidade (LGPD): Se você precisa remover CPFs ou nomes de clientes de Crédito PJ antes que os dados cheguem ao Data Lake.
+	Limpeza Pesada: Quando os dados de origem estão muito "sujos" ou despadronizados e você usa o AWS Glue ou Spark para limpá-los antes de ocupar espaço de armazenamento.
+	Sistemas Legados: Quando a origem é um banco antigo que não suporta muitas consultas; você extrai tudo, transforma fora e entrega pronto.
+
+	Use ELT (Extract, Load, Transform) quando:
+	Escalabilidade na Nuvem: Você carrega dados brutos no Amazon S3 e usa o AWS Athena para transformar apenas o que for necessário via SQL.
+	Data Mesh: Quando diferentes áreas (squads) precisam do mesmo dado bruto para transformá-los de formas diferentes para seus próprios propósitos.
+	Alta Velocidade de Ingestão: Quando o objetivo é salvar o dado o mais rápido possível para não perder o evento, deixando a lógica de negócio para depois.
+
+Desenvolvimento backend.
+	Desenvolvimento de produtos de dados
+
+Arquitetura de soluções de dados e desenvolvimento de soluções de plataforma de dados.
+	Utlização de ferramentas como Lambda, Glue, S3
