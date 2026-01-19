@@ -1,0 +1,426 @@
+Modelagem de dados e conceitos de Data Mesh.
+	- Experiência sólida em democratização de dados, sei que não está descrito, mas para contextualizar
+	- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+	- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+	- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+
+
+Se você tem forte base em engenharia de software, visão sistêmica e interesse em aplicar IA no contexto de acessibilidade e experiência do usuário, esse desafio é para você ;)
+
+Responsabilidades
+	1. Desenvolvimento e evolução de soluções técnicas voltadas à acessibilidade digital
+		Descrição: Criar e aprimorar sistemas que garantam que pessoas com diferentes tipos de deficiência possam utilizar produtos digitais sem barreiras.
+		Exemplo: Implementar suporte a leitores de tela em uma aplicação web, garantindo que todos os elementos tenham descrições semânticas adequadas (uso correto de aria-label, alt em imagens).
+		Casos de uso:
+			Aplicativos bancários acessíveis para pessoas com deficiência visual.
+			Plataformas de e-learning que suportam navegação por teclado.
+			Ferramentas corporativas que seguem padrões WCAG 2.1 e WAI-ARIA (Diretrizes de Acessibilidade para Conteúdo Web (Web Content Accessibility Guidelines), uma versão atualizada do padrão internacional do W3C para tornar a web acessível a todos, incluindo pessoas com deficiências visuais, auditivas, cognitivas, de aprendizagem e motoras, focando em dispositivos móveis e tecnologias assistivas)
+
+	2. Projetar e implementar soluções com inteligência artificial aplicada à engenharia
+		Descrição: Utilizar IA para melhorar processos de desenvolvimento e experiência do usuário, especialmente em acessibilidade.
+		Exemplo: Criar modelos de machine learning que detectem automaticamente problemas de contraste em interfaces ou que gerem legendas automáticas para vídeos.
+		Casos de uso:
+			Ferramenta que sugere correções de acessibilidade em tempo real durante o desenvolvimento.
+			Algoritmos que identificam padrões de navegação de usuários com deficiência motora e ajustam a interface.
+			Sistemas de recomendação que personalizam a experiência conforme necessidades específicas (ex.: aumentar fonte para baixa visão).
+
+	3. Desenvolver e manter pipelines automatizados, workflows e integrações
+		Descrição: Construir fluxos de CI/CD e automações que garantam qualidade, escalabilidade e integração com serviços de IA.
+		Exemplo: Pipeline que roda testes automatizados de acessibilidade (ex.: axe-core, Lighthouse) antes de cada deploy.
+		
+		- O axe-core é o motor de testes de acessibilidade mais popular do mundo, desenvolvido pela Deque Systems. Ele foca em testes automatizados que retornam zero falsos positivos.
+		O que é: Uma biblioteca de regras em JavaScript de código aberto.
+		Foco Técnico: É projetado para ser integrado diretamente no fluxo de desenvolvimento (Testes Unitários, Integração e End-to-End).
+		Regras: Baseia-se nas diretrizes da WCAG (Web Content Accessibility Guidelines).
+		Integração: Pode ser usado com ferramentas como Selenium, Cypress, Playwright e o próprio Lighthouse.
+		Vantagem: Permite testar componentes isolados e estados dinâmicos de uma aplicação que ferramentas de varredura simples não alcançam.
+		
+		- O Lighthouse é uma ferramenta de código aberto do Google, integrada diretamente ao Chrome DevTools, que ajuda a auditar a qualidade de páginas web.
+		O que é: Uma ferramenta de diagnóstico "tudo-em-um" para performance, SEO, boas práticas, PWA e Acessibilidade.
+		Motor de Acessibilidade: O Lighthouse utiliza o motor do axe-core para realizar seus testes de acessibilidade.
+		Relatórios: Gera uma pontuação de 0 a 100 e fornece uma lista detalhada de problemas encontrados, indicando onde está o erro no código e como corrigi-lo.
+		Facilidade de Uso: Por estar no navegador (aba "Lighthouse" nas ferramentas de desenvolvedor), é a porta de entrada para qualquer desenvolvedor auditar uma página rapidamente.
+		Automação: Também pode ser executado via linha de comando (CLI) ou como um módulo Node.js em pipelines de CI/CD.
+
+		Casos de uso:
+			Integração de APIs de IA para reconhecimento de voz em plataformas de atendimento.
+			Workflow que orquestra serviços de tradução automática para conteúdos acessíveis em múltiplos idiomas.
+			Automação de testes de regressão para garantir que novas features não quebrem padrões de acessibilidade.
+
+	4. Atuar próximo a times de design, produto e dados
+		Descrição: Colaborar de forma interdisciplinar, garantindo que acessibilidade e IA sejam consideradas desde a concepção até a entrega.
+		Exemplo: Trabalhar com designers para validar protótipos acessíveis e com cientistas de dados para treinar modelos que melhorem a experiência inclusiva.
+		Casos de uso:
+			Refinar fluxos de navegação com base em dados de uso de pessoas com deficiência.
+			Co-criar guidelines de design inclusivo junto ao time de UX.
+			Ajustar modelos de IA com feedback real de usuários.
+
+	5. Participar de todo o ciclo de desenvolvimento
+
+
+	6. Ser referência técnica na squad
+		Descrição: Atuar como mentor e líder técnico, orientando decisões arquiteturais e disseminando boas práticas.
+		Exemplo: Definir arquitetura baseada em microserviços que facilita integração com APIs de IA e garante escalabilidade.
+		Casos de uso:
+			Apoiar colegas na escolha de frameworks que melhor suportam acessibilidade (ex.: React com bibliotecas específicas).
+			Conduzir sessões de pair programming para ensinar práticas de desenvolvimento inclusivo.
+			Criar documentação técnica sobre padrões de acessibilidade e integração com IA.
+
+Aptidões pessoais
+	1. Curiosidade técnica e interesse contínuo por novas tecnologias (especialmente IA aplicada a produtos digitais)
+		Descrição: Capacidade de se manter atualizado e explorar novas ferramentas, frameworks e tendências, com foco em como a IA pode melhorar produtos digitais.
+		Exemplo: Estudar e aplicar modelos de NLP para criar assistentes virtuais acessíveis em plataformas web.
+		Casos de uso:
+			Avaliar novas bibliotecas de visão computacional para reconhecimento de gestos.
+			Testar frameworks de IA que automatizam testes de acessibilidade.
+			Explorar soluções de IA generativa para gerar descrições alternativas de imagens.
+
+	2. Autonomia, responsabilidade e visão de longo prazo
+		Descrição: Capacidade de tomar decisões técnicas de forma independente, assumindo responsabilidade pelos resultados e planejando soluções escaláveis e sustentáveis.
+		Exemplo: Escolher uma arquitetura baseada em microserviços para garantir evolução futura sem comprometer a manutenção.
+		Casos de uso:
+			Planejar a evolução de uma plataforma de acessibilidade considerando crescimento de usuários.
+			Definir padrões de versionamento e documentação para garantir continuidade do projeto.
+			Antecipar riscos de dependência tecnológica e propor alternativas.
+
+	3. Comunicação clara para diferentes públicos
+		Descrição: Habilidade de traduzir conceitos técnicos complexos em linguagem acessível para stakeholders não técnicos (produto, design, clientes).
+		Exemplo: Explicar para o time de design como atributos aria-label impactam a experiência de usuários com leitores de tela.
+		Casos de uso:
+			Apresentar resultados de testes de acessibilidade para executivos.
+			Documentar integrações de IA de forma compreensível para equipes de dados.
+			Conduzir workshops internos sobre boas práticas de acessibilidade.
+
+	4. Visão crítica para avaliar trade-offs técnicos, riscos e impacto
+		Descrição: Capacidade de analisar diferentes soluções, ponderando custo, desempenho, acessibilidade e experiência do usuário.
+		Exemplo: Decidir entre usar um modelo de IA pré-treinado (rápida implementação, mas menos customizável) ou treinar um modelo próprio (maior custo, mas mais precisão).
+		Casos de uso:
+			Avaliar se uma biblioteca de acessibilidade atende aos padrões WCAG ou se é necessário customizar.
+			Decidir entre priorizar performance ou acessibilidade em cenários de limitação técnica.
+			Identificar riscos de viés em modelos de IA que afetam usuários com deficiência.
+
+	5. Foco em qualidade, resultados e compromisso com prazos
+		Descrição: Garantir que entregas sejam feitas com excelência técnica, dentro dos prazos e com impacto positivo para o usuário final.
+		Exemplo: Implementar testes automatizados de acessibilidade em pipelines CI/CD para assegurar qualidade contínua.
+		Casos de uso:
+			Cumprir cronogramas de releases sem comprometer padrões de acessibilidade.
+			Monitorar métricas de qualidade (tempo de resposta, erros de acessibilidade, satisfação do usuário).
+			Priorizar backlog com foco em impacto real para usuários com necessidades específicas.
+
+Requisitos essenciais
+- Experiência sólida em engenharia de software, atuando em ambientes distribuídos.
+- Conhecimento em AWS, com vivência em serviços como: AWS Athena, AWS Glue, Lambda, ECS, API Gateway e S3. Certificações serão bem vindas;
+	
+	
+	1. Bancos de Dados Relacionais (SQL)
+		No contexto bancário, o modelo relacional é fundamental para garantir a consistência e integridade (propriedades ACID) das transações de crédito.
+		Normalização: Saber estruturar tabelas para evitar redundância e garantir que os dados de clientes PJ e seus limites de crédito estejam sempre corretos.
+		Consultas Complexas: Domínio de SQL avançado para realizar cruzamentos de dados entre diferentes domínios da empresa.
+
+	2. Bancos de Dados NoSQL
+		A vaga cita explicitamente o AWS DynamoDB. Aqui, a mentalidade muda:
+		Escalabilidade: Utilizado para lidar com grandes volumes de dados ou acessos simultâneos que um banco tradicional teria dificuldade em suportar.
+		Modelagem por Padrão de Acesso: Diferente do SQL, no NoSQL (especialmente no DynamoDB), você modela os dados com base em como eles serão consultados e não apenas em como eles se relacionam.
+		Flexibilidade de Esquema: Ideal para armazenar logs de transações, eventos de mensageria ou dados semiestruturados que vêm de diferentes fontes de crédito.
+		
+	- Bancos Relacionais (SQL) - Ex: PostgreSQL, MySQL, Oracle
+		Foco: Integridade de dados e consistência transacional (ACID).
+		Quando usar: * Dados altamente relacionados (ex: Cadastro de Cliente x Conta x Cartão).
+		Necessidade de Joins complexos e transações financeiras garantidas.
+		Esquema de dados rígido e estruturado.
+		Pontos chave: Normalização, índices, chaves estrangeiras e escalabilidade predominantemente vertical (aumentar o servidor).
+	- Bancos Não Relacionais (NoSQL) - Ex: DynamoDB, MongoDB, Cassandra
+		Foco: Escalabilidade horizontal, alta disponibilidade e flexibilidade.
+		Quando usar: * Grandes volumes de dados e alta taxa de leitura/escrita.
+		Esquemas flexíveis ou que mudam rápido.
+		Performance de baixa latência em escala global.
+		Pontos chave: Desnormalização, escalabilidade horizontal (adicionar mais máquinas) e teorema CAP.
+	
+	- Uso SQL quando a integridade referencial e transações ACID são críticas para o negócio, como no núcleo financeiro. Já o NoSQL (DynamoDB) eu aplico em cenários de alta escala e baixa latência, como o histórico de faturas ou logs de eventos, onde a performance e a disponibilidade global superam a necessidade de Joins complexos.
+	
+	As Três Engrenagens (C-A-P)
+	C - Consistência (Consistency): Todos os nós do sistema veem os mesmos dados ao mesmo tempo. Se você grava uma informação, qualquer leitura imediata em qualquer lugar trará esse dado atualizado.
+	A - Disponibilidade (Availability): O sistema continua respondendo a todas as requisições (leitura/escrita), mesmo que alguns nós falhem. Ele nunca fica "fora do ar".
+	P - Tolerância a Partição (Partition Tolerance): O sistema continua operando mesmo que a comunicação entre os servidores sofra uma interrupção (uma "partição" na rede).
+
+	2. A Regra de Ouro: Escolha Duas
+	Em um mundo perfeito, teríamos as três. Porém, em sistemas distribuídos (na nuvem), falhas de rede são inevitáveis, portanto a Tolerância a Partição (P) é obrigatória. Isso nos força a escolher entre:
+	
+	CP (Consistência + Tolerância a Partição): O sistema prioriza dados corretos. Se houver erro de rede, ele prefere ficar indisponível (erro 500) do que entregar um dado desatualizado.
+	Exemplo: Bancos de dados relacionais tradicionais e o Hadoop (citado na vaga de dados).
+
+	AP (Disponibilidade + Tolerância a Partição): O sistema prioriza estar sempre ativo. Ele entrega o dado que tiver disponível, mesmo que não seja a versão mais recente.
+	Exemplo: O DynamoDB (citado em ambas as vagas) opera frequentemente neste modelo para garantir alta performance.
+
+	Análise de sistemas e análise de dados.
+
+		Análise de Sistemas
+			Foco em entender requisitos de negócio e traduzi-los em soluções tecnológicas.
+			Atividades principais: levantamento de requisitos, modelagem de processos, definição de arquitetura, documentação funcional e técnica.
+			Objetivo: garantir que o sistema atenda às necessidades do usuário, seja escalável e sustentável.
+			Exemplo: desenhar o fluxo de um sistema de vendas, definindo integrações com ERP e regras de negócio.
+
+		Análise de Dados
+			Foco em coletar, organizar e interpretar dados para gerar insights e apoiar decisões.
+			Atividades principais: limpeza e transformação de dados, modelagem estatística, criação de dashboards e relatórios.
+			Ferramentas comuns: SQL, Python (pandas, NumPy), Power BI, Tableau.
+			Objetivo: transformar dados brutos em informação útil e estratégica.
+			Exemplo: analisar dados de vendas para identificar padrões de consumo e prever demanda.
+
+	Programação e aplicação de conceitos de Engenharia de Software.
+		- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+					- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+					- SOLID:
+						S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+						O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+						L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+						I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+						D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+						
+						SOLID aplicado:
+						SRP → classes pequenas e testáveis
+						OCP → extensão sem quebrar código existente
+						LSP → contratos respeitados
+						ISP → interfaces coesas
+						DIP → dependência de abstrações
+
+					- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+					- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+
+				O que é DDD
+					Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+					Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+					Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+				
+				Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+					- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+					- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+					- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+					- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+					
+				Padrões de Projeto:
+					- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+					- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+					- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+					- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+					- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+					- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+					- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+					- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+					- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+					- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+
+- Domínio de Python e SQL, com experiência em manipulação, análise e automação de dados. Conhecimentos em Java ou C# serão bem vindos;
+
+	1. Manipulação de Dados
+		Bibliotecas principais: pandas, numpy.
+		Exemplo: Limpeza de dados de logs de acessibilidade, removendo duplicatas e normalizando formatos de datas.
+		Caso de uso: Preparar datasets para treinar modelos de IA que detectam problemas de acessibilidade em interfaces.
+
+	2. Análise de Dados
+		Bibliotecas principais: matplotlib, seaborn, scikit-learn.
+		Exemplo: Criar gráficos que mostram padrões de navegação de usuários com deficiência visual.
+		Caso de uso: Identificar gargalos de usabilidade e propor melhorias na interface.
+
+	3. Automação
+		Ferramentas: Scripts Python, cron jobs, integração com APIs.
+		Exemplo: Automatizar a coleta diária de métricas de acessibilidade de um site usando requests e BeautifulSoup.
+		Caso de uso: Monitoramento contínuo de conformidade com padrões WCAG.
+
+	4. Integração com Cloud e Pipelines
+		Ferramentas: AWS Lambda, Glue, Athena.
+		Exemplo: Função Lambda em Python que processa arquivos JSON enviados para um bucket S3.
+		Caso de uso: Automatizar ingestão de dados em pipelines governados.
+
+	🗄️ SQL
+		1. Manipulação de Dados
+			Comandos essenciais: SELECT, JOIN, GROUP BY, UPDATE, DELETE.
+			Exemplo: Consolidar dados de múltiplas tabelas para gerar relatórios de acessibilidade.
+			Caso de uso: Criar visões (views) que mostram métricas de uso segmentadas por tipo de deficiência.
+
+		2. Análise de Dados
+			Ferramentas: SQL em data warehouses (Athena, Redshift, BigQuery).
+			Exemplo: Query que calcula tempo médio de resposta de APIs acessíveis.
+			Caso de uso: Avaliar performance de serviços críticos para usuários com necessidades especiais.
+
+		3. Automação
+			Ferramentas: Stored procedures, triggers, jobs agendados.
+			Exemplo: Trigger que valida inserções em tabelas de acessibilidade, garantindo consistência.
+			Caso de uso: Automatizar auditoria de dados em sistemas regulados.
+
+	🔗 Python + SQL (Integração)
+		1. ETL (Extract, Transform, Load)
+			Exemplo: Usar Python (pandas) para transformar dados e SQL para carregar em um data warehouse.
+			Caso de uso: Pipeline que coleta dados de acessibilidade, transforma em métricas e armazena para análise.
+
+		2. Automação de Relatórios
+			Exemplo: Script Python que executa queries SQL e gera relatórios em PDF/Excel.
+			Caso de uso: Relatórios semanais de conformidade com padrões de acessibilidade.
+
+		3. Integração com APIs
+			Exemplo: Python coleta dados de APIs externas e insere em banco via SQL.
+			Caso de uso: Consolidar dados de múltiplas fontes (ex.: Google Analytics + logs internos).
+
+- Vivência com pipelines de desenvolvimento governados (IuPipes);
+
+- Experiência prática com Github Actions;
+
+	Principais Conceitos do GitHub Actions
+	1. Workflow
+		Definição: Arquivo YAML que descreve o processo automatizado (pipeline).
+		Exemplo: Um workflow que roda testes unitários sempre que há um push na branch principal.
+		Caso de uso: Automatizar build, testes e deploy de uma aplicação web.
+
+	2. Evento (Trigger)
+		Definição: Ações no repositório que disparam o workflow.
+		Exemplo:
+		push: quando há envio de código.
+		pull_request: quando uma PR é aberta ou atualizada.
+		schedule: execução em horários definidos (cron jobs).
+		Caso de uso: Rodar testes automaticamente em cada PR para garantir qualidade antes do merge.
+
+	3. Job
+		Definição: Conjunto de steps que são executados em sequência dentro de um runner
+		Exemplo: Um job chamado build que compila o código e outro chamado test que roda testes.
+		Caso de uso: Separar responsabilidades (ex.: build em um job, testes em outro).
+
+	4. Step
+		Definição: Cada comando ou ação dentro de um job.
+		Exemplo:
+		Step que instala dependências (npm install).
+		Step que roda testes (pytest).
+		Caso de uso: Garantir que cada etapa do pipeline seja modular e reutilizável.
+
+	5. Action
+		Definição: Unidade reutilizável que executa uma tarefa específica. Pode ser oficial, da comunidade ou personalizada.
+		Exemplo:
+		actions/checkout: clona o repositório.
+		actions/setup-python: configura ambiente Python.
+		Caso de uso: Reutilizar ações prontas para acelerar desenvolvimento de pipelines.
+
+	6. Runner
+		Definição: Máquina (host) que executa os jobs. Pode ser hospedada pelo GitHub ou self-hosted.
+		Exemplo: Runner Linux que compila e testa código Python.
+		Caso de uso: Usar runners self-hosted para ambientes customizados (ex.: servidores internos).
+
+	7. Artefatos e Cache
+		Definição:
+		Artefatos: arquivos gerados durante o workflow (logs, relatórios, binários).
+		Cache: armazenamento de dependências para acelerar execuções futuras.
+		Exemplo: Salvar relatórios de testes como artefatos.
+		Caso de uso: Reduzir tempo de execução reutilizando dependências já baixada
+
+- Vivência em integração com APIs, incluindo consumo.
+	APIs: Conhecimento e experiência na construção e integração de APIs RESTful.
+	Tenho experiência em trabalhar com APIs RESTful, aplicando boas práticas de design, segurança e documentação. REST é o conjunto de princípios arquiteturais que define como sistemas devem se comunicar de forma padronizada, usando recursos, verbos HTTP e representações. Já RESTful significa colocar esses princípios em prática corretamente, ou seja, construir APIs que realmente seguem o modelo REST (com endpoints bem definidos, versionamento, uso adequado de status codes e documentação via Swagger/OpenAPI). Em AWS, por exemplo, exponho APIs com API Gateway e Lambda, armazeno dados em DynamoDB ou RDS, e monitoro chamadas com CloudWatch, garantindo escalabilidade, segurança e facilidade de integração.
+
+Conhecimento ou experiência prática com inteligência artificial no contexto de engenharia, como:
+	🔌 1. Uso de APIs de IA
+		Fundamento: APIs de IA expõem modelos complexos (NLP, visão computacional, classificação, geração de texto) como serviços acessíveis via HTTP/REST ou gRPC.
+		Práticas avançadas:
+			Orquestração de múltiplas APIs: combinar análise semântica com geração de texto para criar sistemas de suporte inteligentes.
+			Caching e rate limiting: otimizar chamadas para reduzir custo e latência.
+			Observabilidade: monitorar métricas como tempo de resposta, acurácia e custo por requisição.
+		Desafios:
+			Dependência de terceiros (lock-in).
+			Garantia de privacidade e segurança dos dados enviados.
+			Mitigação de vieses embutidos nos modelos.
+		Caso real: Um sistema de atendimento que usa API de linguagem natural para interpretar perguntas e API de classificação para direcionar ao setor correto.
+
+	🧠 2. Sistemas Multiagentes, RAG, Fine-tuning e Prompt Engineering
+		Fundamento:
+			Multiagentes: arquiteturas em que agentes independentes colaboram ou competem para resolver problemas.
+			RAG (Retrieval-Augmented Generation): combina busca em bases de conhecimento com geração de texto contextualizado.
+			Fine-tuning: ajuste de modelos pré-treinados para domínios específicos.
+			Prompt Engineering: design de instruções otimizadas para guiar modelos.
+		Práticas avançadas:
+			Multiagentes: dividir responsabilidades (ex.: um agente para busca, outro para sumarização, outro para validação).
+			RAG: indexar documentação técnica em vector databases e usar embeddings para recuperar trechos relevantes antes da geração.
+			Fine-tuning: treinar modelos com dados internos para termos técnicos específicos (ex.: logs de sistemas distribuídos).
+			Prompt Engineering: criar prompts hierárquicos que guiam o modelo em etapas (ex.: primeiro buscar, depois resumir, depois validar).
+		Desafios:
+			Coordenação entre agentes (evitar redundância ou conflito).
+			Balancear custo de fine-tuning vs. uso de modelos genéricos.
+			Garantir consistência e auditabilidade das respostas.
+			Caso real: Sistema de suporte técnico que usa RAG para buscar em documentação interna e prompt engineering para gerar respostas estruturadas e confiáveis.
+
+	📐 3. Criação de Embeddings e Vector Databases
+		Fundamento:
+			Embeddings: representações vetoriais que capturam semântica de textos, imagens ou dados.
+			Vector Databases: bancos especializados em busca por similaridade (ANN – Approximate Nearest Neighbor).
+		Práticas avançadas:
+			Indexação incremental: atualizar embeddings conforme novos documentos são adicionados.
+			Híbrido semântico + keyword search: combinar busca vetorial com busca tradicional para maior precisão.
+			Clusterização: agrupar embeddings para identificar padrões ou tópicos emergentes.
+		Desafios:
+			Escalabilidade em bases com milhões de embeddings.
+			Garantir relevância e precisão em consultas semânticas.
+			Manutenção de embeddings atualizados quando o contexto muda.
+		Caso real: Plataforma de engenharia que usa embeddings para permitir busca semântica em milhares de tickets de suporte, encontrando problemas similares já resolvidos.
+
+	🏗️ 4. Arquitetura, Observabilidade e Boas Práticas
+	Fundamento: Sistemas de IA precisam ser tratados como software crítico: escaláveis, monitoráveis e auditáveis.
+	Práticas avançadas:
+		Arquitetura: microserviços desacoplados, cada um responsável por uma parte do pipeline de IA (ingestão, pré-processamento, inferência, pós-processamento).
+		Observabilidade: métricas específicas de IA (ex.: taxa de acerto, confiança do modelo, custo por requisição).
+		Boas práticas: versionamento de modelos, testes automatizados de inferência, documentação clara.
+	Desafios:
+		Monitorar drift de dados (mudança no perfil dos dados ao longo do tempo).
+		Garantir explicabilidade das decisões do modelo.
+		Balancear custo de infraestrutura vs. performance.
+	Caso real: Sistema de recomendação que monitora métricas de precisão e recall em tempo real, ajustando automaticamente thresholds para manter qualidade.
+
+	O que é o Amazon Bedrock
+		Plataforma da AWS para IA generativa: fornece acesso a modelos de linguagem, visão e outros tipos de foundation models (FMs).
+		Sem necessidade de infraestrutura própria: você consome modelos via API, sem configurar servidores ou GPUs.
+		Flexibilidade: escolha entre diferentes provedores de modelos (Anthropic, AI21 Labs, Stability AI, etc.).
+	Casos de Uso:
+	Chatbots e assistentes virtuais em sites e aplicativos.
+	Análise de documentos com busca semântica e sumarização.
+	Geração de conteúdo (textos, descrições, relatórios).
+	Automação de processos em ambientes corporativos (ex.: triagem de tickets de suporte).
+	Integração com pipelines de dados para enriquecer análises com IA generativa.
+
+Diferenciais
+	🌐 Experiência com IA aplicada à acessibilidade
+	Descrição: Uso de inteligência artificial para melhorar a inclusão digital, automatizando análises e sugerindo melhorias.
+	Exemplos práticos:
+		Algoritmos que avaliam contraste de cores em interfaces.
+		Modelos de NLP que geram descrições alternativas de imagens para pessoas com deficiência visual.
+		Sistemas que verificam conformidade com padrões WCAG em tempo real.
+	Casos de uso:
+		Plataformas de e-learning que adaptam conteúdo automaticamente.
+		Ferramentas internas que auditam acessibilidade em aplicações corporativas.
+		Chatbots inclusivos que interpretam linguagem natural e oferecem suporte acessível.
+
+	🔗 Conhecimento em MCP (Model Context Protocol)
+		Descrição: MCP é um protocolo emergente que padroniza como aplicações interagem com modelos de IA, permitindo maior interoperabilidade e governança.
+		Exemplos práticos:
+			Uso de MCP para conectar diferentes agentes de IA em um sistema multiagente.
+			Integração de modelos de linguagem com bases de conhecimento internas via MCP.
+		Casos de uso:
+			Construção de pipelines de IA que combinam modelos de diferentes fornecedores.
+			Garantia de rastreabilidade e consistência em interações com modelos.
+			Facilitar auditoria e compliance em sistemas que usam IA generativa.
+
+	🎨 Experiência com Design Systems e Ferramentas de Avaliação de Acessibilidade
+		Descrição: Capacidade de aplicar padrões visuais e técnicos que garantem consistência e acessibilidade em interfaces.
+		Exemplos práticos:
+			Uso de design systems como Material Design ou sistemas internos customizados.
+			Ferramentas como axe-core, Lighthouse ou Wave para testes automatizados de acessibilidade.
+		Casos de uso:
+			Garantir que componentes reutilizáveis sigam padrões inclusivos.
+			Automatizar testes de acessibilidade em pipelines CI/CD.
+			Atender requisitos regulatórios de acessibilidade digital (ex.: Lei Brasileira de Inclusão, ADA nos EUA).
+
+	🛡️ Atuação em ambientes com governança, auditoria ou compliance
+	Descrição: Experiência em ambientes regulados que exigem rastreabilidade, segurança e conformidade.
+	Exemplos práticos:
+		Implementação de pipelines governados com logs e auditoria.
+		Uso de ferramentas de monitoramento e observabilidade para garantir conformidade.
+	Casos de uso:
+		Sistemas financeiros que precisam atender normas do Banco Central.
+		Plataformas de saúde que seguem requisitos de privacidade (HIPAA, LGPD).
+		Ambientes corporativos com auditorias periódicas de acessibilidade e segurança.
