@@ -1,0 +1,207 @@
+Modelagem de dados e conceitos de Data Mesh.
+	- Experiência sólida em democratização de dados, sei que não está descrito, mas para contextualizar
+	- Brainr e Catalogo: Já fui responsável pelo portal que faz gerenciamento das tabelas do mesh (Brainr), onde desenvolvi o BrainrGPT, ferramenta que automatizava descrições de colunas com IA. Também cuidava do Catalogo de Dados, onde havia a da gestão de acessos às tabelas democratizadas, garantindo governança e segurança.
+
+	- Atlan: Contribuí na migração do catálogo corporativo para o Atlan, centralizando todas as tabelas democratizadas em uma plataforma única. Isso trouxe maior organização, rastreabilidade e acesso controlado aos dados.
+
+	- Qualidade e Ciclo de Vida: Atualmente, trabalho na equipe de aferição automática de qualidade das tabelas do data mesh (Hórus). Com isso, conheço todo o ciclo de vida da democratização: criação das tabelas, ingestão, validação de qualidade, gestão de acessos e disponibilização via conta consumer.
+
+ANL ENGENHARIA TI SR - FINANÇAS, RISCO DE CREDITO E CAPITAL - 810433 ID: 810433 | Inscrições abertas até 22/01/2026
+Informações Gerais
+Nível: Sênior
+Área: Tecnologia
+Comunidade: FINANÇAS, RISCO DE CREDITO E CAPITAL
+RT: RISCO DE CREDITO E CAPITAL
+Squad: TRIBUTOS PROPRIOS FEDERAIS
+Papel: TEAM MEMBER
+Local: São Paulo - São Paulo
+Modelo de Trabalho: Híbrido sem escala
+
+Sobre a vaga _Responsabilidades
+
+- Desenvolver e manter as pipelines de dados com foco em performance, escalabilidade e segurança;
+- Garantir a qualidade do codigo com testes automatizados e boas práticas de engenharia;
+- Projetar e implementar pipelines de dados utilizando serviços AWS como S3, Glue/Athena, Lambda, RDS, Stepfunctions;
+	
+	1. Bancos de Dados Relacionais (SQL)
+		No contexto bancário, o modelo relacional é fundamental para garantir a consistência e integridade (propriedades ACID) das transações de crédito.
+		Normalização: Saber estruturar tabelas para evitar redundância e garantir que os dados de clientes PJ e seus limites de crédito estejam sempre corretos.
+		Consultas Complexas: Domínio de SQL avançado para realizar cruzamentos de dados entre diferentes domínios da empresa.
+
+	2. Bancos de Dados NoSQL
+		A vaga cita explicitamente o AWS DynamoDB. Aqui, a mentalidade muda:
+		Escalabilidade: Utilizado para lidar com grandes volumes de dados ou acessos simultâneos que um banco tradicional teria dificuldade em suportar.
+		Modelagem por Padrão de Acesso: Diferente do SQL, no NoSQL (especialmente no DynamoDB), você modela os dados com base em como eles serão consultados e não apenas em como eles se relacionam.
+		Flexibilidade de Esquema: Ideal para armazenar logs de transações, eventos de mensageria ou dados semiestruturados que vêm de diferentes fontes de crédito.
+		
+	- Bancos Relacionais (SQL) - Ex: PostgreSQL, MySQL, Oracle
+		Foco: Integridade de dados e consistência transacional (ACID).
+		Quando usar: * Dados altamente relacionados (ex: Cadastro de Cliente x Conta x Cartão).
+		Necessidade de Joins complexos e transações financeiras garantidas.
+		Esquema de dados rígido e estruturado.
+		Pontos chave: Normalização, índices, chaves estrangeiras e escalabilidade predominantemente vertical (aumentar o servidor).
+	- Bancos Não Relacionais (NoSQL) - Ex: DynamoDB, MongoDB, Cassandra
+		Foco: Escalabilidade horizontal, alta disponibilidade e flexibilidade.
+		Quando usar: * Grandes volumes de dados e alta taxa de leitura/escrita.
+		Esquemas flexíveis ou que mudam rápido.
+		Performance de baixa latência em escala global.
+		Pontos chave: Desnormalização, escalabilidade horizontal (adicionar mais máquinas) e teorema CAP.
+	
+	- Uso SQL quando a integridade referencial e transações ACID são críticas para o negócio, como no núcleo financeiro. Já o NoSQL (DynamoDB) eu aplico em cenários de alta escala e baixa latência, como o histórico de faturas ou logs de eventos, onde a performance e a disponibilidade global superam a necessidade de Joins complexos.
+	
+	As Três Engrenagens (C-A-P)
+	C - Consistência (Consistency): Todos os nós do sistema veem os mesmos dados ao mesmo tempo. Se você grava uma informação, qualquer leitura imediata em qualquer lugar trará esse dado atualizado.
+	A - Disponibilidade (Availability): O sistema continua respondendo a todas as requisições (leitura/escrita), mesmo que alguns nós falhem. Ele nunca fica "fora do ar".
+	P - Tolerância a Partição (Partition Tolerance): O sistema continua operando mesmo que a comunicação entre os servidores sofra uma interrupção (uma "partição" na rede).
+
+	2. A Regra de Ouro: Escolha Duas
+	Em um mundo perfeito, teríamos as três. Porém, em sistemas distribuídos (na nuvem), falhas de rede são inevitáveis, portanto a Tolerância a Partição (P) é obrigatória. Isso nos força a escolher entre:
+	
+	CP (Consistência + Tolerância a Partição): O sistema prioriza dados corretos. Se houver erro de rede, ele prefere ficar indisponível (erro 500) do que entregar um dado desatualizado.
+	Exemplo: Bancos de dados relacionais tradicionais e o Hadoop (citado na vaga de dados).
+
+	AP (Disponibilidade + Tolerância a Partição): O sistema prioriza estar sempre ativo. Ele entrega o dado que tiver disponível, mesmo que não seja a versão mais recente.
+	Exemplo: O DynamoDB (citado em ambas as vagas) opera frequentemente neste modelo para garantir alta performance.
+
+	Análise de sistemas e análise de dados.
+
+		Análise de Sistemas
+			Foco em entender requisitos de negócio e traduzi-los em soluções tecnológicas.
+			Atividades principais: levantamento de requisitos, modelagem de processos, definição de arquitetura, documentação funcional e técnica.
+			Objetivo: garantir que o sistema atenda às necessidades do usuário, seja escalável e sustentável.
+			Exemplo: desenhar o fluxo de um sistema de vendas, definindo integrações com ERP e regras de negócio.
+
+		Análise de Dados
+			Foco em coletar, organizar e interpretar dados para gerar insights e apoiar decisões.
+			Atividades principais: limpeza e transformação de dados, modelagem estatística, criação de dashboards e relatórios.
+			Ferramentas comuns: SQL, Python (pandas, NumPy), Power BI, Tableau.
+			Objetivo: transformar dados brutos em informação útil e estratégica.
+			Exemplo: analisar dados de vendas para identificar padrões de consumo e prever demanda.
+
+	Programação e aplicação de conceitos de Engenharia de Software.
+		- Conhecimento principal em Python, com boas práticas de desenvolvimento, com orientação a objetos, utilizando SOLID, Clean Arch, testes unitarios, testes integrados, ingestão de dependencias, padrões de projeto. Gosto de disseminar projetos que ficaram bons para utilizarem como template.
+					- Herança (cachorro É UM animal); COMPOSIÇÃO (carro TEM UM motor); POLIMORFISMO (comportamento muda de acordo com o objeto)
+					- SOLID:
+						S – Single Responsibility Principle: Cada classe deve ter apenas uma razão para mudar, pois concentrar responsabilidades distintas em um único componente aumenta o acoplamento e dificulta a evolução sustentável do sistema.
+						O – Open/Closed Principle: Os módulos devem estar abertos para extensão e fechados para modificação, permitindo evolução contínua sem comprometer a estabilidade do código já validado em produção.
+						L – Liskov Substitution Principle: Objetos de subclasses devem poder substituir suas superclasses sem alterar o comportamento esperado, garantindo consistência semântica e preservando contratos de abstração.
+						I – Interface Segregation Principle: Interfaces devem ser específicas e coesas, evitando obrigar clientes a depender de métodos que não utilizam, o que reduz fragilidade e promove baixo acoplamento.
+						D – Dependency Inversion Principle: Os módulos de alto nível não devem depender de implementações de baixo nível, mas de abstrações, permitindo arquiteturas flexíveis, testáveis e resilientes a mudanças tecnológicas.
+						
+						SOLID aplicado:
+						SRP → classes pequenas e testáveis
+						OCP → extensão sem quebrar código existente
+						LSP → contratos respeitados
+						ISP → interfaces coesas
+						DIP → dependência de abstrações
+
+					- Clean Arch: O Clean Architecture organiza o sistema em quatro camadas: Entidades com regras de negócio puras, Casos de Uso que coordenam essas regras, Adaptadores que traduzem dados entre aplicação e mundo externo, e Infraestrutura que contém frameworks e tecnologias. Essa separação garante independência, testabilidade e facilidade de evolução.
+					- Piramede de Testes: A pirâmide de testes mostra que devemos ter muitos testes unitários rápidos e baratos na base, uma quantidade moderada de testes de integração para validar interações entre módulos, e poucos testes end-to-end no topo, que são mais caros e lentos. Essa proporção garante qualidade, velocidade e menor custo de manutenção.
+
+				O que é DDD
+					Definição: Conjunto de princípios e práticas que priorizam o entendimento profundo do domínio de negócio e sua modelagem no software.
+					Objetivo: Reduzir a distância entre especialistas de negócio e desenvolvedores, criando uma linguagem ubíqua (compartilhada por todos).
+					Aplicação: Não é uma arquitetura específica, mas pode ser usado em arquiteturas como Clean Architecture, Hexagonal, Onion, CQRS
+				
+				Arquiteturas:  Clean Architecture, Hexagonal, Onion, CQRS
+					- Clean Architecture: Organiza o sistema em camadas concêntricas, mantendo o domínio independente de frameworks e infraestrutura. Use quando precisar organizar o sistema em camadas independentes, mantendo o domínio isolado de frameworks.
+					- Hexagonal Architecture: Usa ports & adapters para isolar o núcleo e permitir troca fácil de tecnologias externas. Use quando quiser flexibilidade para trocar tecnologias externas facilmente via ports & adapters.
+					- Onion Architecture: Estrutura em camadas como uma cebola, com todas as dependências apontando para o domínio central. Use quando precisar garantir que todas as dependências apontem para o núcleo do domínio.
+					- CQRS: Separa leitura e escrita em modelos distintos para otimizar performance e consistência em sistemas complexos. Use quando leitura e escrita têm requisitos distintos e precisam ser otimizadas separadamente.
+					
+				Padrões de Projeto:
+					- Singleton: Garante que exista apenas uma instância de uma classe em todo o sistema. Use quando precisar garantir uma única instância global compartilhada (ex.: gerenciador de configuração).
+					- Factory Method: Centraliza a criação de objetos, delegando às subclasses a decisão de qual instância produzir. Use quando quiser delegar às subclasses a lógica de criação de objetos sem acoplar ao tipo concreto.
+					- Abstract Factory: Cria famílias de objetos relacionados sem expor suas classes concretas. Use quando precisar criar famílias de objetos relacionados que devem funcionar juntos.
+					- Builder: Constrói objetos complexos passo a passo, separando a lógica de criação da representação final. Use quando precisar montar objetos complexos em etapas, mantendo flexibilidade na construção.
+					- Prototype: Cria novos objetos copiando instâncias existentes (clonagem). Use quando precisar criar novos objetos rapidamente a partir da clonagem de instâncias existentes.
+					- Adapter: Conecta interfaces incompatíveis, permitindo que trabalhem juntas. Use quando precisar integrar sistemas com interfaces incompatíveis sem alterar o código original.
+					- Decorator: Adiciona responsabilidades dinamicamente a um objeto sem alterar sua estrutura. Use quando quiser adicionar funcionalidades a objetos de forma dinâmica e transparente.
+					- Observer: Define dependência um-para-muitos, notificando automaticamente objetos interessados em mudanças. Use quando precisar notificar automaticamente múltiplos objetos sobre mudanças em um estado.
+					- Strategy: Encapsula algoritmos diferentes e permite alterná-los em tempo de execução. Use quando precisar alternar algoritmos ou comportamentos em tempo de execução sem alterar o cliente.
+					- Command: Transforma ações em objetos, permitindo filas, logs e desfazer operações. Use quando quiser encapsular ações como objetos para suportar filas, logs ou desfazer operações.
+					
+_No que você precisa mandar bem
+Experiência com desenvolvimento Python, PySpark, SQL e arquitetura distribuída;
+Conhecimento prático em serviços AWS voltados para dados (S3, Glue, Athena, Lambda, RDS, etc.);
+Experiência com práticas DevOps, CI/CD e versionamento;
+Experiência com ferramentas de monitoramento e gerenciamento, como DataDog, CloudWatch;
+
+	🐍 Python
+	🔑 Tópicos principais
+		Manipulação de dados: uso de bibliotecas como pandas, numpy para limpeza, transformação e análise.
+		Automação: scripts para ETL, integração com APIs, geração de relatórios.
+		Desenvolvimento de sistemas: frameworks como Flask/FastAPI para criação de APIs.
+		Integração com cloud: funções serverless em AWS Lambda, automação de pipelines.
+		Testes e qualidade: pytest, unittest, boas práticas de modularização e versionamento.
+	⚙️ Exemplos práticos
+		Criar scripts que coletam dados fiscais de APIs governamentais e armazenam em S3.
+		Automatizar relatórios financeiros semanais com Python + SQL.
+		Funções Lambda em Python que processam eventos tributários em tempo real.
+	🎯 Casos de uso
+		Pipelines de dados tributários.
+		Monitoramento de conformidade regulatória.
+		Integração de sistemas financeiros com serviços de IA.
+
+	🔥 PySpark
+	🔑 Tópicos principais
+		Processamento distribuído: execução de jobs em clusters para grandes volumes de dados.
+		DataFrames e RDDs: abstrações para manipulação eficiente de dados.
+		Transformações e ações: operações como map, filter, reduce, groupBy.
+		Integração com AWS: leitura/escrita em S3, Glue, Athena.
+		Performance tuning: particionamento, caching, otimização de queries.
+	⚙️ Exemplos práticos
+		Processar milhões de registros de transações financeiras em cluster Spark.
+		Criar pipelines de ETL com PySpark que transformam dados brutos em métricas de risco de crédito.
+		Usar PySpark para consolidar dados de múltiplas fontes (tributos federais, estaduais, municipais).
+	🎯 Casos de uso
+		Análise de risco de crédito em larga escala.
+		Processamento de dados fiscais massivos.
+		Preparação de datasets para machine learning em finanças.
+
+	🗄️ SQL
+	🔑 Tópicos principais
+		Consultas complexas: JOIN, GROUP BY, HAVING, subqueries.
+		Modelagem de dados: normalização, criação de views e índices.
+		Otimização: tuning de queries, uso de índices, particionamento.
+		Integração com pipelines: execução de queries em Athena, RDS, Redshift.
+		Segurança: controle de acesso, auditoria de queries.
+	⚙️ Exemplos práticos
+		Query que calcula exposição de crédito por cliente.
+		Criação de views que consolidam dados fiscais para relatórios regulatórios.
+		Stored procedures que automatizam cálculos de tributos.
+	🎯 Casos de uso
+		Relatórios financeiros e regulatórios.
+		Auditoria de dados tributários.
+		Suporte a análises de risco de crédito.
+
+	🌐 Arquitetura Distribuída
+	🔑 Tópicos principais
+		Microserviços: sistemas desacoplados que se comunicam via APIs.
+		Mensageria: Kafka, RabbitMQ para comunicação assíncrona.
+		Escalabilidade: horizontal (mais máquinas) e vertical (mais recursos).
+		Resiliência: tolerância a falhas, replicação de dados.
+		Observabilidade: logs, métricas, tracing (DataDog, CloudWatch).
+		Governança: compliance, auditoria, versionamento de pipelines.
+	⚙️ Exemplos práticos
+		Arquitetura de dados que processa tributos federais em múltiplos serviços.
+		Uso de Step Functions para orquestrar pipelines complexos em AWS.
+		Monitoramento distribuído com DataDog para garantir conformidade regulatória.
+	🎯 Casos de uso
+		Sistemas financeiros que precisam processar milhões de transações simultâneas.
+		Ambientes regulados que exigem rastreabilidade e auditoria.
+		Plataformas de risco de crédito que integram múltiplas fontes de dados.
+
+
+_Desejável
+Certificações AWS ou cursos relevantes (ex: AWS Cloud Practitioner, AWS Data Engineer Associate+, etc.)
+
+_Diferenciais
+Experiência com .NET será um diferencial;
+
+Responsabilidades (Resumo de Tags)
+aws
+.net
+DevOp
+Ágil
+DataDog
