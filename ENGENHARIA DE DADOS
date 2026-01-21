@@ -172,123 +172,83 @@ Fundamentos - OLAP, OLTP, ETL
 		
 Fundamentos - Data Centric e Data Driven
 
-📌 Data-Driven vs Data-Centricity — Visão Geral
-Data-Driven e Data-Centricity são dois conceitos relacionados ao uso de dados nas organizações, mas não são a mesma coisa. Muitos times usam os termos de forma intercambiável, porém eles representam níveis diferentes de maturidade e foco estratégico com dados.
+	📌 Data-Driven vs Data-Centricity — Visão Geral
+		Data-Driven e Data-Centricity são dois conceitos relacionados ao uso de dados nas organizações, mas não são a mesma coisa. Muitos times usam os termos de forma intercambiável, porém eles representam níveis diferentes de maturidade e foco estratégico com dados.
 
-🧠 1. Definição: O que é Data-Centricity
-Data-Centricity é uma abordagem em que dados são posicionados como um ativo central, permanente e independente de tecnologia ou aplicação. Ou seja:
-Dados são tratados como ativos estratégicos da organização.
-A arquitetura, processos e produtos são construídos em torno dos dados, não ao contrário.
-Os dados permanecem consistentes independentemente das aplicações que os usam.
+	🧠 1. Definição: O que é Data-Centricity
+		Data-Centricity é uma abordagem em que dados são posicionados como um ativo central, permanente e independente de tecnologia ou aplicação. Ou seja:
+			- Dados são tratados como ativos estratégicos da organização.
+			- A arquitetura, processos e produtos são construídos em torno dos dados, não ao contrário.
+			- Os dados permanecem consistentes independentemente das aplicações que os usam.
 
-👉 Isso significa que os dados não mudam de significado nem de estrutura conforme mudam os sistemas ou ferramentas — a organização preserva uma visão única e confiável do mesmo conjunto de dados.
+		👉 Isso significa que os dados não mudam de significado nem de estrutura conforme mudam os sistemas ou ferramentas — a organização preserva uma visão única e confiável do mesmo conjunto de dados.
 
-📍 2. Diferença entre Data-Driven e Data-Centric
-📊 Data-Driven
+	📍 2. Diferença entre Data-Driven e Data-Centric
+		📊 Data-Driven
+			Foco em usar dados para orientar decisões ou medir resultados.
+			Empresas data-driven extraem insights e relatórios para apoiar estratégias.
+			Essa abordagem melhora a capacidade de decidir com base em informações reais.
 
-Foco em usar dados para orientar decisões ou medir resultados.
+		🧱 Data-Centric
+			Vai além de usar dados para decidir: coloca os dados como núcleo do modelo de negócio e da arquitetura de tecnologia.
+			Sistemas, produtos e análises são construídos ao redor dos dados, não apenas usam dados como insumo.
 
-Empresas data-driven extraem insights e relatórios para apoiar estratégias.
+		💡 Em termos de maturidade:
+		Ser data-driven é um passo para se tornar data-centric.
 
-Essa abordagem melhora a capacidade de decidir com base em informações reais.
+	🛠️ 3. Componentes de um Framework Data-Centric
+		Um framework data-centric bem estruturado possui vários pilares interligados:
+			🔹 a) Business Goals e Data Strategy
+			Começa com objetivos de negócio claros alinhados à estratégia de dados.
+			Decisões como custo de infraestrutura, métricas de sucesso e uso de dados são tomadas com foco no valor para o negócio.
+			Exemplo:
+				Antes de escolher uma solução de armazenamento, a empresa define quais KPIs são críticos (ex: churn, receita por usuário) e estrutura a arquitetura para suportar essas métricas desde o início.
 
-🧱 Data-Centric
+			🔹 b) Data Governance
+			Regras formais para como os dados são coletados, usados, governados e descartados.
+			Inclui:
+				Organograma de dados (quem é dono, quem acessa),
+				Documentação de tecnologia,
+				Políticas do ciclo de vida dos dados,
+				Protocolos de segurança.
+			Exemplo:
+				Definir onde cada tipo de dado é armazenado e por quanto tempo, com regras de conformidade (ex: GDPR).
 
-Vai além de usar dados para decidir: coloca os dados como núcleo do modelo de negócio e da arquitetura de tecnologia.
+			🔹 c) Data Science e Data Architecture
+			Arquitetura técnica desenhada para suportar análise e modelagem de dados.
+			Data scientists usam esse conjunto para identificar métricas relevantes, criar modelos preditivos e garantir que infraestrutura e dados conversem de forma robusta.
+			Exemplo:
+				Criar pipelines que alimentam modelos de previsão de demanda, e arquitetura que permite reutilizar esses dados em outros projetos.
 
-Sistemas, produtos e análises são construídos ao redor dos dados, não apenas usam dados como insumo.
+			🔹 d) Reporting e Visualização
+			Transformar dados e modelos em formatos úteis para usuários de negócio.
+			Dashboards e visualizações adaptados por perfil de usuário (ex: executivo, time de produto) tornam os dados acionáveis.
+			Exemplo:
+				Um dashboard que mostra crescimento de receita por segmento e que permite filtrar resultados por timeframe ou região.
 
-💡 Em termos de maturidade:
-Ser data-driven é um passo para se tornar data-centric.
+	🤖 4. Data-Centricity para Suporte a IA/ML
+	Uma abordagem data-centric é essencial para treinar modelos de IA e ML com qualidade. Isso porque:
+		bem rotulados e consistentes.
+		Análise exploratória de dados (EDA) deve ser aplicada para identificar vieses, valores faltantes e problemas de estrutura antes de modelar.
+	Benefícios diretos:
+		Redução de vieses nos modelos.
+		Aumento da precisão das previsões.
+		Melhor interpretação dos resultados de IA.
 
-🛠️ 3. Componentes de um Framework Data-Centric
+	📈 5. Por que a Data-Centricity é Valiosa?
+		Empresas com dados bem gerenciados crescem mais rapidamente e de forma sustentável.
+		Dados consistentes e confiáveis aumentam a capacidade de inovação e precisão estratégica.
+		Investimento em gerenciamento de dados traz retorno sobre o investimento em um alto percentual de casos.
 
-Um framework data-centric bem estruturado possui vários pilares interligados:
+	🧠 6. Resumo dos Conceitos — Em uma Frase
+		Data-Driven: usar dados para tomar decisões melhores.
+		Data-Centric: colocar dados como ativo central e permanente, suportando a arquitetura, produtos, processos e cultura da organização.
 
-🔹 a) Business Goals e Data Strategy
+	🧪 Casos de Uso (Prático)
+		1) Time de Produto em Ecommerce
+			Data-Driven: analisa relatórios de conversão e abandono de carrinho.
+			Data-Centric: constrói toda arquitetura de produto com pipelines que garantem dados de fonte única para análises, teste A/B, modelos de previsão e personalização.
 
-Começa com objetivos de negócio claros alinhados à estratégia de dados.
-
-Decisões como custo de infraestrutura, métricas de sucesso e uso de dados são tomadas com foco no valor para o negócio.
-
-Exemplo:
-Antes de escolher uma solução de armazenamento, a empresa define quais KPIs são críticos (ex: churn, receita por usuário) e estrutura a arquitetura para suportar essas métricas desde o início.
-
-🔹 b) Data Governance
-
-Regras formais para como os dados são coletados, usados, governados e descartados.
-
-Inclui:
-
-Organograma de dados (quem é dono, quem acessa),
-
-Documentação de tecnologia,
-
-Políticas do ciclo de vida dos dados,
-
-Protocolos de segurança.
-
-Exemplo:
-Definir onde cada tipo de dado é armazenado e por quanto tempo, com regras de conformidade (ex: GDPR).
-
-🔹 c) Data Science e Data Architecture
-
-Arquitetura técnica desenhada para suportar análise e modelagem de dados.
-
-Data scientists usam esse conjunto para identificar métricas relevantes, criar modelos preditivos e garantir que infraestrutura e dados conversem de forma robusta.
-
-Exemplo:
-Criar pipelines que alimentam modelos de previsão de demanda, e arquitetura que permite reutilizar esses dados em outros projetos.
-
-🔹 d) Reporting e Visualização
-
-Transformar dados e modelos em formatos úteis para usuários de negócio.
-
-Dashboards e visualizações adaptados por perfil de usuário (ex: executivo, time de produto) tornam os dados acionáveis.
-
-Exemplo:
-Um dashboard que mostra crescimento de receita por segmento e que permite filtrar resultados por timeframe ou região.
-
-🤖 4. Data-Centricity para Suporte a IA/ML
-
-Uma abordagem data-centric é essencial para treinar modelos de IA e ML com qualidade. Isso porque:
-
-Modelos dependem de dados limpos, bem rotulados e consistentes.
-
-Análise exploratória de dados (EDA) deve ser aplicada para identificar vieses, valores faltantes e problemas de estrutura antes de modelar.
-
-Benefícios diretos:
-
-Redução de vieses nos modelos.
-
-Aumento da precisão das previsões.
-
-Melhor interpretação dos resultados de IA.
-
-📈 5. Por que a Data-Centricity é Valiosa?
-
-Empresas com dados bem gerenciados crescem mais rapidamente e de forma sustentável.
-
-Dados consistentes e confiáveis aumentam a capacidade de inovação e precisão estratégica.
-
-Investimento em gerenciamento de dados traz retorno sobre o investimento em um alto percentual de casos.
-
-🧠 6. Resumo dos Conceitos — Em uma Frase
-
-Data-Driven: usar dados para tomar decisões melhores.
-
-Data-Centric: colocar dados como ativo central e permanente, suportando a arquitetura, produtos, processos e cultura da organização.
-
-🧪 Casos de Uso (Prático)
-
-1) Time de Produto em Ecommerce
-
-Data-Driven: analisa relatórios de conversão e abandono de carrinho.
-
-Data-Centric: constrói toda arquitetura de produto com pipelines que garantem dados de fonte única para análises, teste A/B, modelos de previsão e personalização.
-
-2) Banco ou Fintech com IA de Risco de Crédito
-
-Data-Driven: faz análises pontuais de risco com dados transacionais.
-
-Data-Centric: cruza dados comportamentais, demográficos e sinais externos em uma estrutura única para alimentar modelos que se atualizam em tempo real.
+		2) Banco ou Fintech com IA de Risco de Crédito
+			Data-Driven: faz análises pontuais de risco com dados transacionais.
+			Data-Centric: cruza dados comportamentais, demográficos e sinais externos em uma estrutura única para alimentar modelos que se atualizam em tempo real.
