@@ -1218,3 +1218,198 @@ Qualidade de dados - O Que é Data Quality e Por Que Isso é Importante?
 
 	🧠 Resumo Final (Definição Técnica)
 		Data Quality é a capacidade dos dados de atenderem aos requisitos de uso do negócio, sendo corretos, completos, consistentes, atualizados, únicos e válidos ao longo de todo o seu ciclo de vida, garantindo confiança, eficiência operacional, conformidade e suporte à tomada de decisão.
+
+Data Tools - AWS Glue
+
+
+	📌 O que é AWS Glue
+		AWS Glue é um serviço de integração de dados com tecnologia serverless (sem servidor) da Amazon Web Services que facilita descoberta, preparação, transformação, movimentação e integração de dados de várias fontes para uso em análises, machine learning e aplicações data-driven.
+		Ele consolida as principais etapas de ETL/ELT de dados — desde a identificação e catalogação até a execução de pipelines — em um serviço único que não exige gestão de infraestrutura.
+
+	🎯 Objetivos e Casos de Uso
+	O AWS Glue é utilizado para:
+		Descobrir e catalogar dados (de mais de 70 fontes diversas, dentro ou fora da AWS).
+		Preparar e transformar dados para analytics, BI ou Machine Learning.
+		Mover e integrar dados em data lakes, data warehouses ou outros repositórios.
+		Construir pipelines ETL/ELT completos que podem ser agendados, acionados por eventos ou executados sob demanda.
+		Ele pode ser usado tanto por engenheiros de dados experientes quanto por usuários corporativos por meio de interfaces visuais ou scripts customizados.
+
+	⚙️ Principais Características
+		🧩 1) Serverless
+			Você não gerencia nenhum servidor — o Glue provisiona e escala automaticamente os recursos conforme a necessidade da workload.
+		🗃️ 2) Data Catalog Centralizado
+			Armazena metadados de todas suas fontes de dados, incluindo:
+				Definições de tabelas
+				Esquema
+				Localização física
+				Esses metadados podem ser usados por outros serviços como Amazon Athena, Amazon EMR e Redshift Spectrum.
+		🐍 3) Pipelines ETL/ELT Poderosos
+			Você pode gerar automaticamente código ETL em Python ou Scala usando o mecanismo Apache Spark incorporado.
+			Os trabalhos podem ser agendados ou acionados por eventos.
+		🪄 4) Integração com Dados em Batch e Streaming
+			Glue também permite processamento contínuo de dados em movimento (Streaming ETL), consumindo eventos e aplicando transformações em tempo real.
+		📊 5) Descoberta automática de esquema
+			Com crawlers, o Glue percorre seus dados, detecta automaticamente esquemas e popula o Data Catalog conforme mudanças de estrutura.
+		🧪 6) Ferramentas de produtividade
+			Inclui AWS Glue Studio — uma interface visual para criar, depurar e monitorar pipelines, e notebooks interativos para desenvolvimento exploratório.
+
+	📦 Componentes Principais
+		👉 AWS Glue Data Catalog — repositório central de metadados.
+		👉 Crawlers e Classificadores — inferem automaticamente esquemas e criam metadados.
+		👉 ETL Jobs — scripts (gerados ou customizados) que realizam extração, transformação e carregamento.
+		👉 Triggers — iniciam jobs com base em tempo ou eventos.
+		👉 Interactive Sessions & Notebooks — para análise interativa e desenvolvimento exploratório.
+
+	📌 Como funciona (em alto nível)
+		Descoberta de dados: Você configura crawlers para analisar fontes e registrar metadados no catálogo.
+		Preparação: Constrói pipelines ETL usando Glue Studio, scripts ou notebooks.
+		Execução: Glue executa os jobs em um ambiente Spark serverless, gerenciando recursos automaticamente.
+		Integração e consumo: Os dados transformados podem ser consumidos por BI/analytics ou carregados em data stores como S3, Redshift, etc.
+
+	🧠 Vantagens Principais
+		✔ Escalabilidade automática — adapta recursos à workload.
+		✔ Sem gerenciamento de infraestrutura — você foca em lógica de dados.
+		✔ Suporte a múltiplos padrões de integração — ETL, ELT e streaming.
+		✔ Catálogo de dados central — metadados reutilizáveis por toda arquitetura de dados.
+		✔ Ferramentas visuais e interativas — facilitam desenvolvimento e monitoramento.
+
+	📍 Onde se encaixa na arquitetura de dados
+	AWS Glue é frequentemente usado como nó central em pipelines de dados, especialmente em arquiteturas de:
+		Data Lake (dados brutos → transformados → consumidos)
+		Data Warehouse modernizado
+		Workloads de ML e analytics
+		Integrado com serviços como Athena, Redshift, EMR e S3.
+
+	📌 Resumo Final (definição técnica)
+		AWS Glue é um serviço de integração de dados sem servidor que centraliza a descoberta, catalogação, preparação, transformação e movimentação de dados em pipelines ETL/ELT e streaming, proporcionando escalabilidade automática, suporte a diversas fontes e integração com a plataforma AWS para acelerar analytics e machine learning.
+		
+Data Tools - AWS Job bookmarks - AWS Glue
+
+	📌 AWS Glue: Job Bookmarks — Monitoramento de Continuação de Dados
+	🧠 O que são Job Bookmarks
+		Job bookmarks (marcadores de trabalho) são um recurso do AWS Glue que rastrea o estado de dados já processados em execuções anteriores de um job de ETL. Isso permite que um job seja reexecutado de forma incremental sem reprocessar dados já consumidos anteriormente.
+		Em outras palavras:
+		Eles gravam um “ponto de continuidade” — os dados que já foram lidos e processados em uma execução anterior — para que, na próxima execução, o Glue continue de onde parou.
+
+	🎯 Por que usar Job Bookmarks
+		Sem bookmarks, cada execução de um job do Glue teria de reprocessar todo o conjunto de dados, inclusive registros antigos, mesmo se apenas novos dados chegaram desde a última execução.
+		Com bookmarks:
+			Evita duplicação de processamento;
+			Reduz custo e tempo, pois só novos dados são processados;
+			Possibilita pipelines incrementais, que são comuns em fluxo de produção de dados.
+
+	⚙️ Como funcionam os marcadores
+		📍 1. Estado persistente
+		Quando o job termina com bookmark habilitado, o AWS Glue:
+			Armazena o estado atual do processamento em um repositório interno;
+			Esse estado inclui informações sobre fontes, transformações e destino — tudo como pares de chave-valor.
+		Esse estado contém:
+			Nome do job e identificação da execução,
+			Run ID e número de execução,
+			Elementos de estado por contexto de transformação (origem, transformações, coletor).
+		📍 2. Próxima execução
+		Na próxima execução:
+			O Glue lê o marcador anterior;
+			Usa os dados salvos para filtrar somente novos dados;
+			Recalcula os dados que precisam ser processados.
+
+		Isso garante que apenas os dados que mudaram ou chegaram depois do último processamento sejam lidos e transformados.
+
+	🧪 Exemplos típicos de uso
+	📌 Cenário de logs em S3
+	Job que ingere logs de um bucket S3 em que novos arquivos são adicionados regularmente.
+	Com job bookmarks, o Glue:
+		Verifica a hora/modificação dos arquivos;
+		Processa apenas novos arquivos desde a última execução.
+
+	📌 Uso com fontes JDBC
+	Quando a origem é um banco de dados JDBC, o Glue:
+		Usa colunas (geralmente a chave primária ou definida) como chave de marcador;
+		Determina quais linhas já foram processadas com base nessa chave.
+
+	🛠️ Modos de Configuração
+	Ao iniciar um job, você pode configurar os job bookmarks assim:
+		Enable (Habilitar): Rastreia dados já processados e evita duplicação;
+		Disable (Desabilitar): Ignora continuação — o job sempre processa todos os dados;
+		Pause: Permite processar incrementalmente sem gravar o estado final.
+	A opção “Pause” tem subopções (job-bookmark-from, job-bookmark-to) que permitem controlar precisamente o intervalo de dados a processar em uma execução específica.
+
+	🔄 Reprocessamento e Reset
+	Se você precisar reprocessar tudo:
+		Pode resetar o marcador de job;
+		Isso faz com que o Glue ignore o estado anterior e reconsidere os dados desde o início.
+		Você pode resetar via console, CLI ou API (ex: aws glue reset-job-bookmark).
+
+	🧠 Boas práticas
+		✔ Não altere a origem dos dados quando o bookmark está habilitado — isso pode confundir o estado e causar dados ignorados ou duplicados.
+		✔ Use tabelas do Glue Data Catalog para um gerenciamento mais robusto de partições e controle de estado.
+		✔ Para grandes conjuntos de arquivos, use o compilador de listas de arquivos do Glue para evitar problemas de memória no driver ao listar muitos arquivos.
+
+	📌 Resumo Final
+		Job bookmarks no AWS Glue são marcadores de estado que permitem que um job de ETL processe apenas os dados “novos” desde sua última execução, evitando reprocessamento desnecessário, reduzindo custos e tempo de execução de pipelines incrementais.
+		
+Data Tools - AWS EMR
+
+	📌 Amazon EMR — O que é
+		Amazon EMR (anteriormente chamado Amazon Elastic MapReduce) é uma plataforma de processamento de big data gerenciada pela AWS que simplifica a execução de frameworks de big data de código aberto, como Apache Spark, Apache Hadoop, Trino, Apache Hive, Apache Flink e outros, para processar e analisar grandes volumes de dados.
+		Ele permite executar processamento distribuído de dados em larga escala e pode transformar, analisar ou mover conjuntos de dados massivos com alta performance e integração com outros serviços AWS como Amazon S3, DynamoDB e AWS Glue Data Catalog.
+
+	🎯 Para que Serve o Amazon EMR
+	O EMR é usado para:
+		Big Data Analytics — executar consultas, agregações e análises estatísticas em datasets que vão de gigabytes a petabytes.
+		Pipeline de Dados e ETL — processar, transformar e carregar dados de vários sistemas para data lakes e data warehouses.
+		Workloads de Machine Learning — alimentação de ML com frameworks como Spark MLlib e integração com o Amazon SageMaker.
+		Processamento de Fluxos de Dados (Streaming) — análises contínuas e real-time usando estruturas como Flink.
+		👉 Em essência, serve para escala, flexibilidade e performance em workloads distribuídos de dados que seriam difíceis ou caros de gerenciar manualmente.
+
+	⚙️ Como o EMR Funciona — Conceito de Cluster
+	O Amazon EMR executa aplicações de big data em clusters de máquinas (nós) que podem ser:
+		Provisionados e configurados automaticamente pela AWS.
+		Dimensionados dinamicamente conforme a carga do trabalho.
+		Reconfigurados enquanto executam, sem reiniciar os clusters.
+	O serviço gerencia:
+		Provisionamento e configuração dos nós,
+		Instalação e ajuste de ferramentas (Hadoop, Spark etc.),
+		Escalabilidade e alta disponibilidade,
+		Segurança (integração com IAM, encriptação, Kerberos etc.).
+	No fundo, o EMR abstrai todo o trabalho pesado de administração de clusters, permitindo que equipes foquem em desenvolvimento, análise e insights de dados.
+
+	🧱 Modelos de Implantação
+	O EMR oferece três modos principais de implantação, cada um com propósitos distintos:
+		🟢 EMR Sem Servidor (Serverless)
+			Executa aplicações de big data sem necessidade de gerenciar cluster nem recursos subjacentes. AWS cuida de provisionar e escalar automaticamente conforme o trabalho é executado, liberando recursos ao terminar.
+				Quando usar: análises ad hoc, cargas de trabalho variáveis e times que querem simplicidade operacional.
+		🔵 EMR no Amazon EC2
+			Executa clusters tradicionais EMR usando instâncias EC2, onde você tem controle total sobre configuração, tamanho e tipos de instância.
+				Quando usar: workloads persistentes, necessidade de customização fina de hardware/software, uso de instâncias Spot para otimização de custos etc.
+		🟡 EMR no Amazon EKS (Kubernetes)
+			Permite rodar jobs de Spark e outros frameworks no mesmo cluster Kubernetes (EKS) que suas outras aplicações, utilizando infraestrutura compartilhada.
+				Quando usar: ambientes já baseados em Kubernetes ou quando se deseja co-locar workloads analíticos e aplicativos containers.
+
+	💡 Recursos e Benefícios
+	🚀 Performance e Escalabilidade
+		EMR oferece runtimes otimizados para Spark e outras tecnologias, que podem processar dados com performance significativamente superior ao código aberto padrão, reduzindo tempo de execução e custos.
+	📈 Flexibilidade
+		Você pode rapidamente iniciar clusters, ajustar sua capacidade (adição/remoção de nós) e desligar clusters ao final da execução para economizar recursos.
+	🛠 Ferramentas de Desenvolvimento
+		O EMR Studio é um ambiente colaborativo com Jupyter Notebooks, Spark UI e ferramentas de debugs, facilitando o desenvolvimento e teste de aplicações distribuídas.
+	🔐 Alta Disponibilidade
+		É possível configurar clusters com múltiplos nós mestres para suportar falhas sem interrupção, com failover automático e monitoração contínua.
+
+	🤝 Integração com AWS
+	AM EMR integra-se com outros serviços AWS essenciais, como:
+		Amazon S3 (armazenamento de dados),
+		AWS Glue Data Catalog (metadados),
+		IAM e AWS KMS (segurança),
+		Step Functions (orquestração).
+		Essa integração facilita pipelines end-to-end dentro do ecossistema AWS.
+
+	🧠 Quando Usar o Amazon EMR
+		🔹 Data engineering e pipelines ETL/ELT que exigem processamento distribuído.
+		🔹 Análises de big data que precisam de frameworks como Spark ou Hive para processamento escalável.
+		🔹 Machine learning em larga escala — integração com SageMaker e runtimes otimizados.
+		🔹 Workloads interativas e exploratórias com notebooks e desenvolvimento colaborativo.
+
+
+	📌 Resumo Final (Definição Técnica)
+		Amazon EMR é um serviço gerenciado da AWS para executar plataformas de big data como Apache Spark, Hadoop, Hive e Trino em clusters elásticos, oferecendo escalabilidade, integração com o ecossistema AWS e várias opções de implantação (serverless, EC2 e EKS) para processar e analisar grandes volumes de dados de forma eficiente e econômica.
