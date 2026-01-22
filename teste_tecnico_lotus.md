@@ -1,49 +1,80 @@
-# Guia Aprofundado para Entrevista Sênior — CI/CD, AWS, Docker, Terraform, PySpark e Machine Learning
+# Guia Aprofundado para Entrevista Sênior — CI/CD, AWS, Docker, Terraform, PySpark e Machine Learning (v3)
 
-Este guia foi reorganizado e expandido para ser didático e completo: cada tema começa com definições básicas, passa por conceitos internos, apresenta padrões arquiteturais, exemplos práticos (com comandos), práticas recomendadas e armadilhas comuns. Ao final de cada seção há perguntas de entrevista e respostas-síntese.
+Esta versão (v3) é uma revisão ampliada e consolidada do material anterior. Ela inclui, para cada tema, definições, internals, padrões arquiteturais, melhores práticas, piores práticas (anti-padrões), como testar local e em CI, observability (logs/metrics/tracing), segurança, exemplos completos e checklist de perguntas para entrevistas.
 
-Use este arquivo como material de estudo longo prazo. Se quiser, eu crio exercícios práticos e repositórios de exemplo para cada seção.
-
----
-
-## Como este arquivo está organizado
-
-- Para cada tecnologia: Definição curta → Por que importa → Conceitos e internals → Quando usar / quando não usar → Padrões e arquiteturas comuns → Exemplo prático (com comandos) → Operações e debugging → Segurança e custos → Melhores e piores práticas → Perguntas de entrevista com respostas curtas.
+Objetivo: eliminar lacunas encontradas nas versões anteriores (especialmente: cobertura de testes, observability, falhas operacionais e práticas ruins comuns), e entregar um guia que você possa usar tanto para estudar quanto para provar competência em entrevistas sênior.
 
 ---
 
-## 1) CI/CD com GitHub Actions
+Índice (rápido)
+- CI/CD: GitHub Actions (tests, security, OIDC, examples)
+- CI/CD: AWS (CodeBuild/CodePipeline/CodeDeploy, testing, strategies)
+- Docker & Dockerfile (build, test, scanning, runtime policies)
+- Terraform (state, modules, testing, policies)
+- PySpark (unit/integration tests, tuning, debugging)
+- Machine Learning (testing, MLOps, monitoring, fairness)
+- Checklists finais e conjunto de perguntas para entrevista
 
-Definição
-- GitHub Actions é um sistema de automação nativo do GitHub que executa pipelines (workflows) descritos em arquivos YAML. Um workflow reage a eventos (push, pull_request, schedule, manual) e é executado por runners (hosted ou self-hosted).
+---
 
-Por que importa
-- Automatiza build, teste e deploy; integra-se nativamente com GitHub (PRs, checks, secrets) e permite implementar políticas de qualidade e segurança desde o PR.
+## Convenção de leitura
+- Cada seção tem: 1) Definição curta, 2) Por que importa, 3) Internals resumidos, 4) Quando usar, 5) Melhores práticas, 6) Piores práticas, 7) Testes e CI (o que testar e como), 8) Observability e debugging, 9) Segurança e compliance, 10) Exemplo prático e 11) Perguntas para entrevista.
 
-Conceitos e internals
-- Workflow: arquivo YAML com triggers, jobs e steps.
-- Jobs: unidades paralelizáveis que executam em runners isolados.
-- Steps: comandos ou actions que compõem um job; compartilham workspace local do runner.
-- Runner: ambiente (VM/container) que executa steps. Hosted runners são gerenciados pelo GitHub; self-hosted são mantidos por você.
-- Matrix: executa variações (ex.: várias versões de Python) em paralelo.
+---
 
-Quando usar / quando não usar
-- Use: projetos com repositório no GitHub, necessidade de integração com PRs e checks, automações multi-cloud.
-- Não use (ou use com cautela): quando políticas de compliance proíbem runners externos (use self-hosted em rede privada) ou para tarefas com requisitos de hardware muito específicos (prefira runners com GPU dedicados).
+## CI/CD — GitHub Actions
 
-Padrões e estratégias
-- Build once, deploy many: gerar artefato único e reutilizá-lo entre ambientes (staging/prod).
-- PR checks (CI) vs gated deploys (CD): separar responsabilidades.
-- OIDC / short-lived credentials: evite secrets de longa duração usando OIDC para trocar por credenciais cloud temporárias.
+1) Definição curta
+- Plataforma de automação do GitHub que executa workflows descritos em YAML. Workflows são acionados por eventos (push, PR, schedule) e executados em runners.
 
-Exemplo prático completo (com explicação passo a passo)
+2) Por que importa
+- Torna possível garantir qualidade (tests, linters), build reprodutível, geração de artefatos e deploy automatizado com integração a revisões (PR checks).
 
-- Objetivo: rodar testes em PR, buildar imagem ao push na main e fazer deploy para ECS usando OIDC.
+3) Internals resumidos
+- Event payload -> runner scheduler -> job que executa containers/VMs -> steps executam comandos/actions.
+- Cada job é isolado; steps compartilham filesystem do runner. Runners hosted são efêmeros.
 
-Workflow (resumo):
+4) Quando usar
+- Repositórios hospedados no GitHub; para integração com PRs, checks e marketplaces de actions. Ótimo para pipelines multi-cloud.
+
+5) Melhores práticas (detalhado)
+- Separar pipelines: CI (unit + lint + fast tests), Integration (integration tests, contract tests), CD (deploy) com gates.
+- Build once, deploy many: produza artefatos imutáveis (image:sha) e reuse-os entre ambientes.
+- Testes rápidos em PR: execute lint, unit tests e security static checks. Deixe testes mais pesados para pipelines periódicos (nightly) ou pre-release.
+- Cache: use actions/cache para dependências; use cache para Docker layers (buildx) em CI para acelerar.
+- Secrets e OIDC: armazene secrets no GitHub Secrets; prefira OIDC para acessar AWS/GCP sem long-lived keys.
+- Minimal permissions: configure `permissions:` no workflow para reduzir escopo do `GITHUB_TOKEN`.
+- Artifacts e test reports: use upload-artifact para relatar coverage, junit xml e debug artifacts.
+- Fail fast: configure jobs para falhar rápido (lint/format) evitando wasted compute.
+
+6) Piores práticas (anti-padrões)
+- Incluir secrets plaintext no YAML.
+- Fazer deploy diretamente em branchs sem aprovação (ex.: deploy on push master sem protected branches).
+- Ter um único job monolítico que instala, testa e deploya tudo.
+- Não versionar actions internas ou usar actions de terceiros sem revisão.
+
+7) Testes e CI (o que testar e como)
+- Unit tests: rápidos, sem dependências externas; executar em cada PR.
+- Linters/formatters: flake8/black, eslint, style checks; rodar em PR.
+- Integration tests: tests que usam infra minimal (localstack, testcontainers, ephemeral db); rodar em uma pipeline separada ou em job condicional.
+- End-to-end: em ambiente staging com dados controlados; executar antes do deploy para production (gated deploy).
+- Security checks: SAST (semgrep), dependency scan (dependabot, GitHub native), container scan (Trivy) — rodar no CI.
+- Contract tests: verificar contratos de APIs (Pact) entre serviços.
+
+8) Observability e debugging
+- Logs: GitHub fornece logs por step; configure upload de arquivos de log importantes.
+- Debugging: re-run with debug flags, usar `ACTIONS_STEP_DEBUG` quando necessário; adicionar steps temporários para inspeção (env dump, ls -la) — cuidado com secrets.
+- Metrics: exportar pipeline metrics para Prometheus/Grafana (via actions that push metrics) para observar tempo médio de CI, flakiness.
+
+9) Segurança e compliance
+- OIDC para cloud access (AWS IAM role trust with condition for repo/branch). Use least privilege roles for CI.
+- Scan containers and code; sign artifacts (cosign) and verify signatures before deploy.
+- Enforce branch protection, required reviews, and require passing checks before merge.
+
+10) Exemplo prático (workflow completo com testes separados)
 
 ```yaml
-name: CI-CD
+name: CI
 on:
   pull_request:
   push:
@@ -54,334 +85,402 @@ permissions:
   id-token: write
 
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
-        with: { python-version: '3.10' }
-      - run: pip install -r requirements.txt
-      - run: pytest -q
+        with: python-version: '3.10'
+      - run: pip install -r requirements-dev.txt
+      - run: flake8 src
+      - run: black --check src
 
-  build-and-push:
-    if: github.ref == 'refs/heads/main'
-    needs: ci
+  unit-tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with: python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
+      - run: pytest --junitxml=results.xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: junit-${{ matrix.python-version }}
+          path: results.xml
+
+  integration-tests:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configure AWS creds via OIDC
+      - run: ./scripts/run-integration-tests.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: integration-logs
+          path: logs/
+
+  build-and-push:
+    if: github.ref == 'refs/heads/main'
+    needs: [unit-tests, integration-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to ECR via OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::ACCOUNT_ID:role/github-ci-role
           aws-region: us-east-1
-      - name: Build and push
+      - name: Build and push image
         run: |
-          docker build -t repo/app:${{ github.sha }} .
+          IMAGE=${{ github.sha }}
+          docker build -t $ECR/repo:$IMAGE .
           aws ecr get-login-password | docker login --username AWS --password-stdin $ECR
-          docker tag repo/app:${{ github.sha }} $ECR/repo/app:${{ github.sha }}
-          docker push $ECR/repo/app:${{ github.sha }}
+          docker push $ECR/repo:$IMAGE
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to ECS with role
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::ACCOUNT_ID:role/github-deploy-role
+          aws-region: us-east-1
+      - run: ./scripts/deploy-ecs.sh ${{ github.sha }}
 ```
 
-Operações e debugging
-- Logs: GitHub exibe logs por step. Para debugging, adicione steps que capturem artefatos e variáveis de ambiente (cuidado com secrets).
-- Re-execute jobs, use `ACTIONS_RUNNER_DEBUG` para logs ampliados quando necessário.
-
-Segurança e custos
-- Minimizar `permissions:` no workflow; usar GitHub Secrets para segredos pequenos e OIDC para credenciais cloud.
-- Self-hosted runners reduzem custos por execução em larga escala, mas aumentam custo operacional e requerem hardening (CIS, controle de rede).
-
-Melhores práticas (resumo rápido)
-- Cache de dependências, build-only-once, testes rápidos em PR, integração de scanners de segurança no pipeline, controle de permissões.
-
-Erros comuns a evitar
-- Colocar chaves em texto puro; rodar deploy diretamente em branches sem revisão; usar `latest` como tag de imagem.
-
-Perguntas de entrevista (exemplos)
-- "Explique OIDC entre GitHub Actions e AWS." → GitHub fornece um token OIDC; configure trust policy na Role; workflow troca token por creds temporários para assumir role.
-- "Como reduzir tempo de CI?" → dividir testes por tipo, usar selection tests, cache e paralelização (matrix/xdist).
+11) Perguntas de entrevista
+- "Como garantir que dependabot não quebre a build?" → lockfile tests in CI (install from lockfile), pin transitive dependencies in CI smoke tests, integration tests.
+- "Como medir flakiness?" → track test failure rates over time, rerun failed tests automatically and count flaky patterns.
 
 ---
 
-## 2) CI/CD na AWS (CodePipeline, CodeBuild, CodeDeploy, ECR, ECS, EKS)
+## CI/CD na AWS (CodeBuild, CodePipeline, CodeDeploy — versão ampliada)
 
-Definição
-- Serviços AWS usados para construir pipelines nativos: CodePipeline (orquestração), CodeBuild (build), CodeDeploy (deploy). ECR é o registry para imagens; ECS/EKS executam containers.
+1) Definição curta
+- Serviços nativos AWS para orquestração, build e deploy de aplicações com integração profunda no ecossistema AWS.
 
-Por que importa
-- Integração profunda com IAM, CloudWatch, CloudFormation e outros serviços AWS; útil para times que desejam manter tudo dentro da conta AWS por compliance ou simplicidade operacional.
+2) Por que importa
+- Integração com IAM, CloudWatch, CloudFormation facilita políticas de segurança, monitoramento e auditoria.
 
-Conceitos e internals
-- CodeBuild: roda jobs dentro de containers; usa `buildspec.yml` para fases (install, pre_build, build, post_build).
-- CodePipeline: liga estágios de source → build → deploy e suporta actions e approval gates.
-- CodeDeploy: executa estratégias (in-place, blue/green) para EC2, ECS e Lambda.
+3) Internals essenciais
+- CodeBuild: executa containers com permissões do IAM role anexado; usa `buildspec.yml`.
+- CodePipeline: compõe stages (Source → Build → Test → Deploy). Pode incluir approvals.
+- CodeDeploy: orquestra estratégias de deploy, suporta hooks/lifecycle events.
 
-Quando usar / quando não usar
-- Use: se infra estiver majoritariamente em AWS e você precisa de integração nativa com serviços AWS.
-- Não use: quando deseja multi-cloud/CI centralizado (GitHub Actions pode ser melhor).
+4) Quando usar
+- Use quando infra e requisitos operacionais residem majoritariamente em AWS ou quando compliance exige tudo dentro de contas AWS.
 
-Padrões e estratégias
-- Blue/Green com ALB para ECS: provisionar nova task definition e novo target group; trocar tráfego com validações.
-- Canary deploys para alterar percentual de tráfego gradualmente.
+5) Melhores práticas
+- Segregação de roles (build role com permissão limitada; deploy role com menos privilégios de leitura de source).
+- Implementar etapas de teste: unit (in-code), integration (connect to ephemeral resources), acceptance (smoke test in staging). Use artifacts do CodeBuild para transportar artefatos para stages seguintes.
+- Imutabilidade de artefatos (imagem com digest); use digests em task definitions.
+- Use approvals human-in-the-loop para production deploys (manual approvals in CodePipeline).
 
-Exemplo prático — buildspec minimal
+6) Piores práticas
+- Deploy direto sem testes ou approvals; permissões amplas para roles; usar `latest` sem controle.
+
+7) Testes e CI
+- Unit tests: incluir no build container antes de produzir artifact.
+- Integration tests: use test clusters (ephemeral) ou mock services (localstack) para validar infra calls.
+- Smoke tests: um step de deploy que roda um healthcheck endpoint e valida resposta antes de finalizar deploy.
+
+8) Observability e debugging
+- CloudWatch Logs: configure log groups e retention. Use CloudWatch Metrics e Alarms tied to health checks.
+- X-Ray para tracing distribuído. Use structured logs (JSON) para fácil agregação.
+
+9) Segurança
+- KMS para cifrar artifacts; Parameter Store/Secrets Manager para secrets; IAM least-privilege for roles. Use VPC endpoints for S3/ECR to avoid internet exposure.
+
+10) Exemplo: buildspec com steps de teste e scan
 
 ```yaml
 version: 0.2
+env:
+  variables:
+    IMAGE_REPO: my-app
 phases:
+  install:
+    runtime-versions:
+      docker: 20
+    commands:
+      - pip install -r requirements-dev.txt
   pre_build:
     commands:
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - echo logging into ecr
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
-      - docker build -t my-app:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag my-app:$CODEBUILD_RESOLVED_SOURCE_VERSION $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/my-app:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - pytest tests/unit --junitxml=unit-results.xml
+      - docker build -t $IMAGE_REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION .
   post_build:
     commands:
-      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/my-app:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - printf '[{"name":"my-app","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/my-app:$CODEBUILD_RESOLVED_SOURCE_VERSION > imagedefinitions.json
+      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - trivy image --severity HIGH,CRITICAL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION || true
 artifacts:
   files:
-    - imagedefinitions.json
+    - unit-results.xml
 ```
 
-Operações e troubleshooting
-- Ver logs do CodeBuild (CloudWatch Logs). Para deploys em ECS, verifique events do service, e logs do container (CloudWatch/Fluentd).
-- Para problemas de networking, verifique security groups, IAM policies e permissões de role.
-
-Segurança
-- Separe roles: deploy role não precisa de permissões de escrita em source code; use KMS para criptografia de artifacts.
-
-Melhores práticas e armadilhas
-- Não usar tags mutáveis (ex.: `latest`) em produção; use digests ou SHA tags. Habilitar scans de imagem e criação de políticas para rejeitar imagens com CVEs críticos.
-
-Perguntas de entrevista (exemplos)
-- "Como faria rollback automático em ECS?" → Use blue/green + CloudWatch alarms + CodeDeploy hooks para reverter o tráfego se health checks falharem.
+11) Perguntas de entrevista
+- "Como você implementa canary usando CodePipeline + ECS?" → criar step que atualiza service with a new task set, shift traffic percentage via Application Load Balancer and monitor alarms before completing deployment.
 
 ---
 
-## 3) Docker & Dockerfile
+## Docker & Dockerfile (com testes e scanner integrados)
 
-Definição
-- Docker é uma plataforma para empacotar aplicações e dependências em imagens portáveis. Um Dockerfile descreve passos para construir essa imagem.
+1) Definição curta
+- Docker empacota aplicações e dependências em imagens que são executadas como containers.
 
-Por que importa
-- Consistência entre ambientes (dev, staging, prod), isolamento de dependências e facilidade de deployment.
+2) Por que importa
+- Garante consistência de runtime, portabilidade e facilita CI/CD.
 
-Conceitos e internals
-- Camadas: cada instrução no Dockerfile cria uma camada; camadas são cacheadas e read-only.
-- Union filesystem: camadas sobrepostas formam o sistema de arquivos final do container.
-- Build cache: rede de caches por instrução acelera builds repetidos.
+3) Internals rápidos
+- Cada instrução gera camada; union FS aplica camadas.
 
-Quando usar / quando não usar
-- Use: microservices, reproducible builds, ambientes isolados.
-- Evite: scripts simples que não precisam de isolamento ou quando PaaS simplifica deploy sem containers.
+4) Quando usar
+- Microservices, ambientes replicáveis e para criar componentes facilmente distribuíveis.
 
-Padrões arquiteturais
-- Multi-stage builds: separar etapas de build de runtime para imagens menores.
-- Distroless/scratch runtime images para reduzir superfície de segurança.
+5) Melhores práticas detalhadas
+- Multi-stage builds, pin base image versions, minimize layers, clean caches.
+- Security scan during CI (Trivy/Grype), sign images (cosign), and verify at deploy.
+- Runtime policy: run as non-root, set resource limits, use seccomp and read-only root FS.
 
-Exemplo prático (multi-stage Python + explicação)
+6) Piores práticas
+- Baking secrets into images, using `latest` tag in prod, leaving package managers and build tools in final image.
 
-```dockerfile
-FROM python:3.10-slim AS builder
-WORKDIR /app
-COPY pyproject.toml poetry.lock ./
-RUN pip install --upgrade pip && pip install poetry && poetry config virtualenvs.create false && poetry install --no-dev
-COPY . .
-RUN python -m build -w dist/
+7) Testes e CI
+- Lint Dockerfile: hadolint in CI.
+- Build tests: try run health endpoint in CI container (smoke test), run containerized unit tests.
+- Security scanning: trivy image, fail build on HIGH/CRITICAL vulnerabilities (policy can be configurable).
 
-FROM python:3.10-slim AS runtime
-WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-COPY --from=builder /app /app
-USER 1000
-EXPOSE 8000
-CMD ["gunicorn", "app.main:app", "-w", "2", "-b", "0.0.0.0:8000"]
+8) Observability and debugging
+- Container logs to stdout/stderr; use centralized logging (Fluentd/CloudWatch/ELK).
+- Use docker inspect and run container with interactive shell in debug runs.
+
+9) Segurança
+- Sign images (cosign), verify signatures in deploy stage; use registry auth controls; image immutability.
+
+10) Exemplo CI snippet (lint + build + scan + smoke)
+
+```yaml
+jobs:
+  docker-lint-build-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hadolint
+        uses: hadolint/hadolint-action@v2
+        with: { dockerfile: 'Dockerfile' }
+      - name: Build image
+        run: docker build -t my-app:test .
+      - name: Run smoke test
+        run: |
+          docker run --rm -d --name smoke my-app:test
+          sleep 3
+          curl -f http://localhost:8080/health || (docker logs smoke && exit 1)
+      - name: Scan with Trivy
+        run: trivy image --exit-code 1 --severity HIGH,CRITICAL my-app:test
 ```
 
-Operações e debugging
-- `docker history` mostra camadas da imagem.
-- `docker inspect` e `docker logs` para debugging em containers locais.
-
-Segurança e custos
-- Scanner (Trivy) integrado ao CI. Assinatura de imagens com `cosign` para garantir procedência.
-
-Melhores práticas e anti-padrões
-- Não inclua secrets em build args; prefira runtime secrets manager. Evite `apt-get upgrade` no Dockerfile em produção.
-
-Perguntas de entrevista
-- "Como reduzir tamanho de imagem?" → multi-stage, remover caches, usar distroless, minimizar dependências.
+11) Perguntas de entrevista
+- "Como lidar com CVEs em imagens base?" → Pin base versions, monitor CVE feeds, rotate base images and rebake images regularly, apply image signing and runtime denial if unsigned.
 
 ---
 
-## 4) Terraform
+## Terraform (práticas extensivas e testes)
 
-Definição
-- Terraform é uma ferramenta declarativa de infraestrutura como código (IaC) que gerencia recursos via providers (AWS, GCP, Azure, etc.).
+1) Definição curta
+- IaC declarativa que cria e mantém recursos em provedores.
 
-Por que importa
-- Reproducibilidade e versionamento de infra, colaboração entre equipes e automação de criação/alteração de recursos.
+2) Por que importa
+- Padronização, auditabilidade e repeatability da infra.
 
-Conceitos e internals
-- Configuration: arquivos .tf com recursos e módulos.
-- State: arquivo que mapeia recursos declarados para IDs reais no provedor.
-- Provider: plugin que implementa CRUD para recursos.
+3) Internals
+- `terraform plan` gera dif entre state e config; provider plugins implement API calls; state armazena mapping entre recursos e IDs reais.
 
-Quando usar / quando não usar
-- Use para infra que precisa ser versionada, reproduzível e auditável. Evite para perubahan temporárias rápidas sem controle de versão (scripts ad-hoc podem ser suficientes, mas registre mudanças depois).
+4) Quando usar
+- Infra que precisa ser reproduzível, auditável e versionada.
 
-Arquiteturas e patterns
-- Módulos reutilizáveis, backends remotos com locking (S3 + DynamoDB na AWS), CI que executa `terraform plan` em PRs.
+5) Melhores práticas
+- Backend remoto com lock (S3 + DynamoDB), use workspaces/environments isolados por team/env, modularize (modules por domínio), version modules sem breaking changes.
+- Policy as Code: OPA/Sentinel for security guardrails.
+- Automate `plan` in PRs and require approval for `apply` to production.
 
-Exemplo prático (backend S3)
+6) Piores práticas
+- State local, editar infra manualmente sem registrar, permissões amplas no bucket de state, não versionar módulos.
 
-```hcl
-terraform {
-  backend "s3" {
-    bucket = "my-tfstate-bucket"
-    key    = "envs/prod/terraform.tfstate"
-    region = "us-east-1"
-    dynamodb_table = "tf-lock"
-  }
-}
-```
+7) Testes e CI
+- `terraform validate`, `terraform fmt` and `tflint` on PR.
+- Security static analysis: checkov/terrascan.
+- Integration tests: Terratest (Go) create real infra in ephemeral accounts or use mocks for expensive resources.
 
-Operações e debugging
-- `terraform plan` para visualizar mudanças; `terraform apply -auto-approve` para aplicar. Use `terraform state` para manipular estado quando necessário (com cautela).
+8) Observability and debugging
+- Keep detailed plan outputs in artifacts for audits; use logs from provers and cloud consoles.
 
-Segurança
-- Criptografar state e restringir acesso via IAM. Evitar armazenar secrets no state (use Secrets Manager ou SSM Parameter Store e referencie via data sources com acesso controlado).
+9) Segurança
+- Encrypt state with KMS; restrict access with IAM; avoid plaintext secrets in variables (use vault/secrets manager + data sources).
 
-Melhores práticas e erros comuns
-- Validar e formatar com `terraform fmt` e `terraform validate`. Não editar state manualmente sem backups.
+10) Example pipeline for Terraform (PR + apply)
 
-Perguntas de entrevista
-- "Como organizar infra para múltiplas equipes?" → separar state por domínio/produto, usar módulos e políticas (OPA/Sentinel) para governança.
+- PR: run `terraform init -backend=false` + `terraform validate` + `terraform plan -out=tfplan` and upload tfplan as artifact for reviewers.
+- Merge: pipeline assumes role and runs `terraform apply tfplan` in a controlled environment.
+
+11) Perguntas de entrevista
+- "Como testar módulos que criam RDS?" → use Terratest to create ephemeral resources in isolated account or use mocks and unit tests (validate plan) combined with smoke tests on minimal infra.
 
 ---
 
-## 5) PySpark — explicação detalhada e prática
+## PySpark (com foco em testes e produção)
 
-Definição
-- Apache Spark é um engine distribuído para processamento de dados (batch e streaming). PySpark é a API Python para Spark, focada em DataFrames, SQL e Structured Streaming.
+1) Definição curta
+- API Python do Apache Spark para processamento distribuído (batch/stream).
 
-Por que importa
-- Permite processar TBs-PBs de dados distribuídos com abstrações de alto nível e otimizações internas (Catalyst, Tungsten).
+2) Por que importa
+- Facilita ETL/ELT em grandes volumes com otimizações internas.
 
-Conceitos e internals (explicados para quem está começando)
-- Transformações vs Ações: Transformações (map, filter, select) constroem um plano lógico; ações (count, collect, write) executam o plano.
-- DAG: Directed Acyclic Graph de operações; o planner gera este DAG e o executor o executa em tasks.
-- Partições: unidade de paralelismo. Cada partition é processada por uma task.
-- Shuffle: redistribuição de dados entre executors (quando faz joins, groupBy, repartition).
+3) Internals resumidos
+- Catalyst optimizer, Tungsten engine, driver/executors, shuffle mechanics.
 
-Quando usar / quando não usar
-- Use: ETL em larga escala, joins e agregações distribuídas, processamento de streaming tolerante a falhas.
-- Evite: datasets pequenos que cabem em memória de uma única máquina (uso desnecessário de cluster e complexidade).
+4) Quando usar
+- Processos que excedem capacidade de single-node: joins grandes, aggregations e transformações massivas.
 
-Padrões e estratégias comuns
-- Broadcast join para pequenas tabelas.
-- Repartition por chave que será usada em joins subsequentes.
-- Cache/persist apenas quando dados serão reutilizados múltiplas vezes.
+5) Melhores práticas
+- Usar DataFrame API e SQL queries; evitar UDFs quando possível.
+- Explicit schema, partition pruning, broadcast for small tables, tune shuffle partitions and memory.
+- Use AQE (Spark 3.x) para dinamically otimizations.
 
-Exemplo introdutório com explicação passo-a-passo
+6) Piores práticas
+- UDFs Python sem necessidade; `collect()` em produção; gerar small files; não particionar dados adequadamente.
+
+7) Testes e CI
+- Unit tests: isolate pure functions; use `SparkSession.builder.master('local[*]')` in pytest fixtures.
+- Integration tests: run small datasets in local-mode or via dockerized Spark; use sample datasets and assert counts/aggregations.
+- Performance tests: run with representative data sizes in a sandbox cluster and measure shuffle/read/write times.
+
+8) Observability e debugging
+- Spark UI, event logs and History Server; tail executor logs for OOM, GC pauses.
+- Add checkpoints in streaming and monitor offsets.
+
+9) Segurança
+- IAM roles for S3 access, encrypt data at rest and in transit, limit who can submit jobs to cluster.
+
+10) Exemplo de teste unitário (pytest fixture)
 
 ```python
+import pytest
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, when
 
-spark = SparkSession.builder.master('local[*]').appName('example').getOrCreate()
+@pytest.fixture(scope='session')
+def spark():
+    spark = SparkSession.builder.master('local[2]').appName('pytest').getOrCreate()
+    yield spark
+    spark.stop()
 
-# Leitura com schema explícito (mais rápido que inferir)
-schema = 'id INT, ts TIMESTAMP, user_id STRING, value DOUBLE'
-df = spark.read.schema(schema).parquet('./data/raw/')
-
-# Transformações (lazy)
-df2 = df.filter(col('value').isNotNull()).withColumn('flag', when(col('value')>100, 'high').otherwise('low'))
-
-# Ação: gravar em parquet particionado
-df2.repartition('date').write.mode('overwrite').partitionBy('date').parquet('./data/processed/')
+def test_filter_and_flag(spark):
+    df = spark.createDataFrame([(1, 10.0), (2, None)], ['id','value'])
+    df2 = df.filter(df.value.isNotNull()).withColumn('flag', (df.value > 5).cast('string'))
+    assert df2.count() == 1
 ```
 
-Operações, tuning e debugging
-- Spark UI (porta 4040 para local, History Server para clusters) mostra DAG, stages e tasks.
-- Ajustes chave: `spark.sql.shuffle.partitions`, `executor.memory`, `executor.cores`, `spark.serializer=KryoSerializer`.
-- Evitar UDFs Python quando possível; UDFs quebram otimizações do Catalyst.
-
-Segurança e custos
-- Em cloud, leia/escreva com permissões mínimos (IAM roles). Evite manter dados sensíveis em plain-parquet sem criptografia.
-
-Melhores práticas e armadilhas
-- Evitar small files: agrupe e reescreva arquivos pequenos; particione por colunas amplamente utilizadas.
-- Use AQE (Adaptive Query Execution) em Spark 3.x para otimizações dinâmicas.
-
-Perguntas de entrevista (exemplos)
-- "Por que Kryo?" → Serialização eficiente e mais rápida que Java serializer; reduz overhead em shuffle.
-- "O que é AQE?" → Ajustes dinâmicos do plano de execução em runtime (repartition coalesce, mudar join strategy).
+11) Perguntas de entrevista
+- "Como identificar que job está causando OOM?" → olhar GC logs, executor metrics, task memory usage in Spark UI; verificar operations that cause shuffle/aggregation on skewed keys.
 
 ---
 
-## 6) Machine Learning — engenharia e produção
+## Machine Learning (MLOps completo: testes, deploy, monitoramento e governança)
 
-Definição
-- Machine Learning (ML) é o campo da IA que cria modelos capazes de fazer previsões a partir de dados. MLOps aplica práticas de engenharia de software e DevOps ao ciclo de vida de modelos ML.
+1) Definição curta
+- Conjunto de práticas para construir, validar, versionar, deployar e monitorar modelos ML em produção.
 
-Por que importa
-- Modelos em produção impactam negócios; controlar reprodutibilidade, monitoramento e governança é essencial para evitar regressões e viés.
+2) Por que importa
+- Modelos degradam sem monitoramento; decisão errada em produção pode causar prejuízo e riscos legais (viés, privacidade).
 
-Conceitos e internals
-- Feature Store: armazenamento organizado de features para treino e inferência com consistência.
-- Model Registry: versionamento de modelos (MLflow, etc) com estágios e metadados.
-- Drift detection: técnicas para detectar mudanças estatísticas nas entradas ou saídas do modelo.
+3) Internals e componentes
+- Data ingestion, feature engineering, training, model registry, deployment, monitoring and feedback loop.
 
-Quando usar / quando não usar
-- Use: problemas com volume de dados, necessidade de automação de previsões e feedback loop.
-- Evite: prototypes ad-hoc para POC sem pipeline de produção; sempre planeje transição para produção com testes.
+4) Quando usar
+- Sempre que um modelo for consumido em escala ou impactar decisões de negócio. Para POC mantenha pipelines leves mas com estratégia para produção.
 
-Padrões; deployment e serving
-- Online serving: REST/gRPC endpoints; cuidadosa com latência e escala.
-- Batch scoring: quando latência não é crítica, processe em lote eficiente.
-- Canary/A-B testing: deploy incremental e comparação estatística.
+5) Melhores práticas
+- Data validation (Great Expectations) antes do treino e antes da inferência.
+- Unit tests for transforms, contract tests for features; integration tests that run training on small dataset.
+- Model contract and canary deploys: validate performance vs baseline before promotion.
+- Version everything: data, code, features, model artifacts.
 
-Exemplo prático simples (training + MLflow)
+6) Piores práticas
+- Deploy direto de notebooks; treinar e usar features inconsistentes entre treino e inference; não monitorar performance.
 
-```python
-import mlflow
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.datasets import load_breast_cancer
+7) Testes e CI
+- Unit tests for preprocessing & feature transformations.
+- Integration tests: run training pipeline on small dataset, assert model metrics above baseline.
+- Regression tests: ensure new model improves or matches baseline on holdout dataset.
 
-X, y = load_breast_cancer(return_X_y=True)
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+8) Observability and monitoring
+- Monitor model metrics (AUC, accuracy, business KPIs), input feature distributions, prediction distributions, latency and error rates.
+- Implement alerts for drift and degraded metrics; capture explainability output (SHAP) for top incidents.
 
-with mlflow.start_run():
-    clf = RandomForestClassifier(n_estimators=50, random_state=42)
-    clf.fit(X_train, y_train)
-    acc = clf.score(X_val, y_val)
-    mlflow.log_metric('val_acc', acc)
-    mlflow.sklearn.log_model(clf, 'model')
-```
+9) Segurança and governance
+- PII protections: hashing/tokenization, access controls on datasets and model artifacts.
+- Audit trails: who trained which model with which data and hyperparams.
 
-Operações e monitoramento
-- Monitore latência, throughput, taxas de erro, e distribuição das features e das predições. Integre com Prometheus/Grafana e logs para troubleshooting.
+10) Example: CI pipeline for ML (sketch)
 
-Segurança e fairness
-- Remova/anonimize PII; teste fairness antes de promover modelos para produção; mantenha auditoria de features e dados de treino.
+- PR: run unit tests for transforms, lint, run training with small dataset and check metrics.
+- Build: create image with model binary and push to registry.
+- Deploy: canary to small % of traffic, run A/B comparison for X hours, promote if metrics good.
 
-Melhores práticas e armadilhas
-- Tenha testes automatizados para transforms, smoke tests para modelo em staging e monitoramento ativo para drift.
-
-Perguntas de entrevista
-- "Como detectar data drift?" → Compare distribuições (PSI/KL), monitore performance por cohort, alimente pipeline de retraining quando thresholds excedidos.
+11) Perguntas de entrevista
+- "Como garantir que features entre treino e inference são consistentes?" → Feature store / shared code for transformations / serialized feature schema and tests that compare stats.
 
 ---
 
-## Dicas finais e plano de estudo
+## Checklists práticos (resumidos)
 
-- Estudo dirigido: intercale teoria com hands-on; construa mini-projetos (um pipeline CI/CD com deploy, um job PySpark local e um modelo ML com tracking).
-- Pratique respostas curtas (30–90s) e detalhadas (5–10 min) para cada pergunta técnica.
+- GitHub Actions CI:
+  - Lint, unit tests, coverage, dependency scan in PR.
+  - Integration tests in staging.
+  - Build artifacts immutable and signed.
+  - OIDC for cloud credentials.
 
-Se quiser, começo implementando o template A (GitHub Actions + OIDC -> AWS + Terraform minimal + ECS deploy) e escrevo um README com passos para rodar localmente e validações básicas.
+- AWS CI/CD:
+  - CodeBuild runs tests and builds artifacts.
+  - CodePipeline enforces manual approval for production.
+  - CloudWatch alarms + health checks for rollback.
+
+- Docker:
+  - Hadolint, Trivy in CI; cosign image signing; non-root runtime, resource limits.
+
+- Terraform:
+  - `terraform validate`, fmt, tflint, checkov; plan in PR; apply by pipeline with approvals.
+
+- PySpark:
+  - Unit tests local; integration on sample datasets; tune partitions, avoid UDFs.
+
+- ML:
+  - Data validation, unit tests for transforms, model registry, canary deploy + monitoring.
 
 ---
 
-Arquivo gerado: `interview_senior_tech_guide_v2.md`
+## Perguntas rápidas para treinar (30–90s respostas)
+
+1. "Explique OIDC com GitHub Actions e AWS." — GitHub Issues a short-lived OIDC token; IAM Role trusts token for repo/branch; workflow assumes role and obtains temporary creds.
+
+2. "Por que evitar UDFs Python no Spark?" — UDFs quebram otimizações Catalyst; são mais lentos e não se beneficiam de whole-stage codegen.
+
+3. "Como detectar data drift?" — Compare distribuições (PSI/KL), track model performance per cohort and set thresholds that trigger retraining pipelines.
+
+4. "Que testes colocar no CI para ML?" — Unit tests for transforms, integration test training pipeline, regression tests vs baseline metrics.
+
+---
+
+Se quiser, implemento agora um dos templates executáveis (A-E) que citamos antes. Recomendo começar por A (pipeline GitHub Actions + OIDC + Terraform minimal + deploy ECS) — digo em seguida as etapas que vou executar se aprovar.
+
+Fim da v3.
