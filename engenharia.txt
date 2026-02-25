@@ -1,0 +1,1814 @@
+O documento será organizado de acordo com a ementa fornecida, abordando os seguintes tópicos:
+
+Big Data – conceitos, processamento, camadas, tipos de dados, qualidade, Hadoop, Spark.
+
+AWS – serviços de computação, integração, segurança, armazenamento, ferramentas de dados (Glue, Redshift, Athena) e FinOps.
+
+Banco de Dados – modelagem, SQL, Data Warehouse, NoSQL.
+
+Programação – algoritmos, lógica, conceitos de programação distribuída.
+
+DevOps – fundamentos, shell script, Git, observabilidade.
+
+Data Mesh – princípios, vantagens, ingestão e qualidade.
+
+Cada questão será apresentada com a pergunta original, a alternativa correta (destacada) e uma explicação detalhada do conceito envolvido.
+
+Vamos lá!
+
+📘 Guia Didático de Engenharia de Dados
+Introdução
+A engenharia de dados é a área responsável por projetar, construir e manter a infraestrutura que coleta, armazena, processa e disponibiliza dados para análise. Envolve conhecimentos de bancos de dados, computação em nuvem, big data, programação e boas práticas de desenvolvimento. Este guia foi elaborado para ajudar você a entender os conceitos fundamentais e a resolver questões típicas de uma prova de certificação ou concurso na área.
+
+1. Big Data
+O que é Big Data?
+Big Data refere-se a conjuntos de dados tão grandes e complexos que as ferramentas tradicionais de processamento não conseguem lidar com eles de forma eficiente. Seus princípios são frequentemente descritos pelos 5 Vs:
+
+Volume: grande quantidade de dados.
+
+Velocidade: dados gerados rapidamente (ex.: streams).
+
+Variedade: diferentes formatos (estruturados, semiestruturados, não estruturados).
+
+Veracidade: qualidade e confiabilidade dos dados.
+
+Valor: extrair insights úteis.
+
+Tipos de processamento
+Batch (lote): processa grandes volumes de dados em intervalos programados (ex.: diariamente).
+
+Streaming (tempo real): processa dados continuamente à medida que chegam.
+
+Interativo (ad hoc): consultas sob demanda, geralmente exploratórias.
+
+ETL vs ELT
+ETL (Extract, Transform, Load): os dados são extraídos, transformados em um servidor de staging e depois carregados no destino.
+
+ELT (Extract, Load, Transform): os dados são extraídos e carregados primeiro no destino (ex.: data lake) e depois transformados conforme necessário. É mais comum em arquiteturas modernas com ferramentas como Spark.
+
+Camadas de dados
+Source of Record (SoR): sistemas de origem, onde os dados são gerados (ex.: bancos transacionais).
+
+Source of Truth (SoT): camada curada, com dados limpos e confiáveis para análise.
+
+Specialized: camadas específicas para determinados domínios ou aplicações (ex.: data marts).
+
+Tipos e formatos de dados
+Estruturados: tabelas com linhas e colunas (ex.: CSV, Parquet, ORC, Avro).
+
+Semiestruturados: possuem alguma organização, mas não são rígidos (ex.: JSON, XML).
+
+Não estruturados: sem formato predefinido (ex.: imagens, vídeos, textos livres).
+
+Qualidade de dados
+Métricas comuns: completeza, unicidade, consistência, validade, precisão. É importante aplicar validações em cada camada do pipeline.
+
+Hadoop e MapReduce
+Hadoop: ecossistema de software para armazenamento e processamento distribuído. Componentes principais: HDFS (armazenamento) e YARN (gerenciamento de recursos).
+
+MapReduce: modelo de programação que divide o processamento em duas fases: Map (processa dados em paralelo) e Reduce (agrega resultados). O nó Master coordena, enquanto os Slaves executam as tarefas. O nó Master não deve armazenar ou processar dados diretamente.
+
+Apache Spark
+Framework de processamento em memória, mais rápido que MapReduce para muitas cargas de trabalho.
+
+Oferece APIs para Java, Scala, Python e SQL.
+
+Operações de transformação: map, filter, flatMap, distinct, join, etc. (nota: joinstep não é uma operação padrão).
+
+Questões Resolvidas
+1. Qual é o mecanismo de consulta utilizado no Amazon Athena?
+Alternativa correta: Presto
+Explicação: O Amazon Athena é um serviço de consulta interativa que permite executar queries SQL diretamente em dados armazenados no S3. Ele utiliza o mecanismo Presto, um motor de consultas distribuído de código aberto, otimizado para análises rápidas em grandes volumes de dados.
+
+2. Ao trabalhar com dados em uma arquitetura de data lake, qual das seguintes estratégias é recomendada para garantir a qualidade dos dados?
+Alternativa correta: Aplicação de validações de qualidade de dados em cada camada do data lake
+Explicação: Em um data lake, os dados passam por diferentes camadas (raw, trusted, refined). Aplicar validações em cada etapa garante que problemas sejam detectados precocemente e que os dados downstream sejam confiáveis. As outras opções (única camada, arquivo único, sem monitoramento) são práticas inadequadas.
+
+3. SQOOP é uma ferramenta do ecossistema Hadoop cuja principal função é:
+Alternativa correta: Importar dados de sistemas gerenciadores de banco de dados relacionais
+Explicação: O Apache Sqoop foi desenvolvido para transferir dados entre o Hadoop (HDFS, Hive, HBase) e bancos de dados relacionais (como MySQL, PostgreSQL, Oracle). Ele permite importar e exportar dados de forma eficiente.
+
+4. Por padrão Spark persiste dados em memória ou em disco. Sobre a afirmação acima, marque a melhor opção:
+Alternativa correta: Dados podem ser persistidos de forma híbrida, em memória e disco
+Explicação: O Spark permite que os dados sejam persistidos (cacheados) em memória para acelerar processamentos repetitivos. No entanto, se não houver memória suficiente, ele pode armazenar dados em disco. Além disso, é possível configurar níveis de persistência como MEMORY_ONLY, DISK_ONLY ou MEMORY_AND_DISK.
+
+5. Qual opção apresenta a definição correta para Replicação e Partição, respectivamente?
+Alternativa correta: Dados são copiados para diferentes nós / Dados são divididos entre diferentes nós
+Explicação: Em sistemas distribuídos:
+
+Replicação: cópias dos dados são mantidas em múltiplos nós para garantir tolerância a falhas e alta disponibilidade.
+
+Partição (sharding): os dados são divididos em fragmentos e distribuídos entre nós para paralelizar o processamento.
+
+6. Map reduce opera no conceito Master e Slave. Qual das tarefas abaixo não é recomendada para o nó Master?
+Alternativa correta: Manter e processar dados
+Explicação: No modelo Master-Slave, o nó Master é responsável por coordenar as tarefas, agendar execuções, manter metadados e balancear a carga. Ele não deve armazenar ou processar dados diretamente, pois isso poderia sobrecarregá-lo e comprometer a coordenação do cluster.
+
+7. Uma das características do HDFS é a replicação transparente. Qual opção abaixo melhor define este conceito?
+Alternativa correta: Arquivos são distribuídos automaticamente entre os nós da rede
+Explicação: No HDFS, os arquivos são divididos em blocos (ex.: 128 MB) e cada bloco é replicado automaticamente em múltiplos nós (padrão: 3 réplicas). Isso ocorre de forma transparente para o usuário, garantindo tolerância a falhas e disponibilidade.
+
+8. São exemplos de operações de transformação em Spark, EXCETO:
+Alternativa correta: Joinstep
+Explicação: As operações de transformação no Spark incluem map, filter, flatMap, distinct, join (que é uma operação de transformação, mas o nome correto é join). "Joinstep" não é uma operação reconhecida no Spark.
+
+9. Partition e Bucketing são mecanismos do Hive de particionar dados para otimizar consultas. Uma tabela possui uma coluna e-mail, qual seria a melhor técnica de particionamento e por quê?
+Alternativa correta: Bucketing, pois a cardinalidade dos dados será muito grande
+Explicação:
+
+Partitioning é ideal para colunas com baixa cardinalidade (ex.: país, ano), pois cria diretórios separados.
+
+Bucketing é melhor para colunas com alta cardinalidade (ex.: e-mail, ID), pois distribui os dados em um número fixo de buckets (arquivos) dentro de cada partição, melhorando a eficiência de consultas com joins e agregações.
+
+2. AWS (Amazon Web Services)
+Principais serviços de dados
+S3: armazenamento de objetos, base para data lakes.
+
+Glue: serviço serverless de ETL, com catálogo de dados (Glue Data Catalog) e crawlers para descobrir esquemas.
+
+Redshift: data warehouse em nuvem, colunar, escalável.
+
+Athena: consultas SQL interativas em dados no S3, usando Presto.
+
+EMR: cluster gerenciado para frameworks como Spark, Hadoop, Flink.
+
+Lambda: computação serverless para execução de código em resposta a eventos.
+
+Monitoramento e custos
+CloudWatch: coleta métricas, logs e eventos; permite criar alarmes.
+
+Cost Explorer: visualiza e analisa custos da AWS.
+
+SNS: serviço de notificações (e-mail, SMS, HTTP).
+
+Segurança e rede
+IAM: gerenciamento de identidades e permissões.
+
+Security Groups: firewalls virtuais para instâncias.
+
+Route 53: serviço de DNS.
+
+Questões Resolvidas
+10. É correto afirmar que com um par chave "pem" para acesso através do sistema operacional Windows é necessário utilizar o utilitário PutYgen para conversão da chave "pem" para ".ppk"?
+Alternativa correta: Verdadeiro
+Explicação: O PuTTY é um cliente SSH para Windows que não suporta nativamente o formato .pem. O PuTTYgen é uma ferramenta que converte chaves .pem (formato OpenSSH) para o formato .ppk (PuTTY Private Key), permitindo a autenticação via PuTTY.
+
+11. Você selecionou uma aplicação em produção que não está funcionando, no big retailer usa ameaças de acesso negado ao fornecedor, qual serviço abaixo você precisa implementar para evitar um acidente? (pergunta com redação confusa, mas a resposta marcada foi AWS Lambda)
+Alternativa correta: AWS Lambda
+Explicação: Apesar da pergunta estar ambígua, a resposta indicada foi Lambda. Possivelmente o contexto era de execução de uma função para mitigar um problema de acesso. O Lambda pode ser usado para automatizar respostas a eventos, como ajustar permissões ou notificar administradores.
+
+12. Qual é a chave que é única, nunca pode ter valores nulos e garante a unidade de instância?
+Alternativa correta: Chave Primária
+Explicação: Em bancos de dados relacionais, a chave primária (primary key) é um atributo (ou conjunto de atributos) que identifica unicamente cada linha de uma tabela. Deve ser única e não nula.
+
+13. Você está participando do processo de modernização de um banco e sua squad de Data Analytics está responsável por modernizar o Data Warehouse do banco utilizando somente recursos disponíveis na cloud pública AWS. Ficou definido que para esta modernização o recurso para Data Warehouse será o Amazon Redshift e a fonte dos dados devem ser do Data Lake e Data Mesh. Qual recurso deve ser utilizado para realizar a integração das tabelas no Data Lake com o Amazon Redshift?
+Alternativa correta: Redshift Spectrum
+Explicação: O Redshift Spectrum permite consultar dados diretamente no S3 (data lake) sem necessidade de carregá-los no Redshift. Ele estende o SQL do Redshift para ler arquivos em diversos formatos (Parquet, JSON, CSV) e pode ser usado para integrar dados do data lake com as tabelas locais do Redshift.
+
+14. Você deseja receber uma alerta via e-mail após um pipeline de dados retornar um erro inesperado, qual serviço da AWS permite que isso seja implementado com o menor esforço possível para o desenvolvedor?
+Alternativa correta: AWS CloudWatch (com SNS)
+Explicação: O CloudWatch pode monitorar logs e métricas (ex.: erros em funções Lambda, execuções de Glue). É possível criar um alarme que, quando disparado, envia uma notificação para um tópico SNS, que por sua vez envia e-mails. Essa é a forma mais simples e integrada.
+
+15. Qual serviço AWS é responsável pelo gerenciamento de DNS (Domain Name System)?
+Alternativa correta: Amazon Route 53
+Explicação: O Route 53 é o serviço de DNS da AWS, que traduz nomes de domínio (ex.: www.exemplo.com) em endereços IP. Ele também oferece funcionalidades de roteamento de tráfego e verificação de saúde.
+
+16. Durante a planificação da sua equipe, você está respondendo por atualizar o data product of cartões na camada SPEC. A tabela recebe mensalmente todas as transações realizadas pelos clientes. Após a gravação dos dados na nova partição no S3 (cloud storage) ao realizar consulta no Athena você observa que os dados não estão visíveis para os usuários. O que deve ser feito para disponibilizar os dados aos usuários?
+Alternativa correta: Executar o comando MSCK REPAIR TABLE na tabela após a inclusão da partição
+Explicação: No Athena (ou no Glue Data Catalog), quando você adiciona uma nova partição manualmente no S3, o catálogo não é atualizado automaticamente. O comando MSCK REPAIR TABLE varre o local da tabela e adiciona as partições recém-descobertas ao catálogo.
+
+17. Você provisionou um cluster EMR para realizar uma prova de conceito com o Apache Flink e Apache Zeppelin. O objetivo desta prova de conceito é utilizar o FlinksQL todos os recursos do cluster estão acessíveis externamente, mas a conexão via SSH não está ocorrendo com sucesso. O que você deve fazer para permitir o acesso através de SSH?
+Alternativa correta: Alterar o Security Group utilizado no cluster permitindo acesso a porta 22
+Explicação: O Security Group atua como firewall virtual para as instâncias do cluster. Para permitir SSH, é necessário adicionar uma regra de entrada que libere a porta 22 (TCP) para o seu IP (ou para um intervalo). As outras opções (ELB, recriar o cluster, WAF) não são adequadas para esse caso.
+
+18. Banco de dados não relacionais, também conhecidos como NoSQL, surgiram para armazenar dados não estruturados, usando modelos de armazenamento específicos para os tipos de dados que são armazenados, usualmente, fugindo do padrão de armazenamento de linhas e colunas dos bancos de dados tradicionais. Em relação ao Banco de Dados NoSQL, quais são as categorias consideradas para esse tipo de armazenamento?
+Alternativa correta: Armazéns chave-valor; Banco de dados orientados a documentos; Banco de dados de grafos
+Explicação: As principais categorias de bancos NoSQL são:
+
+Chave-valor (ex.: Redis, DynamoDB)
+
+Orientados a documentos (ex.: MongoDB)
+
+Orientados a colunas (ex.: Cassandra, HBase)
+
+Grafos (ex.: Neo4j)
+A alternativa correta lista três delas (faltou colunas, mas é a que contém as principais).
+
+19. Sua squad realizou o processamento dos dados relacionados a conta corrente, todos os dados foram gravados no S3 e nenhuma tabela foi criada no catálogo do Glue. O bucket ficou segmentado da seguinte forma: Caminho: s3://data-product/contacorrente/ Diretórios: /extrato, /pix, /doc, /ted, /boletos. Você precisa deixar a criação das tabelas e partições de forma automatizada utilizando os serviços AWS. Qual recurso pode ser utilizado para atender esta demanda?
+Alternativa correta: Amazon Glue Crawlers
+Explicação: O Glue Crawler percorre os dados armazenados no S3, infere o esquema (nomes de colunas, tipos) e cria/atualiza tabelas no Glue Data Catalog. Ele também pode detectar partições automaticamente.
+
+20. Imagine que você está trabalhando em uma empresa de análise de dados, precisando realizar transformações e limpeza de dados em um pipeline de ingestão. A empresa recebe milhões de arquivos CSV diariamente e as transformações precisam ser aplicadas em cada arquivo individualmente. Qual serviço da AWS seria mais econômico para realizar essas transformações em escala?
+Alternativa correta: AWS Glue
+Explicação: O AWS Glue é um serviço serverless de ETL que executa jobs baseados em Spark. Ele é econômico para cargas de trabalho em lote porque você paga apenas pelo tempo de execução. O Lambda não é adequado para processar milhões de arquivos individualmente devido ao tempo limite e concorrência. O EMR exige gerenciamento de cluster, podendo ser mais caro para cargas esporádicas.
+
+21. Você solicitou a equipe de engenharia de dados para exportar as tabelas do Data Warehouse Legado e colocar no bucket de migração do projeto do novo Data Warehouse. A equipe analisou que todas as tabelas foram exportadas com sucesso e estão disponíveis no bucket s3://data-warehouse/data/legado. Agora a equipe de Data Analytics precisa realizar a importação de todas as tabelas do Legado para o novo DW que está sendo construído no Amazon Redshift. Qual a forma mais adequada para realizar o processo de carga de dados para o Amazon Redshift?
+Alternativa correta: utilizar o comando COPY do Amazon Redshift
+Explicação: O comando COPY é a maneira mais eficiente e recomendada para carregar grandes volumes de dados no Redshift a partir de arquivos no S3. Ele paraleliza a leitura e insere os dados nas tabelas de forma otimizada.
+
+22. Recentemente você implementou uma aplicação piloto na sua empresa que foi um sucesso. Para realizar o rollout do projeto, a direção pediu que você apresentasse os gastos com infraestrutura AWS durante o período para avaliarem e aprovarem a expansão. Qual é o serviço da AWS que fornece essas informações?
+Alternativa correta: AWS Cost Explorer
+Explicação: O AWS Cost Explorer permite visualizar, analisar e prever custos e uso dos serviços AWS. Ele oferece relatórios detalhados e gráficos interativos.
+
+23. Você deseja monitorar o percentual de memória que os seus servidores estão utilizando em determinado período do dia, qual serviço da AWS permite realizar esse monitoramento?
+Alternativa correta: AWS CloudWatch
+Explicação: O CloudWatch coleta métricas de recursos da AWS, como utilização de CPU, memória (se configurado com agente personalizado), disco e rede. É possível criar alarmes e dashboards.
+
+24. O que é MapReduce? (duas versões, a correta é a que define como modelo de programação)
+Alternativa correta: É um modelo de programação, e framework desenvolvido para suportar computações paralelas em grandes coleções de dados em clusters de computadores
+Explicação: O MapReduce é um paradigma de programação distribuída, popularizado pelo Google, que divide o processamento em duas etapas: Map (processamento paralelo) e Reduce (agregação). O Hadoop implementa esse modelo.
+
+3. Banco de Dados
+Modelagem de dados
+Conceitual: alto nível, descreve entidades, atributos e relacionamentos, sem se preocupar com implementação.
+
+Lógica: detalha tabelas, colunas, chaves, mas ainda independente de SGBD.
+
+Física: específica para um banco de dados, incluindo tipos de dados, índices, partições.
+
+Chaves
+Primária: única e não nula, identifica cada linha.
+
+Estrangeira: referencia chave primária de outra tabela.
+
+Substituta (surrogate): chave artificial (ex.: ID sequencial) usada em modelos dimensionais para garantir unicidade e evitar dependência de chaves naturais.
+
+SQL
+Comandos básicos: SELECT, INSERT, UPDATE, DELETE. Junções: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN. Subconsultas com EXISTS, IN.
+
+Data Warehouse e Data Mart
+Data Warehouse (DW): repositório centralizado que integra dados de várias fontes, com visão corporativa, granularidade detalhada e histórico completo.
+
+Data Mart (DM): subconjunto do DW, focado em uma área de negócio (ex.: vendas, marketing), com menor granularidade e histórico limitado.
+
+NoSQL
+Bancos não relacionais: chave-valor, documentos, colunas, grafos.
+
+Questões Resolvidas
+25. Leia as afirmações abaixo sobre DW (Data Warehouse) e DM (Data Marts):
+I. Sob o ponto de vista de abrangência, o DW modela as necessidades sob uma visão específica/departamental;
+II. Em relação a granularidade, o DW contém maior nível de detalhe necessário para o BI;
+III. O DM contém apenas histórico essencial para algumas análises;
+IV. O DM contém todos os históricos necessários para BI.
+Quais são verdadeiras?
+
+Alternativa correta: I e III
+Explicação:
+
+I é falsa: o DW tem visão corporativa, não departamental. O DM é que tem visão específica.
+
+II é verdadeira: o DW armazena dados em nível de detalhe (granularidade fina).
+
+III é verdadeira: o DM contém histórico resumido, suficiente para análises departamentais.
+
+IV é falsa: o DM não contém todo o histórico; isso é característica do DW.
+Portanto, apenas II e III são verdadeiras? Na prova, a resposta marcada foi I e III, o que está incorreto. Provavelmente houve troca. A resposta correta seria II e III. Vou manter a marcação da prova, mas explicar o correto.
+
+Correção: Na verdade, a afirmativa I é sobre DW com visão departamental – isso é característica de DM. Então I é falsa. II é verdadeira (DW tem maior detalhe). III é verdadeira (DM tem histórico essencial). IV é falsa. Logo, verdadeiras: II e III. A opção correspondente é "II e III". Na prova, a resposta marcada foi I e III, o que está errado. Vamos considerar a resposta correta como II e III.
+
+26. Qual dos seguintes fragmentos representa um fragmento XML bem formado?
+Alternativa correta: <myElement myAttribute="someValue"/> (sem ponto final)
+Explicação: Um XML bem formado deve ter uma tag de abertura e fechamento correspondentes, ou ser uma tag vazia com />. A opção correta é aquela que termina com "/>" sem caracteres extras. Na prova, a opção marcada tinha um ponto final, o que invalidaria. Portanto, a resposta certa é a terceira opção (sem ponto).
+
+27. Qual opção melhor explica a necessidade de uma chave substituta em um modelo dimensional?
+Alternativa correta: Manter a integridade da dimensão (ou similar, mas a resposta marcada foi "Não permitir que valores repetidos sejam incluídos na dimensão e relacionados com a fato")
+Explicação: A chave substituta (surrogate key) é uma chave artificial, geralmente um inteiro sequencial, atribuída a cada linha de uma dimensão. Ela serve para:
+
+Isolar a dimensão de mudanças nas chaves naturais do sistema de origem.
+
+Garantir a unicidade de cada registro.
+
+Melhorar performance de joins com a tabela fato.
+A opção marcada fala em "não permitir valores repetidos", o que é uma consequência, mas a principal função é manter a integridade e rastreabilidade.
+
+28. Considera as seguintes tabelas que pertencem a parte de um determinado banco de dados: Tabela de clínicas (codclinica, nomeclinica, localclinica); Tabela de médicos (CRM, NomeMedico, Telefone); Tabela que relaciona médicos a clínicas (codclinica, CRM). Usando SQL Server, assinale o comando que lista códigos e nomes dos médicos que não atuam em nenhuma clínica.
+Alternativa correta: SELECT CRM, nomeMedico FROM Médico WHERE NOT EXISTS (SELECT * FROM Clinicamedico WHERE CRM = Medico.CRM)
+Explicação: A consulta usa NOT EXISTS para selecionar médicos que não têm correspondência na tabela de relacionamento. Essa é uma forma eficiente e semanticamente correta. Outras opções usam LEFT JOIN com condição errada ou NOT IN que pode ter problemas com NULLs.
+
+29. O time fiscal precisa conferir a alíquota que foi utilizada pelo sistema no Faturamento de um serviço. Como o Data Warehouse opera em D+1, essa informação só estará disponível no dia seguinte. Dessa forma o analista fiscal abre um aplicativo de consulta, roda um comando e obtém a alíquota diretamente do sistema transacional. Qual opção melhor classificaria esta forma de processamento de dados?
+Alternativa correta: Interativo ou Ad Hoc
+Explicação: O processamento ad hoc ou interativo refere-se a consultas realizadas sob demanda, geralmente para responder a uma necessidade imediata, sem seguir um agendamento batch ou streaming. O analista acessa diretamente a fonte transacional para obter a informação em tempo real.
+
+30. Em tecnologia as equipes desenvolvem softwares para receber e armazenar informações. Para o computador, tais informações são chamadas de: dados. Dados podem assumir diversos formatos para otimizar a memória do computador. Portanto, quais dos tipos abaixo podemos dizer que são tipos de dados primitivos?
+Alternativa correta: Texto (nome) - Inteiro (idade) - Real (RS) - Lógico (verdadeiro/falso)
+Explicação: Tipos de dados primitivos em programação geralmente incluem: inteiro, real (float), caractere/texto, booleano (lógico). A opção correta lista esses equivalentes.
+
+31. Assinale a alternativa que contém um exemplo de dados não estruturados.
+Alternativa correta: "Funcionários de um departamento de recursos humanos observam os candidatos a uma vaga de emprego e fazem anotações sobre as suas atitudes durante a realização de atividades de um processo de seleção."
+Explicação: Dados não estruturados não possuem um formato predefinido, como textos livres, imagens, vídeos. As anotações feitas por observadores são textos livres, sem esquema rígido. As outras alternativas descrevem dados estruturados (bancos, pesquisas com público-alvo, medições de tempo).
+
+4. Programação
+Algoritmo
+É uma sequência finita de passos (instruções) para resolver um problema ou realizar uma tarefa. Exemplos: receita de bolo, instruções de montagem.
+
+Tipos de dados primitivos
+Inteiro, real, caractere, booleano.
+
+Questões Resolvidas
+32. O que é um algoritmo?
+Alternativa correta: Trata-se de uma sequência de passos. Conhecida como um conjunto de instruções para chegar a um determinado objetivo.
+Explicação: Definição clássica de algoritmo.
+
+5. DevOps
+Conceitos
+DevOps: conjunto de práticas que integra desenvolvimento (Dev) e operações (Ops) para melhorar a colaboração, automação e entrega contínua.
+
+Shift-left testing: prática de realizar testes o mais cedo possível no ciclo de desenvolvimento, reduzindo custos e aumentando a qualidade.
+
+Versionamento: Git é a ferramenta mais comum para controle de versão.
+
+Observabilidade: monitoramento, logs e rastreamento para entender o estado interno de sistemas.
+
+Questões Resolvidas
+33. No âmbito de DevOps, o termo “shift left testing” significa que os testes devem:
+Alternativa correta: ser feitos desde as fases iniciais do ciclo de vida do produto.
+Explicação: "Shift left" significa mover os testes para a esquerda no ciclo de desenvolvimento, ou seja, começar a testar mais cedo (na fase de requisitos, design, código) em vez de deixar para o final.
+
+6. Data Mesh
+O que é Data Mesh?
+É uma abordagem descentralizada para arquitetura de dados, baseada em quatro princípios:
+
+Domínios orientados a negócio: os dados são organizados por domínios (ex.: vendas, clientes), cada um com sua própria equipe.
+
+Dados como produto: cada domínio trata seus dados como um produto, com qualidade e documentação.
+
+Plataforma de autosserviço: infraestrutura que facilita a criação e consumo de produtos de dados.
+
+Governança federada: regras comuns, mas com autonomia dos domínios.
+
+Ingestão no Data Mesh
+Refere-se ao processo de coletar dados de fontes (internas ou externas) e disponibilizá-los como produtos de dados, seguindo os princípios de domínio e propriedade.
+
+Qualidade no Data Mesh
+Recomenda-se:
+
+Testes automatizados de qualidade.
+
+Definição e monitoramento de métricas.
+
+Padronização flexível (não rígida) para atender cada domínio.
+
+Questões Resolvidas
+34. Na era do Big Data... Por que é importante atribuir responsabilidade pelos dados?
+Alternativa correta: Para aplicar governança e fazer com que o responsável entenda os requisitos de conformidade.
+Explicação: A atribuição de responsabilidade (data stewardship) garante que alguém seja accountable pela qualidade, segurança e conformidade dos dados, essencial para governança.
+
+35. No contexto do Data Mesh, quais das seguintes práticas são recomendadas para melhorar a qualidade dos dados em um domínio específico?
+I) Implementar testes automatizados de qualidade de dados
+II) Definir e monitorar métricas de qualidade de dados
+III) Realizar a padronização rígida de todos os dados em um único formato
+
+Alternativa correta: I, II
+Explicação: A padronização rígida (III) vai contra o princípio de autonomia dos domínios. No Data Mesh, cada domínio pode ter seus formatos, desde que siga contratos de interoperabilidade. Testes e métricas são práticas recomendadas.
+
+36. Podemos definir Ingestão no contexto do Data Mesh como:
+Alternativa correta: "A ingestão de dados no contexto do Data Mesh, refere-se ao processo de coletar e trazer dados da vida real para utilização centralizada que adere aos princípios do Domain Driven Design. Esta é uma etapa essencial na criação de uma abordagem descentralizada e orientada por domínio para o gerenciamento de dados, em que os dados são de propriedade e gerenciados por equipes individuais responsáveis por domínios específicos."
+Explicação: Essa definição reflete a visão de que a ingestão deve respeitar os domínios e tratar dados como produtos.
+
+37. Você está atuando em uma equipe onde as bases de dados origem (SoR) ainda não estão catalogadas e democratizadas para uso do banco, somente uso de bases manuais. Nesse contexto, você recebe a solicitação de outra equipe que tem a necessidade de consumir os dados da origem para uso e eles solicitam a você a modelagem dos dados, porém, essas bases ainda não a possuem. Tendo como base uma arquitetura de dados Data Mesh, o que você faria para disponibilizar os dados para a equipe solicitante?
+Alternativa correta: Para sistemas origem que não possuírem modelo de dados, seria necessário que o produtor realizasse a engenharia reversa antes de democratizar a base no Mesh.
+Explicação: No Data Mesh, o produtor do dado (domínio) é responsável por expor seus dados como produto. Se não há modelo, ele deve realizar engenharia reversa para entender a estrutura e disponibilizar de forma adequada, garantindo qualidade e documentação.
+
+38. Quais formatos são suportados no Amazon Athena?
+Alternativa correta: Suporta leitura de diversos arquivos, incluindo JSON, CSV e formatos de dados comprimidos como LZO e Snappy.
+Explicação: O Athena pode consultar dados em vários formatos: CSV, JSON, Parquet, ORC, Avro, e também comprimidos (LZO, Snappy, GZIP). Ele não se limita a bancos de dados, mas lê diretamente do S3.
+
+39. Microserviços são uma abordagem arquitetônica... Qual dos itens abaixo NÃO é um conceito básico de Microserviços?
+Alternativa correta: PoC (Prova de Conceito)
+Explicação: PoC é uma prática de validação, não um conceito arquitetônico de microserviços. Conceitos básicos incluem: CI/CD, APIs, escalabilidade independente, descentralização, etc.
+
+40. Durante o processo de criação do ambiente para Linux (on-prem) para a cloud pública AWS, seu gerente solicitou que fosse criado um gatilho para informar a volumetria de dados migrados ao bucket chegou a 1 petabyte. Qual critério mais adequado para que seu alerta seja enviado para um grupo de gestores de forma automática utilizando os recursos da AWS? A verificação deve ocorrer uma vez ao dia.
+Alternativa correta: Utilizar o CloudWatch para criação de alarme utilizando a métrica BucketSizeBytes, definir gatilho como alarme e utilizar um tópico SNS para envio de e-mail.
+Explicação: O CloudWatch fornece a métrica BucketSizeBytes para buckets S3. É possível criar um alarme que dispara quando o valor ultrapassa 1 PB (ajustado para bytes). O alarme pode enviar notificação para um tópico SNS, que distribui e-mails aos assinantes. A verificação diária pode ser configurada no período do alarme.
+
+Conclusão
+Este guia abordou os principais tópicos de engenharia de dados com base nas questões apresentadas. Esperamos que as explicações tenham sido claras e úteis para seu aprendizado. Lembre-se de que a prática e a exploração dos serviços na AWS (com a camada gratuita) são fundamentais para fixar os conceitos.
+
+Bons estudos!
+
+Esta resposta é gerada por AI, apenas para referência.
+Eu quero que você crie um material para quem não sabe nada, a ideia não é passar diretamente a responsabilidade, mas contemplar todos os temas de forma clara e didática, sem deixar nada passar, cobrindo tudo que é necessário e que faz sentido para as questões. Não quero que fique raso, pode abordar temas que fazem sentido e que não estão descritos nas questões, leve também em consideração o material que contém o que é necessário para a prova de engenharia de dados
+O usuário pediu para criar um material didático completo para quem não sabe nada sobre engenharia de dados, cobrindo todos os temas relevantes para as questões da prova, mas de forma aprofundada e abrangente, incluindo conceitos que não estão explicitamente nas questões, mas que são importantes para o entendimento geral. Ele também mencionou que o material deve ser baseado na ementa fornecida (a lista de tópicos).
+
+Preciso produzir um documento Markdown extenso, bem organizado, que explique cada conceito de forma clara e didática, com exemplos e analogias. Devo cobrir Big Data, AWS, Banco de Dados, Programação, DevOps e Data Mesh, conforme a ementa. Além disso, devo incorporar as questões resolvidas como exemplos práticos, mas o foco é o ensino dos conceitos.
+
+Vou estruturar o material em seções, cada uma com subseções explicando os fundamentos, e ao final de cada seção, colocar as questões relacionadas com explicações. O objetivo é que um leigo possa entender desde o básico até os detalhes técnicos.
+
+Preciso garantir que a linguagem seja acessível, evitando jargões desnecessários, mas sem simplificar demais. Usarei analogias, exemplos do cotidiano e explicações passo a passo.
+
+Vou começar com uma introdução sobre o que é engenharia de dados e por que é importante. Depois, sigo a ordem da ementa. Para cada tópico, explicarei os conceitos, ferramentas, boas práticas, e então apresentarei as questões relacionadas, mostrando como aplicá-los.
+
+O material deve ser extenso, mas organizado com títulos e subtítulos claros. Incluirei definições, exemplos de código quando necessário, e dicas para a prova.
+
+Vou produzir o documento em português, conforme solicitado.
+
+Claro! Vou criar um material completo e didático, pensado para quem está começando do zero na área de engenharia de dados. O objetivo é que, ao final da leitura, você consiga não apenas responder às questões da prova, mas também compreender os fundamentos que sustentam cada conceito. Vamos abordar todos os tópicos da ementa de forma aprofundada, com explicações claras, analogias e exemplos práticos.
+
+📘 Engenharia de Dados para Iniciantes: Guia Completo e Didático
+Sumário
+Introdução à Engenharia de Dados
+
+Big Data: Fundamentos e Ecossistema
+
+O que é Big Data? (5 Vs)
+
+Tipos de processamento: batch, streaming, interativo
+
+ETL vs ELT
+
+Camadas de dados: SoR, SoT, Specialized
+
+Tipos e formatos de dados
+
+Qualidade de dados
+
+Sistemas distribuídos e Hadoop
+
+MapReduce
+
+Apache Spark
+
+Amazon Web Services (AWS) para Dados
+
+Visão geral da nuvem
+
+Serviços de computação: EC2, Lambda
+
+Serviços de integração: SQS, SNS, API Gateway, Route 53, CodePipeline
+
+Segurança: IAM, KMS
+
+Armazenamento: S3, RDS, DynamoDB, EFS, Storage Gateway
+
+Ferramentas de dados: Glue, Redshift, Athena, EMR
+
+Monitoramento e FinOps: CloudWatch, Cost Explorer, SNS
+
+Banco de Dados
+
+Conceitos fundamentais
+
+Modelagem de dados: conceitual, lógica, física
+
+Chaves: primária, estrangeira, substituta
+
+SQL básico e intermediário
+
+Data Warehouse e Data Mart
+
+Bancos NoSQL: categorias e exemplos
+
+Programação
+
+Algoritmos e lógica de programação
+
+Estruturas de controle
+
+Programação distribuída: conceitos iniciais
+
+DevOps
+
+O que é DevOps?
+
+Shell Script
+
+Versionamento com Git
+
+Observabilidade: logs, métricas, tracing
+
+Data Mesh
+
+Princípios do Data Mesh
+
+Diferenças para Data Lake
+
+Ingestão e qualidade no Data Mesh
+
+Questões Comentadas
+
+Todas as questões da prova com explicações detalhadas
+
+Conclusão e Próximos Passos
+
+1. Introdução à Engenharia de Dados
+A engenharia de dados é a disciplina que projeta, constrói e mantém a infraestrutura necessária para coletar, armazenar, processar e disponibilizar dados de forma confiável e escalável. É a base sobre a qual cientistas de dados, analistas e outros profissionais constroem suas análises e modelos.
+
+Imagine que você quer construir uma casa. O engenheiro de dados é quem prepara o terreno, instala a fundação, o encanamento e a fiação elétrica. Depois, o arquiteto (cientista de dados) pode desenhar os cômodos e o decorador (analista) pode mobiliar. Sem uma boa infraestrutura, a casa desaba.
+
+Na prática, o engenheiro de dados lida com:
+
+Fontes de dados: bancos de dados, APIs, arquivos, streams.
+
+Armazenamento: data lakes, data warehouses, bancos NoSQL.
+
+Processamento: transformações, limpezas, agregações.
+
+Orquestração: agendamento e monitoramento de pipelines.
+
+Governança: qualidade, segurança, linhagem.
+
+Agora, vamos mergulhar nos conceitos.
+
+2. Big Data: Fundamentos e Ecossistema
+O que é Big Data?
+Big Data refere-se a conjuntos de dados tão grandes e complexos que as ferramentas tradicionais de processamento não conseguem lidar com eles de forma eficiente. O conceito é frequentemente explicado pelos 5 Vs:
+
+Volume: quantidade massiva de dados. Exemplo: o Facebook gera petabytes de dados por dia.
+
+Velocidade: dados são gerados e precisam ser processados rapidamente. Exemplo: transações bancárias em tempo real.
+
+Variedade: diferentes formatos de dados. Exemplo: textos, imagens, vídeos, logs, dados estruturados.
+
+Veracidade: qualidade e confiabilidade dos dados. Dados podem ser imprecisos, incompletos ou inconsistentes.
+
+Valor: capacidade de extrair insights úteis que justifiquem o investimento.
+
+Tipos de Processamento
+Tipo	Descrição	Exemplo
+Batch (lote)	Processa grandes volumes em intervalos programados (diário, horário).	Relatórios de vendas do dia anterior.
+Streaming (tempo real)	Processa dados continuamente à medida que chegam.	Detecção de fraudes em transações.
+Interativo (ad hoc)	Consultas sob demanda, exploratórias.	Um analista query o banco para verificar um dado específico.
+ETL vs ELT
+ETL (Extract, Transform, Load): os dados são extraídos das fontes, transformados em um servidor intermediário (staging) e depois carregados no destino. É o modelo tradicional, usado quando o destino não tem poder computacional para transformações.
+
+ELT (Extract, Load, Transform): os dados são extraídos e carregados diretamente no destino (ex.: data lake) e depois transformados conforme necessário. É comum em arquiteturas modernas com ferramentas como Spark, pois o destino (ex.: nuvem) pode escalar o processamento.
+
+Analogia: ETL é como preparar os ingredientes (lavar, cortar) antes de levar para a cozinha. ELT é levar todos os ingredientes para a cozinha e depois prepará-los lá.
+
+Camadas de Dados
+Em uma arquitetura de dados, é comum organizar os dados em camadas:
+
+Source of Record (SoR): sistemas de origem, onde os dados são gerados. Ex.: banco de dados transacional, logs de aplicação. São os dados brutos, sem alterações.
+
+Source of Truth (SoT): camada curada, com dados limpos, validados e confiáveis para análise. É o "ouro" da empresa.
+
+Specialized: camadas específicas para determinados domínios ou aplicações, como data marts ou features para machine learning.
+
+Tipos e Formatos de Dados
+Os dados podem ser classificados em:
+
+Estruturados: possuem um esquema rígido, como tabelas com linhas e colunas. Formatos: CSV, Parquet, ORC, Avro.
+
+Semiestruturados: possuem alguma organização, mas não são tão rígidos. Ex.: JSON, XML, logs.
+
+Não estruturados: não têm formato predefinido. Ex.: imagens, vídeos, áudio, textos livres.
+
+Formatos comuns:
+
+CSV: texto separado por vírgulas, legível, mas ineficiente para grandes volumes.
+
+Parquet: formato colunar, comprimido, otimizado para consultas analíticas.
+
+ORC: similar ao Parquet, usado no ecossistema Hive.
+
+Avro: formato de linha, usado para serialização de dados.
+
+JSON: leve, semiestruturado, comum em APIs.
+
+XML: antigo, verboso, ainda usado em sistemas legados.
+
+Qualidade de Dados
+Qualidade de dados é um conjunto de métricas que garantem que os dados são adequados para uso. Principais dimensões:
+
+Completeza:
+
+Gere o .md, de acordo com todos os requisitos que eu te passei até agora
+Vamos criar um material didático completo e aprofundado, cobrindo todos os tópicos da ementa da prova de engenharia de dados, com explicações claras e exemplos práticos. O objetivo é que uma pessoa leiga possa compreender os conceitos e, ao final, seja capaz de responder às questões com confiança. Vou estruturar o documento em seções, abordando cada tema com detalhes, incluindo os conceitos que não aparecem diretamente nas questões mas são fundamentais para a compreensão.
+
+O documento será em formato Markdown, bem organizado, com títulos, subtítulos, listas, tabelas e blocos de código quando necessário. Vou incluir as questões resolvidas no final, com explicações detalhadas, mas também intercalar conceitos ao longo do texto. Vou me basear na ementa fornecida e expandir com tópicos relevantes como governança, segurança, boas práticas, etc.
+
+Vou gerar o conteúdo agora.
+
+📘 Engenharia de Dados para Iniciantes: Guia Completo e Didático
+Sumário
+Introdução à Engenharia de Dados
+
+Big Data: Fundamentos e Ecossistema
+
+2.1 O que é Big Data? (5 Vs)
+
+2.2 Tipos de Processamento de Dados
+
+2.3 ETL vs ELT
+
+2.4 Camadas de Dados (SoR, SoT, Specialized)
+
+2.5 Tipos e Formatos de Dados
+
+2.6 Qualidade de Dados
+
+2.7 Sistemas Distribuídos e Hadoop
+
+2.8 MapReduce
+
+2.9 Apache Spark
+
+Amazon Web Services (AWS) para Dados
+
+3.1 Visão Geral da Nuvem AWS
+
+3.2 Serviços de Computação
+
+3.3 Serviços de Integração
+
+3.4 Segurança e Identidade
+
+3.5 Armazenamento
+
+3.6 Ferramentas de Dados (Glue, Redshift, Athena, EMR)
+
+3.7 Monitoramento e FinOps
+
+Banco de Dados
+
+4.1 Conceitos Fundamentais
+
+4.2 Modelagem de Dados (Conceitual, Lógica, Física)
+
+4.3 Chaves (Primária, Estrangeira, Substituta)
+
+4.4 SQL Básico e Intermediário
+
+4.5 Data Warehouse e Data Mart
+
+4.6 Bancos NoSQL
+
+Programação
+
+5.1 Algoritmos e Lógica de Programação
+
+5.2 Estruturas de Controle
+
+5.3 Programação Distribuída
+
+DevOps
+
+6.1 O que é DevOps?
+
+6.2 Shell Script
+
+6.3 Versionamento com Git
+
+6.4 Observabilidade
+
+Data Mesh
+
+7.1 Princípios do Data Mesh
+
+7.2 Data Mesh vs Data Lake
+
+7.3 Ingestão e Qualidade no Data Mesh
+
+Questões Comentadas
+
+Questão 1: Amazon Athena
+
+Questão 2: Qualidade em Data Lake
+
+Questão 3: Chave .pem para Windows
+
+Questão 4: Persistência no Spark
+
+Questão 5: SQOOP
+
+Questão 6: Replicação e Partição
+
+Questão 7: Nó Master no MapReduce
+
+Questão 8: Replicação Transparente no HDFS
+
+Questão 9: Operações de Transformação no Spark
+
+Questão 10: Partition vs Bucketing
+
+Questão 11: Redshift Spectrum
+
+Questão 12: Alerta via e-mail na AWS
+
+Questão 13: DNS na AWS
+
+Questão 14: Atualização de partições no Athena
+
+Questão 15: Acesso SSH no EMR
+
+Questão 16: Categorias NoSQL
+
+Questão 17: Glue Crawlers
+
+Questão 18: Transformações econômicas com AWS Glue
+
+Questão 19: COPY no Redshift
+
+Questão 20: AWS Cost Explorer
+
+Questão 21: Monitoramento de memória
+
+Questão 22: Definição de MapReduce
+
+Questão 23: XML bem formado
+
+Questão 24: Data Warehouse e Data Mart
+
+Questão 25: Chave Substituta
+
+Questão 26: SQL para médicos sem clínica
+
+Questão 27: Processamento Interativo
+
+Questão 28: Tipos de dados primitivos
+
+Questão 29: Dados não estruturados
+
+Questão 30: Definição de Algoritmo
+
+Questão 31: Shift-left testing
+
+Questão 32: Responsabilidade pelos dados
+
+Questão 33: Qualidade no Data Mesh
+
+Questão 34: Ingestão no Data Mesh
+
+Questão 35: Modelagem sem esquema no Data Mesh
+
+Questão 36: Formatos suportados no Athena
+
+Questão 37: Microserviços (PoC)
+
+Questão 38: Alerta de volumetria no S3
+
+Conclusão e Próximos Passos
+
+1. Introdução à Engenharia de Dados
+A engenharia de dados é a área responsável por projetar, construir e manter a infraestrutura que coleta, armazena, processa e disponibiliza dados para análise. É a base sobre a qual cientistas de dados, analistas e outros profissionais constroem suas análises e modelos.
+
+Analogia: Imagine que você quer construir uma casa. O engenheiro de dados é quem prepara o terreno, instala a fundação, o encanamento e a fiação elétrica. Depois, o arquiteto (cientista de dados) pode desenhar os cômodos e o decorador (analista) pode mobiliar. Sem uma boa infraestrutura, a casa desaba.
+
+Na prática, o engenheiro de dados lida com:
+
+Fontes de dados: bancos de dados, APIs, arquivos, streams.
+
+Armazenamento: data lakes, data warehouses, bancos NoSQL.
+
+Processamento: transformações, limpezas, agregações.
+
+Orquestração: agendamento e monitoramento de pipelines.
+
+Governança: qualidade, segurança, linhagem.
+
+Agora, vamos mergulhar nos conceitos fundamentais.
+
+2. Big Data: Fundamentos e Ecossistema
+2.1 O que é Big Data? (5 Vs)
+Big Data refere-se a conjuntos de dados tão grandes e complexos que as ferramentas tradicionais de processamento não conseguem lidar com eles de forma eficiente. O conceito é frequentemente explicado pelos 5 Vs:
+
+V	Descrição	Exemplo
+Volume	Quantidade massiva de dados.	O Facebook gera petabytes de dados por dia.
+Velocidade	Dados são gerados e precisam ser processados rapidamente.	Transações bancárias em tempo real.
+Variedade	Diferentes formatos de dados.	Textos, imagens, vídeos, logs, dados estruturados.
+Veracidade	Qualidade e confiabilidade dos dados.	Dados de sensores podem ter ruído; redes sociais podem ter opiniões tendenciosas.
+Valor	Capacidade de extrair insights úteis que justifiquem o investimento.	Prever demanda de produtos para otimizar estoque.
+2.2 Tipos de Processamento de Dados
+Tipo	Descrição	Exemplo
+Batch (lote)	Processa grandes volumes em intervalos programados (diário, horário).	Relatórios de vendas do dia anterior.
+Streaming (tempo real)	Processa dados continuamente à medida que chegam.	Detecção de fraudes em transações.
+Interativo (ad hoc)	Consultas sob demanda, exploratórias.	Um analista consulta o banco para verificar um dado específico.
+2.3 ETL vs ELT
+ETL (Extract, Transform, Load): os dados são extraídos das fontes, transformados em um servidor intermediário (staging) e depois carregados no destino. É o modelo tradicional, usado quando o destino não tem poder computacional para transformações.
+
+ELT (Extract, Load, Transform): os dados são extraídos e carregados diretamente no destino (ex.: data lake) e depois transformados conforme necessário. É comum em arquiteturas modernas com ferramentas como Spark, pois o destino (ex.: nuvem) pode escalar o processamento.
+
+Analogia: ETL é como preparar os ingredientes (lavar, cortar) antes de levar para a cozinha. ELT é levar todos os ingredientes para a cozinha e depois prepará-los lá.
+
+2.4 Camadas de Dados (SoR, SoT, Specialized)
+Em uma arquitetura de dados, é comum organizar os dados em camadas:
+
+Source of Record (SoR): sistemas de origem, onde os dados são gerados. Ex.: banco de dados transacional, logs de aplicação. São os dados brutos, sem alterações.
+
+Source of Truth (SoT): camada curada, com dados limpos, validados e confiáveis para análise. É o "ouro" da empresa.
+
+Specialized: camadas específicas para determinados domínios ou aplicações, como data marts ou features para machine learning.
+
+2.5 Tipos e Formatos de Dados
+Os dados podem ser classificados em:
+
+Estruturados: possuem um esquema rígido, como tabelas com linhas e colunas. Formatos: CSV, Parquet, ORC, Avro.
+
+Semiestruturados: possuem alguma organização, mas não são tão rígidos. Ex.: JSON, XML, logs.
+
+Não estruturados: não têm formato predefinido. Ex.: imagens, vídeos, áudio, textos livres.
+
+Formatos comuns:
+
+CSV: texto separado por vírgulas, legível, mas ineficiente para grandes volumes.
+
+Parquet: formato colunar, comprimido, otimizado para consultas analíticas.
+
+ORC: similar ao Parquet, usado no ecossistema Hive.
+
+Avro: formato de linha, usado para serialização de dados.
+
+JSON: leve, semiestruturado, comum em APIs.
+
+XML: antigo, verboso, ainda usado em sistemas legados.
+
+2.6 Qualidade de Dados
+Qualidade de dados é um conjunto de métricas que garantem que os dados são adequados para uso. Principais dimensões:
+
+Completeza: todos os dados necessários estão presentes? (ex.: campos obrigatórios preenchidos)
+
+Unicidade: não há duplicatas indesejadas.
+
+Consistência: os dados estão coerentes entre si (ex.: mesma moeda em todas as transações).
+
+Validade: os dados estão no formato correto e dentro de intervalos aceitáveis.
+
+Precisão: os dados refletem a realidade com exatidão.
+
+Integridade: relações entre dados são mantidas (ex.: chaves estrangeiras válidas).
+
+Aplicar validações em cada camada do pipeline é fundamental para garantir a qualidade.
+
+2.7 Sistemas Distribuídos e Hadoop
+Sistemas distribuídos são compostos por múltiplos computadores (nós) que trabalham juntos para parecer um único sistema. Eles oferecem escalabilidade e tolerância a falhas.
+
+Apache Hadoop é um framework de código aberto para processamento distribuído de grandes volumes de dados. Seus principais componentes:
+
+HDFS (Hadoop Distributed File System): sistema de arquivos distribuído que divide os dados em blocos e os replica em vários nós para tolerância a falhas.
+
+YARN (Yet Another Resource Negotiator): gerencia recursos do cluster e agenda tarefas.
+
+MapReduce: modelo de programação para processamento paralelo.
+
+2.8 MapReduce
+MapReduce é um modelo de programação que divide o processamento em duas fases:
+
+Map: processa dados em paralelo, gerando pares chave-valor intermediários.
+
+Reduce: agrega os resultados, combinando valores associados à mesma chave.
+
+Exemplo: Contar palavras em um conjunto de documentos. Cada nó mapeia as palavras e conta ocorrências locais; depois, o reduce soma as contagens de cada palavra.
+
+No Hadoop, há um nó Master (ResourceManager) que coordena as tarefas, e nós Slaves (NodeManagers) que executam as tarefas. O nó Master não deve armazenar ou processar dados diretamente para não se tornar um gargalo.
+
+2.9 Apache Spark
+Apache Spark é um framework de processamento em memória, mais rápido que MapReduce para muitas cargas de trabalho. Oferece APIs em Java, Scala, Python e SQL.
+
+Características:
+
+Processamento em memória (pode usar disco se necessário).
+
+Suporte a batch, streaming, SQL, machine learning e grafos.
+
+Operações de transformação: map, filter, flatMap, distinct, join, etc. (nota: joinstep não é uma operação padrão).
+
+Persistência: dados podem ser persistidos em memória (MEMORY_ONLY), disco (DISK_ONLY) ou ambos (MEMORY_AND_DISK).
+
+3. Amazon Web Services (AWS) para Dados
+3.1 Visão Geral da Nuvem AWS
+AWS é uma plataforma de serviços em nuvem que oferece computação, armazenamento, banco de dados, análise, machine learning e muito mais. Os serviços são pagos conforme o uso, permitindo escalabilidade elástica.
+
+3.2 Serviços de Computação
+EC2 (Elastic Compute Cloud): máquinas virtuais sob demanda. Você escolhe o sistema operacional, tamanho, armazenamento, etc.
+
+Lambda: computação serverless; execute código em resposta a eventos sem gerenciar servidores. Ideal para tarefas curtas e event-driven.
+
+3.3 Serviços de Integração
+SQS (Simple Queue Service): fila de mensagens para desacoplar componentes de aplicação.
+
+SNS (Simple Notification Service): serviço de notificações push para e-mail, SMS, HTTP, etc.
+
+API Gateway: cria, publica e gerencia APIs.
+
+Route 53: serviço de DNS (Domain Name System) que traduz nomes de domínio em endereços IP.
+
+CodePipeline: serviço de CI/CD para automatizar entregas de software.
+
+3.4 Segurança e Identidade
+IAM (Identity and Access Management): gerencia usuários, grupos, permissões e roles. Controla quem pode acessar quais recursos.
+
+KMS (Key Management Service): cria e gerencia chaves de criptografia.
+
+3.5 Armazenamento
+S3 (Simple Storage Service): armazenamento de objetos, altamente durável e escalável. Base para data lakes.
+
+RDS (Relational Database Service): bancos de dados relacionais gerenciados (MySQL, PostgreSQL, etc.).
+
+DynamoDB: banco NoSQL chave-valor e documento, totalmente gerenciado.
+
+EFS (Elastic File System): sistema de arquivos compartilhado para EC2.
+
+Storage Gateway: conecta infraestrutura on-premises com armazenamento na nuvem.
+
+3.6 Ferramentas de Dados
+Glue: serviço serverless de ETL. Inclui:
+
+Glue Data Catalog: catálogo de metadados centralizado.
+
+Glue Crawlers: percorrem dados no S3 e inferem esquemas, criando tabelas no catálogo.
+
+Glue Jobs: executam scripts ETL (baseados em Spark) em ambiente gerenciado.
+
+Redshift: data warehouse colunar, otimizado para consultas analíticas. Suporta:
+
+COPY: comando eficiente para carregar dados do S3.
+
+Redshift Spectrum: consulta dados diretamente no S3, sem carregar.
+
+Athena: serviço de consultas SQL interativas diretamente em dados no S3, usando o motor Presto. Suporta diversos formatos (CSV, JSON, Parquet, ORC, Avro) e compressão (LZO, Snappy, GZIP).
+
+EMR (Elastic MapReduce): cluster gerenciado para frameworks como Spark, Hadoop, Hive, Flink. Você escolhe o tamanho e paga por hora.
+
+3.7 Monitoramento e FinOps
+CloudWatch: coleta métricas, logs e eventos. Permite criar alarmes (ex.: uso de CPU, tamanho do bucket) e dashboards.
+
+Cost Explorer: ferramenta para visualizar e analisar custos da AWS, ajudando a otimizar gastos.
+
+SNS: usado em conjunto com CloudWatch para enviar notificações por e-mail, SMS, etc.
+
+FinOps é a prática de gerenciar custos em nuvem, combinando finanças, tecnologia e negócios para tomar decisões informadas.
+
+4. Banco de Dados
+4.1 Conceitos Fundamentais
+Um banco de dados é uma coleção organizada de dados armazenados eletronicamente. Os principais tipos:
+
+Relacionais (SQL): organizam dados em tabelas com linhas e colunas, usando SQL para consultas. Ex.: MySQL, PostgreSQL, Oracle.
+
+Não relacionais (NoSQL): flexíveis, adequados para dados não estruturados ou semiestruturados. Ex.: MongoDB, Cassandra, Redis.
+
+4.2 Modelagem de Dados (Conceitual, Lógica, Física)
+Modelagem Conceitual: alto nível, descreve entidades, atributos e relacionamentos, sem se preocupar com implementação. Ex.: diagrama entidade-relacionamento (DER) com "Cliente", "Produto", "Venda".
+
+Modelagem Lógica: detalha tabelas, colunas, chaves, tipos de dados, mas ainda independente de SGBD. Ex.: tabela Cliente com campos id_cliente (INT), nome (VARCHAR).
+
+Modelagem Física: específica para um banco de dados, incluindo índices, partições, otimizações. Ex.: CREATE TABLE com tipos específicos do PostgreSQL.
+
+4.3 Chaves (Primária, Estrangeira, Substituta)
+Chave Primária (Primary Key): identifica unicamente cada linha em uma tabela. Deve ser única e não nula. Pode ser simples (uma coluna) ou composta (várias colunas).
+
+Chave Estrangeira (Foreign Key): referencia a chave primária de outra tabela, estabelecendo um relacionamento.
+
+Chave Substituta (Surrogate Key): chave artificial (ex.: ID sequencial) usada em modelos dimensionais para garantir unicidade e evitar dependência de chaves naturais (que podem mudar). Exemplo: em uma dimensão "Cliente", a chave natural poderia ser o CPF, mas se o CPF mudar (raro), ou se houver clientes sem CPF, usa-se um ID interno.
+
+4.4 SQL Básico e Intermediário
+Comandos essenciais:
+
+SELECT: consultar dados. Ex.: SELECT nome, idade FROM clientes WHERE cidade = 'São Paulo';
+
+INSERT: inserir dados. Ex.: INSERT INTO clientes (nome, idade) VALUES ('João', 30);
+
+UPDATE: atualizar dados. Ex.: UPDATE clientes SET idade = 31 WHERE nome = 'João';
+
+DELETE: deletar dados. Ex.: DELETE FROM clientes WHERE nome = 'João';
+
+Junções (JOIN):
+
+INNER JOIN: retorna apenas linhas com correspondência em ambas as tabelas.
+
+LEFT JOIN: retorna todas as linhas da tabela à esquerda, mesmo sem correspondência à direita.
+
+RIGHT JOIN: análogo ao LEFT, mas com a tabela à direita.
+
+FULL OUTER JOIN: retorna todas as linhas de ambas, preenchendo com NULL onde não há correspondência.
+
+Subconsultas:
+
+EXISTS: verifica se uma subconsulta retorna algum registro.
+
+IN: verifica se um valor está em uma lista ou subconsulta.
+
+4.5 Data Warehouse e Data Mart
+Data Warehouse (DW): repositório centralizado que integra dados de várias fontes, com visão corporativa. Características:
+
+Granularidade detalhada (dados em nível de transação).
+
+Histórico completo.
+
+Otimizado para consultas analíticas.
+
+Data Mart (DM): subconjunto do DW, focado em uma área de negócio (ex.: vendas, marketing). Características:
+
+Menor granularidade (dados agregados).
+
+Histórico limitado ao necessário para análises departamentais.
+
+4.6 Bancos NoSQL
+Principais categorias:
+
+Categoria	Descrição	Exemplos
+Chave-Valor	Armazena pares chave-valor, acesso rápido por chave.	Redis, DynamoDB
+Orientados a Documentos	Armazena documentos semiestruturados (JSON, BSON).	MongoDB, Couchbase
+Orientados a Colunas	Armazena dados em colunas, otimizado para consultas analíticas.	Cassandra, HBase
+Grafos	Armazena nós e arestas, ideal para dados altamente conectados.	Neo4j, Amazon Neptune
+5. Programação
+5.1 Algoritmos e Lógica de Programação
+Um algoritmo é uma sequência finita de passos (instruções) para resolver um problema ou realizar uma tarefa. Exemplos: receita de bolo, instruções de montagem de um móvel.
+
+Lógica de programação envolve o uso de estruturas de controle para criar algoritmos executáveis por computadores.
+
+5.2 Estruturas de Controle
+Condicionais: if, else, switch – executam blocos de código baseados em condições.
+
+Loops: for, while – repetem blocos de código.
+
+Operadores lógicos: AND, OR, NOT – combinam condições.
+
+5.3 Programação Distribuída
+Conceitos básicos:
+
+Paralelismo: dividir tarefas em partes que podem ser executadas simultaneamente em múltiplos processadores ou máquinas.
+
+Tolerância a falhas: capacidade de continuar operando mesmo com falhas em alguns nós.
+
+Frameworks como Hadoop e Spark abstraem a complexidade, permitindo que o desenvolvedor escreva código como se estivesse em uma única máquina.
+
+6. DevOps
+6.1 O que é DevOps?
+DevOps é um conjunto de práticas que integra desenvolvimento (Dev) e operações (Ops) para melhorar a colaboração, automação e entrega contínua de software. Pilares:
+
+Cultura: colaboração e responsabilidade compartilhada.
+
+Automação: pipelines de CI/CD, infraestrutura como código.
+
+Medição: monitoramento e logging.
+
+Compartilhamento: feedback contínuo.
+
+6.2 Shell Script
+Shell script são programas escritos para o shell do sistema operacional (ex.: Bash no Linux). São usados para automatizar tarefas como manipulação de arquivos, execução de comandos, agendamento de jobs.
+
+Exemplo simples:
+
+bash
+#!/bin/bash
+echo "Backup iniciado"
+cp -r /dados /backup
+echo "Backup concluído"
+6.3 Versionamento com Git
+Git é um sistema de controle de versão distribuído. Comandos básicos:
+
+git init: inicia um repositório.
+
+git add: adiciona arquivos à área de staging.
+
+git commit: cria um commit com as alterações.
+
+git push: envia commits para um repositório remoto.
+
+git pull: atualiza o repositório local com alterações remotas.
+
+Branching: ramificações para desenvolver funcionalidades isoladamente (ex.: feature-branch). Depois, faz-se merge com a branch principal.
+
+6.4 Observabilidade
+Observabilidade é a capacidade de entender o estado interno de um sistema a partir de dados externos (logs, métricas, traces). Práticas:
+
+Logs: registros de eventos, usados para debugging e auditoria.
+
+Métricas: dados numéricos ao longo do tempo (ex.: CPU, requisições por segundo).
+
+Tracing: rastreamento de requisições através de serviços distribuídos.
+
+Ferramentas: CloudWatch, ELK Stack, Prometheus, Grafana.
+
+7. Data Mesh
+7.1 Princípios do Data Mesh
+Data Mesh é uma abordagem descentralizada para arquitetura de dados, proposta por Zhamak Dehghani. Baseia-se em quatro princípios:
+
+Domínios orientados a negócio: os dados são organizados por domínios de negócio (ex.: vendas, clientes, estoque), cada um com sua própria equipe (produto de dados).
+
+Dados como produto: cada domínio trata seus dados como um produto, com qualidade, documentação, e contratos claros.
+
+Plataforma de autosserviço: infraestrutura que facilita a criação, governança e consumo de produtos de dados pelos domínios.
+
+Governança federada: regras e padrões comuns, mas com autonomia dos domínios para decidir como implementá-los.
+
+7.2 Data Mesh vs Data Lake
+Data Lake: repositório centralizado de dados brutos, geralmente gerenciado por uma equipe central. Pode levar a gargalos e falta de agilidade.
+
+Data Mesh: descentraliza a propriedade e a responsabilidade, promovendo agilidade e escalabilidade, mas requer maturidade em governança e cultura organizacional.
+
+7.3 Ingestão e Qualidade no Data Mesh
+Ingestão: processo de coletar dados de fontes (internas ou externas) e disponibilizá-los como produtos de dados, seguindo os princípios de domínio. Cada domínio é responsável por ingerir e expor seus dados.
+
+Qualidade: práticas recomendadas:
+
+Testes automatizados de qualidade.
+
+Definição e monitoramento de métricas (completude, unicidade, etc.).
+
+Padronização flexível: cada domínio pode usar formatos adequados, desde que siga contratos de interoperabilidade (evitar padronização rígida que engesse).
+
+8. Questões Comentadas
+Aqui estão todas as questões da prova, com a alternativa correta destacada e uma explicação detalhada do conceito envolvido. As explicações foram elaboradas de forma didática, relacionando com os tópicos abordados anteriormente.
+
+Questão 1: Amazon Athena
+Pergunta: Qual é o mecanismo de consulta utilizado no Amazon Athena?
+
+Alternativas:
+
+AWS Glacier
+
+AWS Firebolt
+
+Presto
+
+Spectrum
+
+Não sei a resposta.
+
+Resposta correta: Presto
+Explicação: O Amazon Athena é um serviço de consulta interativa que permite executar queries SQL diretamente em dados armazenados no S3. Ele utiliza o mecanismo Presto, um motor de consultas distribuído de código aberto, otimizado para análises rápidas em grandes volumes de dados. O Presto foi desenvolvido pelo Facebook e é amplamente adotado na AWS para consultas ad hoc em data lakes.
+
+Questão 2: Qualidade em Data Lake
+Pergunta: Ao trabalhar com dados em uma arquitetura de data lake, qual das seguintes estratégias é recomendada para garantir a qualidade dos dados?
+
+Alternativas:
+
+Utilização de uma única camada de dados para simplificar o gerenciamento e controle
+
+Aplicação de validações de qualidade de dados em cada camada do data lake
+
+Armazenamento de todos os dados em um único arquivo para facilitar o acesso
+
+Realização de processamento em batch sem monitoramento em tempo real
+
+Resposta correta: Aplicação de validações de qualidade de dados em cada camada do data lake
+Explicação: Em um data lake, os dados passam por diferentes camadas (raw, trusted, refined). Aplicar validações em cada etapa garante que problemas sejam detectados precocemente e que os dados downstream sejam confiáveis. As outras opções (única camada, arquivo único, sem monitoramento) são práticas inadequadas que comprometem a qualidade.
+
+Questão 3: Chave .pem para Windows
+Pergunta: É correto afirmar que com um par chave "pem" para acesso através do sistema operacional Windows é necessário utilizar o utilitário PutYgen para conversão da chave "pem" para ".ppk"?
+
+Alternativas:
+
+Não sei a resposta.
+
+Verdadeiro
+
+Falso
+
+Resposta correta: Verdadeiro
+Explicação: O PuTTY é um cliente SSH para Windows que não suporta nativamente o formato .pem (formato OpenSSH). O PuTTYgen é uma ferramenta que converte chaves .pem para o formato .ppk (PuTTY Private Key), permitindo a autenticação via PuTTY. Portanto, a afirmação é verdadeira.
+
+Questão 4: Persistência no Spark
+Pergunta: Por padrão Spark persiste dados em memória ou em disco. Sobre a afirmação acima, marque a melhor opção:
+
+Alternativas:
+
+Spark só persiste dados em disco, sobre o HDFS
+
+Não sei a resposta
+
+Spark só persiste dados em memória
+
+Dados podem ser persistidos de forma híbrida, em memória e disco
+
+A sentença é verdadeira
+
+Resposta correta: Dados podem ser persistidos de forma híbrida, em memória e disco
+Explicação: O Spark permite que os dados sejam persistidos (cacheados) em memória para acelerar processamentos repetitivos. No entanto, se não houver memória suficiente, ele pode armazenar dados em disco. Além disso, é possível configurar níveis de persistência como MEMORY_ONLY, DISK_ONLY ou MEMORY_AND_DISK. Portanto, a afirmação "por padrão Spark persiste dados em memória ou em disco" é verdadeira, mas a melhor opção é a que explicita a possibilidade híbrida.
+
+Questão 5: SQOOP
+Pergunta: SQOOP é uma ferramenta do ecossistema Hadoop cuja principal função é: (marque a melhor resposta)
+
+Alternativas:
+
+Importar dados dimensionais
+
+Importar dados do Postgresql
+
+Não sei a resposta
+
+Importar dados de sistemas gerenciadores de banco de dados relacionais
+
+Importar dados estruturados e semi-estruturados
+
+Resposta correta: Importar dados de sistemas gerenciadores de banco de dados relacionais
+Explicação: O Apache Sqoop foi desenvolvido para transferir dados entre o Hadoop (HDFS, Hive, HBase) e bancos de dados relacionais (como MySQL, PostgreSQL, Oracle). Ele permite importar e exportar dados de forma eficiente. A opção "importar dados de sistemas gerenciadores de banco de dados relacionais" é a mais abrangente e correta.
+
+Questão 6: Replicação e Partição
+Pergunta: Qual opção apresenta a definição correta para Replicação e Partição, respectivamente:
+
+Alternativas:
+
+Dados são copiados para o mesmo nós / Dados são divididos entre diferentes nós
+
+Dados são divididos para diferentes nós / Dados são copiados entre diferentes nós
+
+Não sei a resposta
+
+Dados são copiados para diferentes nós / Dados são divididos no mesmo nós
+
+Dados são copiados para diferentes nós / Dados são divididos entre diferentes nós
+
+Resposta correta: Dados são copiados para diferentes nós / Dados são divididos entre diferentes nós
+Explicação: Em sistemas distribuídos:
+
+Replicação: cópias dos dados são mantidas em múltiplos nós para garantir tolerância a falhas e alta disponibilidade.
+
+Partição (sharding): os dados são divididos em fragmentos e distribuídos entre nós para paralelizar o processamento.
+A opção correta reflete exatamente essas definições.
+
+Questão 7: Nó Master no MapReduce
+Pergunta: Map reduce opera no conceito Master e Slave. Qual das tarefas abaixo não é recomendada para o nó Master?
+
+Alternativas:
+
+Balanceamento de dados
+
+Agendamentos
+
+Manter e processar dados
+
+Manter metadados
+
+Não sei a resposta
+
+Resposta correta: Manter e processar dados
+Explicação: No modelo Master-Slave, o nó Master é responsável por coordenar as tarefas, agendar execuções, manter metadados e balancear a carga. Ele não deve armazenar ou processar dados diretamente, pois isso poderia sobrecarregá-lo e comprometer a coordenação do cluster. As tarefas de processamento de dados são executadas pelos nós Slaves.
+
+Questão 8: Replicação Transparente no HDFS
+Pergunta: Uma das características do HDFS é a replicação transparente. Qual opção abaixo melhor define este conceito?
+
+Alternativas:
+
+Arquivos estão logicamente divididos, mas fisicamente em um mesmo local
+
+Arquivos são distribuídos automaticamente entre os nós da rede
+
+Arquivos são separados em blocos, mas não são distribuídos automaticamente
+
+Arquivos são copiados do sistema de arquivos do sistema operacional para o HDFS
+
+Não sei a resposta
+
+Resposta correta: Arquivos são distribuídos automaticamente entre os nós da rede
+Explicação: No HDFS, os arquivos são divididos em blocos (ex.: 128 MB) e cada bloco é replicado automaticamente em múltiplos nós (padrão: 3 réplicas). Isso ocorre de forma transparente para o usuário, garantindo tolerância a falhas e disponibilidade. A opção "arquivos são distribuídos automaticamente entre os nós da rede" captura a essência da replicação transparente.
+
+Questão 9: Operações de Transformação no Spark
+Pergunta: São exemplos de operações de transformação em Spark, EXCETO:
+
+Alternativas:
+
+distinct() - retorna um novo dataset contendo os valores distintos do RDD original.
+
+map (func) - retorna um novo RDD aplicando a função func em cada elemento.
+
+flatMap (func) - similar ao map, mas retornando mais itens ao invés de apenas um.
+
+Joinstep - responsável pelo relacionamento de objetos.
+
+filter (func) - retorna um novo RDD aplicando o filtro func.
+
+Resposta correta: Joinstep
+Explicação: As operações de transformação no Spark incluem map, filter, flatMap, distinct, join (que é uma operação de transformação, mas o nome correto é join). "Joinstep" não é uma operação reconhecida no Spark. Portanto, é a exceção.
+
+Questão 10: Partition vs Bucketing
+Pergunta: Partition e Bucketing são mecanismos do Hive de particionar dados para otimizar consultas. Uma tabela possui uma coluna e-mail, qual seria a melhor técnica de particionamento e por quê?
+
+Alternativas:
+
+Não sei a resposta
+
+Partition, pois a cardinalidade dos dados será muito grande
+
+Bucketing, pois a cardinalidade dos dados será muito grande
+
+Partition, pois a cardinalidade dos dados será pequena
+
+Bucketing, pois a cardinalidade dos dados será pequena
+
+Resposta correta: Bucketing, pois a cardinalidade dos dados será muito grande
+Explicação:
+
+Partitioning é ideal para colunas com baixa cardinalidade (ex.: país, ano), pois cria diretórios separados.
+
+Bucketing é melhor para colunas com alta cardinalidade (ex.: e-mail, ID), pois distribui os dados em um número fixo de buckets (arquivos) dentro de cada partição, melhorando a eficiência de consultas com joins e agregações. E-mail tem alta cardinalidade (cada e-mail é único), então bucketing é mais adequado.
+
+Questão 11: Redshift Spectrum
+Pergunta: Você está participando do processo de modernização de um banco e sua squad de Data Analytics está responsável por modernizar o Data Warehouse do banco utilizando somente recursos disponíveis na cloud pública AWS. Ficou definido que para esta modernização o recurso para Data Warehouse será o Amazon Redshift e a fonte dos dados devem ser do Data Lake e Data Mesh. Qual recurso deve ser utilizado para realizar a integração das tabelas no Data Lake com o Amazon Redshift?
+
+Alternativas:
+
+Redshift Spectrum
+
+Data Pipeline
+
+JDBC
+
+Redshift SDK
+
+Não sei a resposta.
+
+Data Exchange
+
+Resposta correta: Redshift Spectrum
+Explicação: O Redshift Spectrum permite consultar dados diretamente no S3 (data lake) sem necessidade de carregá-los no Redshift. Ele estende o SQL do Redshift para ler arquivos em diversos formatos (Parquet, JSON, CSV) e pode ser usado para integrar dados do data lake com as tabelas locais do Redshift. É a ferramenta adequada para essa integração.
+
+Questão 12: Alerta via e-mail na AWS
+Pergunta: Você deseja receber uma alerta via e-mail após um pipeline de dados retornar um erro inesperado, qual serviço da AWS permite que isso seja implementado com o menor esforço possível para o desenvolvedor?
+
+Alternativas:
+
+Não sei a resposta.
+
+AWS NotificationService
+
+AWS Cloudwatch
+
+AWS SNS
+
+AWS CloudTrail
+
+Resposta correta: AWS Cloudwatch (embora a combinação CloudWatch + SNS seja a ideal, a questão pede o serviço que permite implementar com menor esforço, e CloudWatch é o que monitora e dispara alarmes)
+Explicação: O CloudWatch pode monitorar logs e métricas (ex.: erros em funções Lambda, execuções de Glue). É possível criar um alarme que, quando disparado, envia uma notificação para um tópico SNS, que por sua vez envia e-mails. O CloudWatch é o serviço central para monitoramento e alarmes, sendo a escolha mais direta.
+
+Questão 13: DNS na AWS
+Pergunta: Qual serviço AWS é responsável pelo gerenciamento de DNS (Domain Name System)?
+
+Alternativas:
+
+BIND
+
+Amazon Route 53
+
+Active Directory
+
+Não sei a resposta.
+
+Amazon DNS
+
+Resposta correta: Amazon Route 53
+Explicação: O Route 53 é o serviço de DNS da AWS, que traduz nomes de domínio (ex.: www.exemplo.com) em endereços IP. Ele também oferece funcionalidades de roteamento de tráfego e verificação de saúde.
+
+Questão 14: Atualização de partições no Athena
+Pergunta: Durante a planificação da sua equipe, você está respondendo por atualizar o data product of cartões na camada SPEC. A tabela recebe mensalmente todas as transações realizadas pelos clientes. Após a gravação dos dados na nova partição no S3 (cloud storage) ao realizar consulta no Athena você observa que os dados não estão visíveis para os usuários. O que deve ser feito para disponibilizar os dados aos usuários?
+
+Alternativas:
+
+Criar uma view no Athena para disponibilizar os dados com todas as partições.
+
+Executar o comando MSCK REPAIR TABLE na tabela após a inclusão da partição.
+
+Não sei a resposta.
+
+Criar no Glue um crawler para a database onde hospeda a tabela e aplicar regra de exceção para as demais tabelas existentes.
+
+Realizar drop e create da tabela após a inclusão da partição.
+
+Resposta correta: Executar o comando MSCK REPAIR TABLE na tabela após a inclusão da partição
+Explicação: No Athena (ou no Glue Data Catalog), quando você adiciona uma nova partição manualmente no S3, o catálogo não é atualizado automaticamente. O comando MSCK REPAIR TABLE varre o local da tabela e adiciona as partições recém-descobertas ao catálogo. É a maneira mais simples e correta.
+
+Questão 15: Acesso SSH no EMR
+Pergunta: Você provisionou um cluster EMR para realizar uma prova de conceito com o Apache Flink e Apache Zeppelin. O objetivo desta prova de conceito é utilizar o FlinksQL todos os recursos do cluster estão acessíveis externamente, mas a conexão via SSH não está ocorrendo com sucesso. O que você deve fazer para permitir o acesso através de SSH?
+
+Alternativas:
+
+Criar um ELB (Elastic Load Balance) com redirecionamento para a porta 22.
+
+Destruir o cluster e criar novamente utilizando uma rede pública.
+
+Não sei a resposta.
+
+Alterar o Security Group utilizado no cluster permitindo acesso a porta 22.
+
+Permitir acesso a porta 22 no WAF (Web Application Firewall).
+
+Resposta correta: Alterar o Security Group utilizado no cluster permitindo acesso a porta 22
+Explicação: O Security Group atua como firewall virtual para as instâncias do cluster. Para permitir SSH, é necessário adicionar uma regra de entrada que libere a porta 22 (TCP) para o seu IP (ou para um intervalo). As outras opções (ELB, recriar o cluster, WAF) não são adequadas para esse caso.
+
+Questão 16: Categorias NoSQL
+Pergunta: Banco de dados não relacionais, também conhecidos como NoSQL, surgiram para armazenar dados não estruturados, usando modelos de armazenamento específicos para os tipos de dados que são armazenados, usualmente, fugindo do padrão de armazenamento de linhas e colunas dos bancos de dados tradicionais. Em relação ao Banco de Dados NoSQL, quais são as categorias consideradas para esse tipo de armazenamento?
+
+Alternativas:
+
+Banco de dados de grafos; Banco de dados orientados a linha; Formas normais de armazenamento.
+
+Primeira forma normal; Banco de dados orientados a documentos; Normalização.
+
+Armazéns chave-valor; Normalização; Banco de dados orientados a coluna.
+
+Armazéns chave-valor; Banco de dados orientados a documentos; Banco de dados de grafos.
+
+Banco de dados orientados a linha; Normalização; Banco de dados orientados a coluna.
+
+Resposta correta: Armazéns chave-valor; Banco de dados orientados a documentos; Banco de dados de grafos
+Explicação: As principais categorias de bancos NoSQL são:
+
+Chave-valor (ex.: Redis, DynamoDB)
+
+Orientados a documentos (ex.: MongoDB)
+
+Orientados a colunas (ex.: Cassandra, HBase)
+
+Grafos (ex.: Neo4j)
+A alternativa correta lista três delas (faltou colunas, mas é a que contém as principais). As outras opções misturam conceitos de modelagem relacional (normalização, formas normais) que não são categorias NoSQL.
+
+Questão 17: Glue Crawlers
+Pergunta: Sua squad realizou o processamento dos dados relacionados a conta corrente, todos os dados foram gravados no S3 e nenhuma tabela foi criada no catálogo do Glue. O bucket ficou segmentado da seguinte forma: Caminho: s3://data-product/contacorrente/ Diretórios: /extrato, /pix, /doc, /ted, /boletos. Você precisa deixar a criação das tabelas e partições de forma automatizada utilizando os serviços AWS. Qual recurso pode ser utilizado para atender esta demanda?
+
+Alternativas:
+
+Amazon Athena
+
+Não sei a resposta.
+
+Amazon Glue Crawlers
+
+Amazon Glue Jobs
+
+Resposta correta: Amazon Glue Crawlers
+Explicação: O Glue Crawler percorre os dados armazenados no S3, infere o esquema (nomes de colunas, tipos) e cria/atualiza tabelas no Glue Data Catalog. Ele também pode detectar partições automaticamente. É a ferramenta ideal para automatizar a criação de tabelas a partir de dados no S3.
+
+Questão 18: Transformações econômicas com AWS Glue
+Pergunta: Imagine que você está trabalhando em uma empresa de análise de dados, precisando realizar transformações e limpeza de dados em um pipeline de ingestão. A empresa recebe milhões de arquivos CSV diariamente e as transformações precisam ser aplicadas em cada arquivo individualmente. Qual serviço da AWS seria mais econômico para realizar essas transformações em escala?
+
+Alternativas:
+
+Amazon EMR
+
+AWS Glue
+
+AWS Lambda
+
+Amazon Redshift
+
+Resposta correta: AWS Glue
+Explicação: O AWS Glue é um serviço serverless de ETL que executa jobs baseados em Spark. Ele é econômico para cargas de trabalho em lote porque você paga apenas pelo tempo de execução. O Lambda não é adequado para processar milhões de arquivos individualmente devido ao tempo limite (15 minutos) e concorrência limitada. O EMR exige gerenciamento de cluster, podendo ser mais caro para cargas esporádicas. O Redshift é um data warehouse, não uma ferramenta de transformação genérica.
+
+Questão 19: COPY no Redshift
+Pergunta: Você solicitou a equipe de engenharia de dados para exportar as tabelas do Data Warehouse Legado e colocar no bucket de migração do projeto do novo Data Warehouse. A equipe analisou que todas as tabelas foram exportadas com sucesso e estão disponíveis no bucket s3://data-warehouse/data/legado. Agora a equipe de Data Analytics precisa realizar a importação de todas as tabelas do Legado para o novo DW que está sendo construído no Amazon Redshift. Qual a forma mais adequada para realizar o processo de carga de dados para o Amazon Redshift?
+
+Alternativas:
+
+utilizar o comando COPY do Amazon Redshift.
+
+utilizar o data pipeline para ler os arquivos no bucket de migração e gravar no Amazon Redshift.
+
+Não sei a resposta.
+
+Desenvolver uma aplicação Python para ler os arquivos no bucket de migração e gravar no Amazon Redshift através de conexão ODBC.
+
+Criar tabelas externas no Amazon Redshift Spectrum e realizar a carga através do Amazon Athena.
+
+Resposta correta: utilizar o comando COPY do Amazon Redshift
+Explicação: O comando COPY é a maneira mais eficiente e recomendada para carregar grandes volumes de dados no Redshift a partir de arquivos no S3. Ele paraleliza a leitura e insere os dados nas tabelas de forma otimizada. As outras opções são menos eficientes ou desnecessárias.
+
+Questão 20: AWS Cost Explorer
+Pergunta: Recentemente você implementou uma aplicação piloto na sua empresa que foi um sucesso. Para realizar o rollout do projeto, a direção pediu que você apresentasse os gastos com infraestrutura AWS durante o período para avaliarem e aprovarem a expansão. Qual é o serviço da AWS que fornece essas informações?
+
+Alternativas:
+
+AWS Trusted Advisor
+
+Não sei a resposta.
+
+AWS Cost Explorer
+
+AWS Billing
+
+AWS Inspector
+
+Resposta correta: AWS Cost Explorer
+Explicação: O AWS Cost Explorer permite visualizar, analisar e prever custos e uso dos serviços AWS. Ele oferece relatórios detalhados e gráficos interativos. O AWS Billing é a página de faturamento, mas o Cost Explorer é a ferramenta de análise. Trusted Advisor dá recomendações de otimização, e Inspector é para segurança.
+
+Questão 21: Monitoramento de memória
+Pergunta: Você deseja monitorar o percentual de memória que os seus servidores estão utilizando em determinado período do dia, qual serviço da AWS permite realizar esse monitoramento?
+
+Alternativas:
+
+AWS CloudExplorer
+
+Não sei a resposta.
+
+AWS Datasync
+
+AWS CloudWatch
+
+AWS CloudTrail
+
+Resposta correta: AWS CloudWatch
+Explicação: O CloudWatch coleta métricas de recursos da AWS, como utilização de CPU, memória (se configurado com agente personalizado), disco e rede. É possível criar alarmes e dashboards. CloudTrail é para auditoria de APIs.
+
+Questão 22: Definição de MapReduce
+Pergunta: O que é MapReduce?
+
+Alternativas:
+
+É uma rotina que é executada dentro do cluster Hadoop para processar alto volume de dados.
+
+É um framework que utiliza todo espaço em disco de um servidor que está no cluster do Hadoop para realizar o processamento que foi solicitado.
+
+Não sei a resposta.
+
+É um modelo de programação, e framework desenvolvido para suportar computações paralelas em grandes coleções de dados em clusters de computadores.
+
+É uma biblioteca que pode ser importada em seu código e utilizada processamento em memória para executar as suas funções.
+
+Resposta correta: É um modelo de programação, e framework desenvolvido para suportar computações paralelas em grandes coleções de dados em clusters de computadores.
+Explicação: O MapReduce é um paradigma de programação distribuída, popularizado pelo Google, que divide o processamento em duas etapas: Map (processamento paralelo) e Reduce (agregação). O Hadoop implementa esse modelo. A opção correta captura essa definição.
+
+Questão 23: XML bem formado
+Pergunta: Qual dos seguintes fragmentos representa um fragmento XML bem formado?
+
+Alternativas:
+
+<myElement myAttribute="someValue">
+
+<myElement myAttribute="someValue"/>. (com ponto final)
+
+<myElement myAttribute="someValue"/>
+
+<myElement myAttribute="someValue/>
+
+Resposta correta: <myElement myAttribute="someValue"/> (sem ponto final)
+Explicação: Um XML bem formado deve ter uma tag de abertura e fechamento correspondentes, ou ser uma tag vazia com />. A opção correta é aquela que termina com "/>" sem caracteres extras. A opção com ponto final no final não é válida. A quarta opção tem a aspa fechando antes do />, o que é inválido.
+
+Questão 24: Data Warehouse e Data Mart
+Pergunta: Leia as afirmações abaixo sobre DW (Data Warehouse) e DM (Data Marts):
+I. Sob o ponto de vista de abrangência, o DW modela as necessidades sob uma visão específica/departamental;
+II. Em relação a granularidade, o DW contém maior nível de detalhe necessário para o BI;
+III. O DM contém apenas histórico essencial para algumas análises;
+IV. O DM contém todos os históricos necessários para BI.
+Com base nas alternativas acima, quais são verdadeiras:
+
+Alternativas:
+
+II e III
+
+I e IV
+
+I e III
+
+II e IV
+
+I e II
+
+Resposta correta: II e III
+Explicação:
+
+I é falsa: o DW tem visão corporativa, não departamental. O DM é que tem visão específica.
+
+II é verdadeira: o DW armazena dados em nível de detalhe (granularidade fina).
+
+III é verdadeira: o DM contém histórico resumido, suficiente para análises departamentais.
+
+IV é falsa: o DM não contém todo o histórico; isso é característica do DW.
+Portanto, apenas II e III são verdadeiras.
+
+Questão 25: Chave Substituta
+Pergunta: Qual opção melhor explica a necessidade de uma chave substituta em um modelo dimensional?
+
+Alternativas:
+
+Relacionar a dimensão com a fato, permitindo que chave primária do modelo relacional seja mantido
+
+Permitir que a chave primária do modelo relacional possa ser repetida
+
+Manter a integridade da dimensão
+
+Não sei a resposta
+
+Não permitir que valores repetidos sejam incluídos na dimensão e relacionados com a fato (ou similar, a resposta marcada foi essa)
+
+Explicação: A chave substituta (surrogate key) é uma chave artificial, geralmente um inteiro sequencial, atribuída a cada linha de uma dimensão. Ela serve para:
+
+Isolar a dimensão de mudanças nas chaves naturais do sistema de origem.
+
+Garantir a unicidade de cada registro.
+
+Melhorar performance de joins com a tabela fato.
+A opção marcada fala em "não permitir valores repetidos", o que é uma consequência, mas a principal função é manter a integridade e rastreabilidade. No entanto, entre as opções, essa é a que mais se aproxima.
+
+Questão 26: SQL para médicos sem clínica
+Pergunta: Considera as seguintes tabelas que pertencem a parte de um determinado banco de dados: Tabela de clínicas (codclinica, nomeclinica, localclinica); Tabela de médicos (CRM, NomeMedico, Telefone); Tabela que relaciona médicos a clínicas (codclinica, CRM). Usando SQL Server, assinale o comando que lista códigos e nomes dos médicos que não atuam em nenhuma clínica.
+
+Alternativas:
+
+Não sei a resposta.
+
+SELECT Médico.CRM, nomeMedico FROM Médico RIGHT JOIN Clinicamedico ON Clinicamedico.codclinica ISNULL
+
+SELECT CRM, nomeMedico FROM Médico WHERE NOT EXISTS (SELECT * FROM Clinicamedico WHERE CRM = Medico.CRM)
+
+SELECT CRM, nomeMedico FROM Médico WHERE CRM NOT IN (SELECT * FROM Clinicamedico WHERE CRM = Medico.CRM)
+
+SELECT Médico.CRM, nomeMedico FROM Médico LEFT JOIN Clinicamedico ON Clinicamedico.codclinica IS NULL
+
+Resposta correta: SELECT CRM, nomeMedico FROM Médico WHERE NOT EXISTS (SELECT * FROM Clinicamedico WHERE CRM = Medico.CRM)
+Explicação: A consulta usa NOT EXISTS para selecionar médicos que não têm correspondência na tabela de relacionamento. Essa é uma forma eficiente e semanticamente correta. Outras opções usam LEFT JOIN com condição errada ou NOT IN que pode ter problemas com NULLs.
+
+Questão 27: Processamento Interativo
+Pergunta: O time fiscal precisa conferir a alíquota que foi utilizada pelo sistema no Faturamento de um serviço. Como o Data Warehouse opera em D+1, essa informação só estará disponível no dia seguinte. Dessa forma o analista fiscal abre um aplicativo de consulta, roda um comando e obtém a alíquota diretamente do sistema transacional. Qual opção melhor classificaria esta forma de processamento de dados?
+
+Alternativas:
+
+Streaming;
+
+Interativo ou Ad Hoc;
+
+Não sei a resposta.
+
+Real Time;
+
+Em Batch;
+
+Resposta correta: Interativo ou Ad Hoc
+Explicação: O processamento ad hoc ou interativo refere-se a consultas realizadas sob demanda, geralmente para responder a uma necessidade imediata, sem seguir um agendamento batch ou streaming. O analista acessa diretamente a fonte transacional para obter a informação em tempo real, caracterizando uma consulta interativa.
+
+Questão 28: Tipos de dados primitivos
+Pergunta: Em tecnologia as equipes desenvolvem softwares para receber e armazenar informações. Para o computador, tais informações são chamadas de: dados. Dados podem assumir diversos formatos para otimizar a memória do computador. Portanto, quais dos tipos abaixo podemos dizer que são tipos de dados primitivos?
+
+Alternativas:
+
+Caracteres (A) - Início (idade) - Lógico (verdadeiro/falso)
+
+Caracteres (A) - Início (idade) - Real (RS) - Lógico (verdadeiro/falso)
+
+Texto (nome) - Inteiro (idade) - Real (RS) - Lógico (verdadeiro/falso)
+
+Resposta correta: Texto (nome) - Inteiro (idade) - Real (RS) - Lógico (verdadeiro/falso)
+Explicação: Tipos de dados primitivos em programação geralmente incluem: inteiro, real (float), caractere/texto, booleano (lógico). A opção correta lista esses equivalentes.
+
+Questão 29: Dados não estruturados
+Pergunta: Assinale a alternativa que contém um exemplo de dados não estruturados.
+
+Alternativas:
+
+Um sistema bancário armazena dados sobre seus clientes, sobre suas respectivas contas bancárias e sobre as transações executadas sobre tais contas.
+
+Dados extraídos de uma rede social de um banco podem ser classificados em polaridades como positivas ou negativas, ou agrupadas por similaridade de assunto.
+
+Funcionários de um departamento de recursos humanos observam os candidatos a uma vaga de emprego e fazem anotações sobre as suas atitudes durante a realização de atividades de um processo de seleção.
+
+Uma empresa deseja lançar um novo produto e, para isso, realiza pesquisas sobre sua aceitação com um conjunto específico de pessoas que representa o público-alvo.
+
+Uma corrida de fórmula 1 na qual se medem os tempos que cada piloto gasta para chegar em diferentes trechos de um circuito.
+
+Resposta correta: Funcionários de um departamento de recursos humanos observam os candidatos a uma vaga de emprego e fazem anotações sobre as suas atitudes durante a realização de atividades de um processo de seleção.
+Explicação: Dados não estruturados não possuem um formato predefinido, como textos livres, imagens, vídeos. As anotações feitas por observadores são textos livres, sem esquema rígido. As outras alternativas descrevem dados estruturados (bancos, pesquisas com público-alvo, medições de tempo).
+
+Questão 30: Definição de Algoritmo
+Pergunta: O que é um algoritmo?
+
+Alternativas:
+
+Permite realizar operações lógicas e aritméticas utilizando apenas dois dígitos ou apenas dois estados (verdadeiro ou falso, tudo ou nada, 0 ou 1)
+
+É a solução de um problema
+
+Trata-se de uma sequência de passos. Conhecida como um conjunto de instruções para chegar a um determinado objetivo.
+
+São Ações enviadas para um computador
+
+Não sei a resposta.
+
+Resposta correta: Trata-se de uma sequência de passos. Conhecida como um conjunto de instruções para chegar a um determinado objetivo.
+Explicação: Definição clássica de algoritmo.
+
+Questão 31: Shift-left testing
+Pergunta: No âmbito de DevOps, o termo “shift left testing” significa que os testes devem:
+
+Alternativas:
+
+dirigir o desenvolvimento do produto.
+
+ser feitos apenas por meio de ferramentas de automação de testes.
+
+ser feitos desde as fases iniciais do ciclo de vida do produto.
+
+ser feitos junto com a entrada em operação do produto.
+
+ser feitos apenas no ambiente de desenvolvimento.
+
+Resposta correta: ser feitos desde as fases iniciais do ciclo de vida do produto.
+Explicação: "Shift left" significa mover os testes para a esquerda no ciclo de desenvolvimento, ou seja, começar a testar mais cedo (na fase de requisitos, design, código) em vez de deixar para o final.
+
+Questão 32: Responsabilidade pelos dados
+Pergunta: Na era do Big Data e da ciência de dados, a maioria das empresas e instituições compreende o poder dos dados. Entretanto, muitas deixam de avaliar as responsabilidades fiscais e jurídicas associadas a eles. São muitos os riscos, mas um processo de governança de dados bem elaborado pode ajudar a garantir a qualidade, disponibilidade, integridade e usabilidade constantes de seus dados. Por que é importante atribuir responsabilidade pelos dados?
+
+Alternativas:
+
+Para ter um responsável comum.
+
+Somente para aplicar governança.
+
+Para que o responsável consiga disponibilizar bases.
+
+Não sei a resposta.
+
+Para aplicar governança e fazer com que o responsável entenda os requisitos de conformidade.
+
+Resposta correta: Para aplicar governança e fazer com que o responsável entenda os requisitos de conformidade.
+Explicação: A atribuição de responsabilidade (data stewardship) garante que alguém seja accountable pela qualidade, segurança e conformidade dos dados, essencial para governança. A opção correta combina governança e conformidade.
+
+Questão 33: Qualidade no Data Mesh
+Pergunta: No contexto do Data Mesh, quais das seguintes práticas são recomendadas para melhorar a qualidade dos dados em um domínio específico?
+I) Implementar testes automatizados de qualidade de dados
+II) Definir e monitorar métricas de qualidade de dados
+III) Realizar a padronização rígida de todos os dados em um único formato
+
+Alternativas:
+
+I, III
+
+II, III
+
+I, II
+
+Resposta correta: I, II
+Explicação: A padronização rígida (III) vai contra o princípio de autonomia dos domínios. No Data Mesh, cada domínio pode ter seus formatos, desde que siga contratos de interoperabilidade. Testes e métricas são práticas recomendadas.
+
+Questão 34: Ingestão no Data Mesh
+Pergunta: Podemos definir Ingestão no contexto do Data Mesh como:
+
+Alternativas:
+
+A ingestão de dados no contexto do Data Mesh, refere-se ao processo de coletar e trazer dados da vida real para utilização centralizada que adere aos princípios do Domain Driven Design. Esta é uma etapa essencial na criação de uma abordagem descentralizada e orientada por domínio para o gerenciamento de dados, em que os dados são de propriedade e gerenciados por equipes individuais responsáveis por domínios específicos.
+
+A ingestão de dados no contexto do Data Mesh, refere-se ao processo de coletar e processamento de dados de várias forças, requisitando-os a um repositório de dados centralizado onde todos os dados são armazenados e gerenciados.
+
+A ingestão de dados no contexto do Data Mesh, refere-se ao processo de transferir dados entre as camadas transacionais (core) para um repositório controlado (SoR) no Data Lake.
+
+Resposta correta: A primeira opção
+Explicação: Essa definição reflete a visão de que a ingestão deve respeitar os domínios e tratar dados como produtos, com propriedade descentralizada. As outras opções ainda sugerem centralização, que é contrária ao Data Mesh.
+
+Questão 35: Modelagem sem esquema no Data Mesh
+Pergunta: Você está atuando em uma equipe onde as bases de dados origem (SoR) ainda não estão catalogadas e democratizadas para uso do banco, somente uso de bases manuais. Nesse contexto, você recebe a solicitação de outra equipe que tem a necessidade de consumir os dados da origem para uso e eles solicitam a você a modelagem dos dados, porém, essas bases ainda não a possuem. Tendo como base uma arquitetura de dados Data Mesh, o que você faria para disponibilizar os dados para a equipe solicitante?
+
+Alternativas:
+
+Para sistemas origem que não possuírem modelo de dados, seria necessário que o consumidor criasse o modelo com os dados que precisa utilizar.
+
+Para sistemas origem que não possuírem modelo de dados, seria necessário que o produtor realizasse a engenharia reversa antes de democratizar a base no Mesh.
+
+Para sistemas origem que não possuírem modelo de dados, seria necessário que o produtor criasse o modelo igual a base manual antes de democratizar a base no Mesh.
+
+Independente dos sistemas origem possuírem ou não modelo de dados, basta o produtor disponibilizar uma integração para consumo dos dados, afinal o produtor dos dados é responsável por expor seu dado.
+
+Resposta correta: Para sistemas origem que não possuírem modelo de dados, seria necessário que o produtor realizasse a engenharia reversa antes de democratizar a base no Mesh.
+Explicação: No Data Mesh, o produtor do dado (domínio) é responsável por expor seus dados como produto. Se não há modelo, ele deve realizar engenharia reversa para entender a estrutura e disponibilizar de forma adequada, garantindo qualidade e documentação.
+
+Questão 36: Formatos suportados no Athena
+Pergunta: Quais formatos são suportados no Amazon Athena?
+
+Alternativas:
+
+A leitura é realizada em bancos de dados disponíveis na AWS, sendo assim é independente de formatos.
+
+Somente bases em formato Parquet.
+
+Suporta leitura de diversos arquivos, incluindo JSON, CSV e formatos de dados comprimidos como LZO e Snappy.
+
+Resposta correta: Suporta leitura de diversos arquivos, incluindo JSON, CSV e formatos de dados comprimidos como LZO e Snappy.
+Explicação: O Athena pode consultar dados em vários formatos: CSV, JSON, Parquet, ORC, Avro, e também comprimidos (LZO, Snappy, GZIP). Ele não se limita a bancos de dados, mas lê diretamente do S3.
+
+Questão 37: Microserviços (PoC)
+Pergunta: Microserviços são uma abordagem arquitetônica e organizacional do desenvolvimento de software na qual o software consiste em pequenos serviços independentes que se comunicam usando APIs, bem definidas. Esses serviços pertencem a pequenas equipes autossuficientes. As arquiteturas de microserviços facilitam a escalabilidade e agilizam o desenvolvimento de aplicativos, habilitando a inovação e acelerando o tempo de introdução de novos recursos no mercado. Qual dos itens abaixo NÃO é um conceito básico de Microserviços?
+
+Alternativas:
+
+PoC
+
+Não sei a resposta.
+
+DPI 1, DPI
+
+CI/CD
+
+Squid
+
+Resposta correta: PoC
+Explicação: PoC (Prova de Conceito) é uma prática de validação, não um conceito arquitetônico de microserviços. Conceitos básicos incluem: CI/CD, APIs, escalabilidade independente, descentralização, etc. "Squid" pode ser um proxy, mas não é conceito básico; DPI (Deep Packet Inspection) também não. No contexto, PoC é a resposta mais clara.
+
+Questão 38: Alerta de volumetria no S3
+Pergunta: Durante o processo de criação do ambiente para Linux (on-prem) para a cloud pública AWS, seu gerente solicitou que fosse criado um gatilho para informar a volumetria de dados migrados ao bucket chegou a 1 petabyte. Qual critério mais adequado para que seu alerta seja enviado para um grupo de gestores de forma automática utilizando os recursos da AWS? A verificação deve ocorrer uma vez ao dia.
+
+Alternativas:
+
+Não sei a resposta.
+
+Utilizar o CloudWatch para criação de alarme utilizando a métrica BucketSizeBytes, definir gatilho como alarme e utilizar um tópico SNS para envio de e-mail.
+
+(repetição da mesma)
+
+Desenvolver uma função lambda na linguagem Python, a cada evento de criação de objeto no bucket executar a soma de volumetria com o AWS SDK para Python e enviar a notificação por email utilizando SNS.
+
+(outra repetição)
+
+Resposta correta: Utilizar o CloudWatch para criação de alarme utilizando a métrica BucketSizeBytes, definir gatilho como alarme e utilizar um tópico SNS para envio de e-mail.
+Explicação: O CloudWatch fornece a métrica BucketSizeBytes para buckets S3. É possível criar um alarme que dispara quando o valor ultrapassa 1 PB (ajustado para bytes). O alarme pode enviar notificação para um tópico SNS, que distribui e-mails aos assinantes. A verificação diária pode ser configurada no período do alarme. Essa é a solução mais simples e nativa.
+
+9. Conclusão e Próximos Passos
+Parabéns! Você percorreu um longo caminho através dos fundamentos da engenharia de dados. Este guia abordou desde conceitos básicos de Big Data até tópicos avançados como Data Mesh e serviços AWS, sempre com explicações didáticas e exemplos práticos.
+
+Para continuar seus estudos:
+
+Pratique na AWS: crie uma conta gratuita e experimente os serviços (S3, Glue, Athena, Redshift).
+
+Explore comunidades: participe de fóruns, grupos no LinkedIn, e acompanhe blogs de referência.
+
+Aprofunde-se em programação: estude Python, SQL e Spark.
+
+Mantenha-se atualizado: a área de dados evolui rapidamente; siga as novidades da AWS e de frameworks open source.
+
+Lembre-se: a engenharia de dados é uma jornada contínua de aprendizado. Boa sorte em sua prova e em sua carreira!
